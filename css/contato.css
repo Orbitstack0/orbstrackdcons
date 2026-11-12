@@ -1,0 +1,1240 @@
+/* ==========================================================================
+   Decolar Consórcios — Fale Conosco (contato.html)
+   Redesign final, radicalmente simplificado, moderno e objetivo.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. HERO REFORMULADO
+   Banner amplo, moderno, elegante e visualmente marcante.
+   -------------------------------------------------------------------------- */
+.contact-hero {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border-bottom: 1px solid var(--color-gray-200);
+  min-height: clamp(380px, 34vw, 460px);
+  display: flex;
+  align-items: center;
+}
+
+.contact-hero-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-hero-photo {
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/images/decolar-hero-atendimento.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 85% 18%;
+}
+
+.contact-hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 720px 460px at 95% -10%, rgba(255, 122, 26, 0.08), transparent 64%),
+    linear-gradient(90deg,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0.98) 32%,
+      rgba(255, 255, 255, 0.90) 45%,
+      rgba(255, 255, 255, 0.40) 64%,
+      rgba(255, 255, 255, 0.06) 82%,
+      transparent 100%
+    );
+}
+
+.contact-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1180px;
+  padding-block: clamp(48px, 5.2vw, 76px);
+}
+
+.contact-hero-content {
+  max-width: 590px;
+}
+
+.contact-hero-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+}
+
+.contact-hero-title {
+  margin-top: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(2rem, 3.1vw, 2.95rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.contact-hero-highlight {
+  color: var(--color-orange);
+}
+
+.contact-hero-lead {
+  margin-top: 16px;
+  font-size: clamp(1rem, 1.15vw, 1.12rem);
+  line-height: 1.62;
+  color: var(--color-gray-700);
+  max-width: 540px;
+}
+
+@media (min-width: 768px) and (max-width: 860px) {
+  .contact-hero {
+    min-height: auto;
+  }
+
+  .contact-hero-inner {
+    padding-block: clamp(38px, 5vw, 56px);
+  }
+
+  .contact-hero-photo {
+    background-position: 82% 16%;
+  }
+
+  .contact-hero-gradient-overlay {
+    background:
+      radial-gradient(ellipse 600px 300px at 50% 0%, rgba(255, 122, 26, 0.08), transparent 70%),
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 0.98) 0%,
+        rgba(255, 255, 255, 0.94) 55%,
+        rgba(255, 255, 255, 0.70) 80%,
+        rgba(255, 255, 255, 0.30) 100%
+      );
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HERO REFINADO — MOBILE (até 767px)
+   Composição editorial limpa: título protagonista, foto suave e contraste total
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .contact-hero {
+    min-height: auto;
+    background: #ffffff;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .contact-hero-inner {
+    padding-top: clamp(26px, 5.8vw, 36px);
+    padding-bottom: clamp(26px, 5.8vw, 34px);
+    padding-inline: 20px;
+  }
+
+  .contact-hero-content {
+    max-width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .contact-hero-photo {
+    background-position: 84% 20%;
+    opacity: 0.18;
+    filter: saturate(0.85);
+  }
+
+  .contact-hero-gradient-overlay {
+    background:
+      radial-gradient(ellipse 460px 240px at 85% 15%, rgba(255, 122, 26, 0.08), transparent 70%),
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 0.98) 0%,
+        rgba(255, 255, 255, 0.93) 50%,
+        rgba(255, 255, 255, 0.98) 100%
+      );
+  }
+
+  .contact-hero-eyebrow {
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+
+  .contact-hero-title {
+    margin-top: 0;
+    font-size: clamp(1.72rem, 5.8vw, 2.15rem);
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    max-width: 17ch;
+  }
+
+  .contact-hero-highlight {
+    color: var(--color-orange);
+  }
+
+  .contact-hero-lead {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    line-height: 1.58;
+    color: #374151;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-hero-inner {
+    padding-inline: 14px;
+    padding-block: 22px 24px;
+  }
+
+  .contact-hero-title {
+    font-size: 1.55rem;
+    line-height: 1.2;
+  }
+
+  .contact-hero-lead {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. CENTRAL DE CONTATO — 2 CANAIS DIRETOS (WhatsApp e E-mail)
+   Espaçamento refinado: aproximação elegante dos cards em relação ao hero
+   -------------------------------------------------------------------------- */
+.contact-main-channels {
+  padding-top: clamp(32px, 3.8vw, 52px);
+  padding-bottom: clamp(38px, 4.4vw, 58px);
+  background: var(--color-white);
+}
+
+.contact-main-channels .container {
+  max-width: 1180px;
+}
+
+.contact-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 2.8vw, 36px);
+  max-width: 1040px;
+  margin-inline: auto;
+}
+
+.contact-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(28px, 3.2vw, 40px);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 122, 26, 0.35);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
+}
+
+.contact-card--featured {
+  border-color: rgba(255, 122, 26, 0.28);
+  background: linear-gradient(180deg, #ffffff 0%, #fffdfa 100%);
+  box-shadow: 0 6px 24px rgba(255, 122, 26, 0.06);
+}
+
+.contact-card--featured:hover {
+  border-color: var(--color-orange);
+  box-shadow: 0 16px 36px rgba(255, 122, 26, 0.12);
+}
+
+.contact-card-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.contact-card-icon-wrap svg {
+  width: 26px;
+  height: 26px;
+}
+
+.contact-card-icon-wrap--whatsapp {
+  background: rgba(37, 211, 102, 0.12);
+  color: #128c7e;
+}
+
+.contact-card-icon-wrap--email {
+  background: rgba(255, 122, 26, 0.1);
+  color: var(--color-orange);
+}
+
+.contact-card-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 122, 26, 0.1);
+  color: var(--color-orange);
+  margin-bottom: 10px;
+}
+
+.contact-card-tag--neutral {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+.contact-card-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.contact-card-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.contact-card-value--email {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.contact-card-subtext {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-gray-600);
+  margin-bottom: 24px;
+}
+
+.contact-card-action {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.contact-btn-full {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.contact-btn-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-base);
+}
+
+.contact-btn-full:hover .contact-btn-arrow {
+  transform: translateX(3px);
+}
+
+/* --------------------------------------------------------------------------
+   CANAL PRINCIPAL — MOBILE (até 767px)
+   Cards compactos, equilibrados e e-mail sem quebra desnecessária
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .contact-main-channels {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .contact-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .contact-card {
+    padding: 20px 18px 18px;
+    border-radius: var(--radius-md);
+  }
+
+  .contact-card-icon-wrap {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+
+  .contact-card-icon-wrap svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .contact-card-tag {
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    margin-bottom: 6px;
+  }
+
+  .contact-card-title {
+    font-size: 1.22rem;
+    margin-bottom: 4px;
+  }
+
+  .contact-card-value {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+
+  .contact-card-value--email {
+    font-size: clamp(0.86rem, 3.6vw, 0.98rem);
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+  }
+
+  .contact-card-subtext {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+
+  .contact-card-action {
+    padding-top: 0;
+  }
+
+  .contact-btn-full {
+    min-height: 46px;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-card {
+    padding: 18px 14px 14px;
+  }
+
+  .contact-card-value--email {
+    white-space: normal;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .contact-btn-full {
+    font-size: 0.88rem;
+    padding: 11px 12px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. CONTATOS SECUNDÁRIOS — SEÇÃO DISCRETA E EXPANSÍVEL
+   -------------------------------------------------------------------------- */
+.contact-secondary-section {
+  padding: 0 0 clamp(36px, 4.5vw, 56px);
+  background: var(--color-white);
+}
+
+.contact-secondary-wrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  overflow: hidden;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.contact-secondary-wrapper:hover {
+  border-color: var(--color-gray-300);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.contact-secondary-trigger {
+  width: 100%;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--color-gray-50);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-base);
+}
+
+.contact-secondary-trigger:hover {
+  background: var(--color-gray-100);
+}
+
+.contact-secondary-trigger-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.contact-trigger-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-gray-500);
+}
+
+.contact-secondary-chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--color-gray-500);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.28s;
+}
+
+.contact-secondary-trigger[aria-expanded="true"] .contact-secondary-chevron {
+  transform: rotate(180deg);
+  color: var(--color-red);
+}
+
+.contact-secondary-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--color-white);
+}
+
+.contact-secondary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 22px;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.contact-secondary-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-50);
+  transition: border-color var(--transition-base);
+}
+
+.contact-secondary-item:hover {
+  border-color: var(--color-gray-300);
+}
+
+.contact-secondary-item--ombudsman {
+  border-left: 3px solid var(--color-orange);
+  background: linear-gradient(90deg, rgba(255, 122, 26, 0.04) 0%, var(--color-gray-50) 40%);
+}
+
+.contact-sec-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border-radius: 8px;
+  background: rgba(240, 68, 46, 0.08);
+  color: var(--color-red);
+}
+
+.contact-sec-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-sec-icon--ombudsman {
+  background: rgba(255, 122, 26, 0.12);
+  color: #ea580c;
+}
+
+.contact-sec-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-sec-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(240, 68, 46, 0.08);
+  color: var(--color-red);
+  margin-bottom: 4px;
+}
+
+.contact-sec-tag--ombudsman {
+  background: rgba(255, 122, 26, 0.14);
+  color: #c2410c;
+}
+
+.contact-sec-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.contact-sec-desc {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--color-gray-600);
+  margin-bottom: 8px;
+}
+
+.contact-sec-link {
+  display: inline-block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-red);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.contact-sec-link--ombudsman {
+  color: #c2410c;
+}
+
+@media (max-width: 767px) {
+  .contact-secondary-section {
+    padding-bottom: 24px;
+  }
+
+  .contact-secondary-trigger {
+    min-height: 52px;
+    padding: 14px 16px;
+  }
+
+  .contact-secondary-trigger-label {
+    font-size: 0.88rem;
+    line-height: 1.35;
+    gap: 8px;
+  }
+
+  .contact-trigger-icon {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+  }
+
+  .contact-secondary-chevron {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+  }
+
+  .contact-secondary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .contact-secondary-item {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .contact-sec-icon {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 7px;
+  }
+
+  .contact-sec-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .contact-sec-title {
+    font-size: 0.92rem;
+  }
+
+  .contact-sec-desc {
+    font-size: 0.81rem;
+    line-height: 1.42;
+    margin-bottom: 6px;
+  }
+
+  .contact-sec-link {
+    font-size: 0.82rem;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-secondary-trigger {
+    padding: 12px 12px;
+  }
+
+  .contact-secondary-trigger-label {
+    font-size: 0.82rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3B. LOCALIZAÇÃO INSTITUCIONAL — MAPA
+   -------------------------------------------------------------------------- */
+.contact-location-section {
+  padding: clamp(24px, 3vw, 36px) 0 clamp(36px, 4.5vw, 56px);
+  background: var(--color-white);
+}
+
+.contact-location-section .container {
+  max-width: 1180px;
+}
+
+.contact-location-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 4vw, 48px);
+  align-items: center;
+}
+
+.contact-location-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-location-title {
+  margin-top: 8px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.contact-location-lead {
+  margin-top: 8px;
+  font-size: 0.96rem;
+  color: var(--color-gray-600);
+}
+
+.contact-location-address {
+  margin-top: 14px;
+  font-style: normal;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.contact-location-cta {
+  margin-top: 24px;
+  width: auto;
+}
+
+/* Moldura do mapa: proporção estável em qualquer largura, cantos
+   arredondados e borda discreta — nunca um iframe "jogado" sem
+   tratamento visual. */
+.contact-location-map-wrap {
+  width: 100%;
+}
+
+.contact-location-map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-gray-200);
+  box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.02);
+  background: var(--color-gray-50);
+}
+
+.contact-location-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.contact-location-iframe[hidden] {
+  display: none;
+}
+
+/* Visível até o mapa carregar (consentimento aceito ou ativação manual
+   — ver js/contato.js). Depois de carregado, js/contato.js adiciona
+   [hidden] aqui e remove do iframe. */
+.contact-location-map-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+}
+
+.contact-location-map-placeholder[hidden] {
+  display: none;
+}
+
+.contact-location-map-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-gray-400);
+}
+
+.contact-location-map-text {
+  max-width: 280px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--color-gray-600);
+}
+
+.contact-location-map-btn {
+  margin-top: 4px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-gray-300);
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.contact-location-map-btn:hover {
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+}
+
+@media (max-width: 860px) {
+  .contact-location-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .contact-location-info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-location-cta {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* Altura fixa (não mais por aspect-ratio) para garantir ~280-320px em
+     qualquer largura mobile, em vez de variar com a largura da tela. */
+  .contact-location-map {
+    aspect-ratio: auto;
+    height: clamp(280px, 70vw, 320px);
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-location-section {
+    padding: 20px 0 28px;
+  }
+
+  .contact-location-cta {
+    max-width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. FAQ COMPACTO
+   -------------------------------------------------------------------------- */
+.contact-faq-section {
+  padding: clamp(38px, 4.8vw, 64px) 0;
+  background: var(--color-gray-50);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.contact-faq-section .container {
+  max-width: 860px;
+}
+
+.contact-faq-head {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.contact-faq-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.contact-faq-lead {
+  font-size: 0.92rem;
+  color: var(--color-gray-600);
+}
+
+.contact-faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-faq-item {
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  overflow: hidden;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.contact-faq-item:hover {
+  border-color: var(--color-gray-300);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.contact-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  transition: color var(--transition-base);
+}
+
+.contact-faq-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  color: var(--color-gray-500);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.28s;
+}
+
+.contact-faq-trigger[aria-expanded="true"] .contact-faq-icon {
+  transform: rotate(180deg);
+  color: var(--color-red);
+}
+
+.contact-faq-trigger[aria-expanded="true"] {
+  color: var(--color-red);
+}
+
+.contact-faq-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-faq-body {
+  padding: 0 20px 16px;
+  font-size: 0.9rem;
+  line-height: 1.58;
+  color: var(--color-gray-700);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding-top: 12px;
+}
+
+.contact-faq-body a {
+  color: var(--color-red);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   FAQ REFINADO — MOBILE (até 767px)
+   Área de toque confortável (>= 48px), títulos equilibrados e ícone alinhado
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .contact-faq-section {
+    padding-top: 30px;
+    padding-bottom: 36px;
+  }
+
+  .contact-faq-head {
+    margin-bottom: 20px;
+  }
+
+  .contact-faq-title {
+    font-size: 1.35rem;
+  }
+
+  .contact-faq-lead {
+    font-size: 0.86rem;
+  }
+
+  .contact-faq-accordion {
+    gap: 8px;
+  }
+
+  .contact-faq-trigger {
+    min-height: 48px;
+    padding: 13px 16px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    gap: 12px;
+  }
+
+  .contact-faq-icon {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    align-self: center;
+  }
+
+  .contact-faq-body {
+    padding: 0 16px 14px;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-faq-trigger {
+    padding: 12px 12px;
+    font-size: 0.84rem;
+  }
+
+  .contact-faq-body {
+    padding: 0 12px 12px;
+    font-size: 0.82rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MODAL DE E-MAIL
+   -------------------------------------------------------------------------- */
+.contact-email-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.contact-email-modal.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.contact-email-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.contact-email-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+}
+
+.contact-email-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--color-gray-500);
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+.contact-email-modal-close:hover {
+  background: var(--color-gray-100);
+  color: var(--color-text);
+}
+
+.contact-email-modal-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.contact-email-modal-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text);
+  padding-right: 30px;
+}
+
+.contact-email-modal-lead {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-gray-600);
+  margin-top: 6px;
+}
+
+.contact-email-modal-recipient {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+}
+
+.contact-email-modal-recipient-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+  margin-bottom: 2px;
+}
+
+.contact-email-modal-address-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.contact-email-modal-address {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text);
+  word-break: break-all;
+}
+
+.contact-email-modal-copy {
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-base);
+}
+
+.contact-email-modal-copy:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.contact-email-modal-copy.is-copied {
+  background: #10b981;
+  color: #fff;
+  border-color: #10b981;
+}
+
+.contact-email-modal-options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-email-modal-options-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-gray-600);
+  margin-bottom: 4px;
+}
+
+.contact-email-modal-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+.contact-email-modal-option:hover {
+  border-color: var(--color-red);
+  background: rgba(240, 68, 46, 0.04);
+  color: var(--color-red);
+}
+
+.contact-email-modal-option svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-gray-500);
+}
+
+.contact-email-modal-option:hover svg {
+  color: var(--color-red);
+}
+
+body.email-modal-open {
+  overflow: hidden;
+}
+
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .contact-card,
+  .contact-btn-arrow,
+  .contact-secondary-chevron,
+  .contact-faq-icon,
+  .contact-faq-panel,
+  .contact-secondary-panel {
+    transition: none !important;
+  }
+}

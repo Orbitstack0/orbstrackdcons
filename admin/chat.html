@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Chat da Equipe | Painel Administrativo Decolar</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Estado de verificação de acesso administrativo (padrão do painel) -->
+  <section class="admin-status-screen" id="admin-loading-state">
+    <div class="admin-status-card">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text">Verificando acesso ao Chat da Equipe…</p>
+    </div>
+  </section>
+
+  <section class="admin-status-screen" id="admin-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title">Não foi possível verificar seu acesso.</h2>
+      <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <!-- Shell do Painel — Exibido apenas após confirmação administrativa -->
+  <div class="admin-shell" id="admin-shell" hidden>
+
+    <header class="admin-mobile-topbar">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-mobile-topbar-logo" width="104" height="26">
+      <span class="admin-mobile-topbar-tag">Painel Administrativo</span>
+      <button type="button" class="admin-nav-toggle" id="admin-nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="admin-sidebar-panel">
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <div class="admin-nav-overlay" id="admin-nav-overlay" hidden></div>
+
+    <!-- Barra Lateral Compartilhada -->
+    <aside class="admin-sidebar" id="admin-sidebar-panel">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-sidebar-logo" width="130" height="33">
+      <span class="admin-sidebar-tag">Painel Administrativo</span>
+
+      <nav class="admin-nav" aria-label="Navegação do painel">
+        <a href="index.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Dashboard</span>
+        </a>
+        <a href="crm.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            CRM Decolar
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="chat.html" class="admin-nav-item is-active" aria-current="page">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat da Equipe
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="artigos.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Artigos</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <button type="button" class="admin-switch-profile-btn" id="admin-switch-profile-btn">
+          <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <span>Trocar perfil</span>
+        </button>
+        <button type="button" class="admin-logout-btn" id="admin-logout-btn">
+          <svg class="admin-nav-item-icon admin-logout-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="admin-main">
+
+      <!-- Barra superior de navegação com botão voltar -->
+      <div class="admin-chat-top-nav">
+        <a href="index.html" class="admin-chat-back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span>Voltar ao Dashboard</span>
+        </a>
+      </div>
+
+      <!-- Cabeçalho da Página do Chat -->
+      <section class="admin-chat-page-header">
+        <div class="admin-chat-page-title-wrap">
+          <div class="admin-chat-page-tags">
+            <span class="admin-chat-tag-badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 4px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Comunicação Interna
+            </span>
+            <span class="admin-crm-status-pill">
+              <span class="admin-crm-status-dot" aria-hidden="true"></span>
+              Em desenvolvimento
+            </span>
+          </div>
+          <h1 class="admin-chat-page-title">Chat da Equipe Decolar</h1>
+          <p class="admin-chat-page-subtitle">
+            Canais corporativos estruturados, alinhamentos comerciais e comunicação interna em tempo real.
+          </p>
+        </div>
+      </section>
+
+      <!-- Interface da Aplicação de Chat (Prévia Visual Estruturada 2.0) -->
+      <div class="admin-chat-container" id="chat-container">
+
+        <!-- Coluna Esquerda: Canais e Conversas Divididos por Grupos -->
+        <aside class="admin-chat-sidebar" id="chat-sidebar">
+          <div class="admin-chat-sidebar-header">
+            <h2 class="admin-chat-sidebar-title">Canais & Conversas</h2>
+            <span class="admin-chat-sidebar-badge">6 canais</span>
+          </div>
+
+          <div class="admin-chat-search-wrap">
+            <svg class="admin-chat-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="admin-chat-search-input" placeholder="Buscar canais ou mensagens…" disabled aria-label="Buscar conversas">
+          </div>
+
+          <div class="admin-chat-nav-scroll">
+
+            <!-- GRUPO 1: ADMINISTRAÇÃO -->
+            <div class="admin-chat-group">
+              <span class="admin-chat-group-title">1. Administração</span>
+              <div class="admin-chat-channel-item" role="button" tabindex="0" data-channel="diretoria">
+                <span class="admin-chat-channel-name">
+                  <svg class="admin-chat-lock-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  diretoria
+                </span>
+                <span class="admin-chat-channel-badge admin-chat-badge--private">Privado</span>
+              </div>
+            </div>
+
+            <!-- GRUPO 2: COMUNICAÇÃO GERAL -->
+            <div class="admin-chat-group">
+              <span class="admin-chat-group-title">2. Comunicação Geral</span>
+              <div class="admin-chat-channel-item is-active" role="button" tabindex="0" data-channel="geral">
+                <span class="admin-chat-channel-name">
+                  <span class="admin-chat-channel-hash">#</span>
+                  geral
+                </span>
+                <span class="admin-crm-status-dot" style="background: var(--color-red);" aria-hidden="true"></span>
+              </div>
+              <div class="admin-chat-channel-item" role="button" tabindex="0" data-channel="comercial">
+                <span class="admin-chat-channel-name">
+                  <span class="admin-chat-channel-hash">#</span>
+                  comercial
+                </span>
+                <span class="admin-chat-channel-badge">Em breve</span>
+              </div>
+              <div class="admin-chat-channel-item" role="button" tabindex="0" data-channel="avisos">
+                <span class="admin-chat-channel-name">
+                  <span class="admin-chat-channel-hash">#</span>
+                  avisos
+                </span>
+                <span class="admin-chat-channel-badge">Somente leitura</span>
+              </div>
+            </div>
+
+            <!-- GRUPO 3: EQUIPES COMERCIAIS -->
+            <div class="admin-chat-group">
+              <span class="admin-chat-group-title">3. Equipes Comerciais</span>
+              <div class="admin-chat-channel-item" role="button" tabindex="0" data-channel="equipe-1">
+                <span class="admin-chat-channel-name">
+                  <span class="admin-chat-channel-hash">#</span>
+                  equipe-1
+                </span>
+                <span class="admin-chat-channel-badge">Supervisor 1</span>
+              </div>
+              <div class="admin-chat-channel-item" role="button" tabindex="0" data-channel="equipe-2">
+                <span class="admin-chat-channel-name">
+                  <span class="admin-chat-channel-hash">#</span>
+                  equipe-2
+                </span>
+                <span class="admin-chat-channel-badge">Supervisor 2</span>
+              </div>
+            </div>
+
+            <!-- GRUPO 4: MENSAGENS PRIVADAS -->
+            <div class="admin-chat-group">
+              <span class="admin-chat-group-title">4. Mensagens Privadas</span>
+              <div class="admin-chat-channel-item" role="button" tabindex="0" data-channel="privadas">
+                <span class="admin-chat-channel-name">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  Mensagens Privadas
+                </span>
+                <span class="admin-chat-channel-badge">DMs</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="admin-chat-sidebar-footer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Segurança e RLS via Supabase</span>
+          </div>
+        </aside>
+
+        <!-- Coluna Direita: Área de Mensagens da Conversa -->
+        <section class="admin-chat-main" id="chat-main" aria-label="Área da conversa ativa">
+          <!-- Cabeçalho da conversa selecionada -->
+          <div class="admin-chat-main-header">
+            <button type="button" class="admin-chat-mobile-back-btn" id="chat-mobile-back-btn" aria-label="Voltar para a lista de canais">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              <span>Canais</span>
+            </button>
+
+            <div class="admin-chat-main-heading">
+              <div class="admin-chat-main-channel" id="chat-active-title">
+                <span class="admin-chat-channel-hash" id="chat-active-icon">#</span>
+                <span id="chat-active-name">geral</span>
+                <span class="admin-chat-channel-subname" id="chat-active-subname">• Grupo Geral Decolar</span>
+              </div>
+              <p class="admin-chat-main-topic" id="chat-active-topic">
+                Comunicação e alinhamento entre administradores e supervisores.
+              </p>
+            </div>
+
+            <span class="admin-crm-status-pill" id="chat-active-badge">
+              <span class="admin-crm-status-dot" aria-hidden="true"></span>
+              <span id="chat-active-badge-text">Todos os Usuários</span>
+            </span>
+          </div>
+
+          <!-- Área central de mensagens — Estado vazio dinâmico e calibrado sem rolagem desnecessária -->
+          <div class="admin-chat-messages-area" id="chat-messages-area">
+            <div class="admin-chat-empty-card" id="chat-empty-card">
+              <div class="admin-chat-empty-icon" id="chat-empty-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <h2 class="admin-chat-empty-title" id="chat-empty-title">Canal Geral da Equipe</h2>
+              <p class="admin-chat-empty-desc" id="chat-empty-desc">
+                Canal oficial para comunicados institucionais, celebração de metas e alinhamento geral entre as lideranças da Decolar Consórcios.
+              </p>
+
+              <!-- Cards de Recursos e Escopo do Canal -->
+              <div class="admin-chat-preview-features" id="chat-feature-cards">
+                <div class="admin-chat-feature-box">
+                  <div class="admin-chat-feature-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  </div>
+                  <h3 class="admin-chat-feature-title" id="chat-card1-title">Participação</h3>
+                  <p class="admin-chat-feature-desc" id="chat-card1-desc">3 Administradores e 2 Supervisores Comerciais.</p>
+                </div>
+
+                <div class="admin-chat-feature-box">
+                  <div class="admin-chat-feature-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  </div>
+                  <h3 class="admin-chat-feature-title" id="chat-card2-title">Transmissão</h3>
+                  <p class="admin-chat-feature-desc" id="chat-card2-desc">Mensagens instantâneas via Supabase Realtime.</p>
+                </div>
+
+                <div class="admin-chat-feature-box">
+                  <div class="admin-chat-feature-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </div>
+                  <h3 class="admin-chat-feature-title" id="chat-card3-title">Permissões RLS</h3>
+                  <p class="admin-chat-feature-desc" id="chat-card3-desc">Leitura e envio para todos os membros autorizados.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Barra de Digitação Visual (Desabilitada) -->
+          <div class="admin-chat-input-bar">
+            <div class="admin-chat-input-row">
+              <button type="button" class="admin-chat-attach-btn" disabled aria-label="Anexar arquivo" title="Envio de arquivos em preparação">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              </button>
+              <input type="text" class="admin-chat-text-input" id="chat-input-field" placeholder="Envio de mensagens desabilitado na fase de preparação visual…" disabled aria-label="Digitar mensagem">
+              <button type="button" class="admin-chat-send-btn" disabled aria-label="Enviar mensagem" title="Envio indisponível nesta etapa">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+            <div class="admin-chat-input-meta">
+              <span id="chat-footer-status">Fase visual de planejamento</span>
+              <span>A integração em tempo real será ativada nas próximas etapas de backend</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- SDK Supabase e Scripts de Proteção Administrativa -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-profile.js"></script>
+  <script src="js/admin-nav-mobile.js"></script>
+  <script src="js/admin-chat.js"></script>
+</body>
+</html>

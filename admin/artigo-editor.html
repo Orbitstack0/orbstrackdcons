@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Editor de Artigos | Painel Administrativo Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin-editor.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
+</head>
+<body class="admin-body">
+
+  <!-- Verificação de acesso — mesmo padrão de admin/index.html. Nenhum
+       campo do formulário é exibido antes da confirmação de autorização. -->
+  <section class="admin-status-screen" id="admin-loading-state">
+    <div class="admin-status-card">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text">Verificando acesso…</p>
+    </div>
+  </section>
+
+  <section class="admin-status-screen" id="admin-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title">Não foi possível verificar seu acesso.</h2>
+      <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <!-- Estado exclusivo do carregamento de um rascunho existente (?id=...).
+       Distinto da verificação de acesso acima — só aparece depois dela. -->
+  <section class="admin-status-screen" id="admin-article-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title" id="admin-article-error-title">Não foi possível carregar este rascunho.</h2>
+      <p class="admin-status-text" id="admin-article-error-text">Verifique o link e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-article-retry-btn" hidden>Tentar novamente</button>
+    </div>
+  </section>
+
+  <div class="admin-shell" id="admin-shell" hidden>
+
+    <header class="admin-mobile-topbar">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-mobile-topbar-logo" width="104" height="26">
+      <span class="admin-mobile-topbar-tag">Painel Administrativo</span>
+      <button type="button" class="admin-nav-toggle" id="admin-nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="admin-sidebar-panel">
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <div class="admin-nav-overlay" id="admin-nav-overlay" hidden></div>
+
+    <aside class="admin-sidebar" id="admin-sidebar-panel">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-sidebar-logo" width="130" height="33">
+      <span class="admin-sidebar-tag">Painel Administrativo</span>
+
+      <nav class="admin-nav" aria-label="Navegação do painel">
+        <a href="index.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Dashboard</span>
+        </a>
+        <a href="crm.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            CRM Decolar
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="chat.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat da Equipe
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="artigos.html" class="admin-nav-item is-active">
+          <span class="admin-nav-item-content">Artigos</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <button type="button" class="admin-switch-profile-btn" id="admin-switch-profile-btn">
+          <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <span>Trocar perfil</span>
+        </button>
+        <button type="button" class="admin-logout-btn" id="admin-logout-btn">
+          <svg class="admin-nav-item-icon admin-logout-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div style="margin-bottom: 16px;">
+        <a href="artigos.html" class="admin-details-back-link" id="editor-back-link">
+          <span aria-hidden="true">&larr;</span> Voltar para Artigos
+        </a>
+      </div>
+
+      <header class="admin-header">
+        <div>
+          <span class="admin-header-eyebrow" id="editor-header-eyebrow">Decolar Consórcios</span>
+          <h1 class="admin-header-title" id="editor-header-title">Editor de artigos</h1>
+        </div>
+        <p class="admin-header-user" id="admin-user-email"></p>
+      </header>
+
+      <!-- Etapa 2B: "Salvar rascunho" grava status=draft; "Publicar" exige
+           confirmação, grava status=published e published_at. Artigos já
+           publicados não podem ser reabertos para edição nesta etapa
+           (loadExistingArticle bloqueia e redireciona para um aviso). -->
+      <div class="admin-editor-grid">
+
+        <form class="admin-editor-form" id="admin-editor-form" novalidate>
+
+          <fieldset class="admin-form-group">
+            <legend class="admin-form-group-title">Tipo de artigo</legend>
+
+            <div class="admin-type-toggle" role="group" aria-label="Tipo de artigo">
+              <button type="button" class="admin-type-toggle-btn is-active" id="editor-type-team" data-type="team">Artigo da equipe</button>
+              <button type="button" class="admin-type-toggle-btn" id="editor-type-guest" data-type="guest">Artigo de visitante</button>
+            </div>
+            <span class="admin-form-hint" id="editor-type-hint">O autor é preenchido automaticamente pelo perfil selecionado.</span>
+          </fieldset>
+
+          <fieldset class="admin-form-group">
+            <legend class="admin-form-group-title">Identificação</legend>
+
+            <div class="admin-form-field">
+              <label for="editor-title">Título</label>
+              <input type="text" id="editor-title" name="title" maxlength="160" autocomplete="off">
+            </div>
+
+            <div class="admin-form-field">
+              <label for="editor-slug">Slug (endereço do artigo)</label>
+              <div class="admin-slug-row">
+                <input type="text" id="editor-slug" name="slug" maxlength="160" autocomplete="off" placeholder="ex: credito-consorcio-2026">
+                <button type="button" class="admin-slug-generate-btn" id="editor-slug-generate">Gerar do título</button>
+              </div>
+              <span class="admin-form-hint">Gerado automaticamente a partir do título — edite se quiser.</span>
+              <span class="admin-form-error-text" id="editor-slug-error"></span>
+            </div>
+
+            <div class="admin-form-field">
+              <label for="editor-excerpt">Resumo</label>
+              <textarea id="editor-excerpt" name="excerpt" rows="3" maxlength="220"></textarea>
+              <span class="admin-char-counter" id="editor-excerpt-counter">0 / 220</span>
+            </div>
+          </fieldset>
+
+          <fieldset class="admin-form-group">
+            <legend class="admin-form-group-title">Classificação</legend>
+
+            <div class="admin-form-row">
+              <div class="admin-form-field">
+                <label for="editor-category">Categoria</label>
+                <select id="editor-category" name="category">
+                  <option value="">Selecione…</option>
+                  <option value="entenda">Entenda o Consórcio</option>
+                  <option value="lances">Lances e Contemplação</option>
+                  <option value="imoveis">Imóveis</option>
+                  <option value="veiculos">Veículos</option>
+                  <option value="pesados">Pesados</option>
+                  <option value="seguranca">Segurança e Planejamento</option>
+                  <option value="mercado">Mercado e Atualidade</option>
+                </select>
+              </div>
+
+              <div class="admin-form-field">
+                <label for="editor-author" id="editor-author-label">Autor</label>
+                <input type="text" id="editor-author" name="author_name" maxlength="120" autocomplete="off">
+                <span class="admin-form-error-text" id="editor-author-error"></span>
+                <span class="admin-form-hint" id="editor-reviewer-info" hidden></span>
+              </div>
+            </div>
+
+            <div class="admin-form-row">
+              <div class="admin-form-field">
+                <label for="editor-source">Fonte (opcional)</label>
+                <input type="text" id="editor-source" name="source_name" maxlength="160" autocomplete="off" placeholder="ex: ABAC">
+              </div>
+
+              <div class="admin-checkbox-field">
+                <input type="checkbox" id="editor-featured" name="featured">
+                <label for="editor-featured">Destacar este artigo na página do blog</label>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="admin-form-group">
+            <legend class="admin-form-group-title">Imagem de capa</legend>
+
+            <div class="admin-cover-upload" id="editor-cover-dropzone">
+              <input type="file" id="editor-cover-input" accept="image/jpeg,image/png,image/webp" hidden>
+
+              <div class="admin-cover-empty" id="editor-cover-empty">
+                <span class="admin-cover-empty-text">Arraste uma imagem aqui ou</span>
+                <button type="button" class="admin-cover-pick-btn" id="editor-cover-pick-btn">Escolher arquivo</button>
+                <span class="admin-form-hint">JPG, PNG ou WebP · até 5 MB</span>
+              </div>
+
+              <div class="admin-cover-preview" id="editor-cover-preview" hidden>
+                <img id="editor-cover-preview-img" alt="Pré-visualização da imagem de capa">
+                <div class="admin-cover-preview-actions">
+                  <button type="button" class="admin-cover-action-btn" id="editor-cover-replace-btn">Substituir</button>
+                  <button type="button" class="admin-cover-action-btn admin-cover-action-btn--danger" id="editor-cover-remove-btn">Remover</button>
+                </div>
+              </div>
+            </div>
+
+            <span class="admin-form-error-text" id="editor-cover-error"></span>
+          </fieldset>
+
+          <fieldset class="admin-form-group">
+            <legend class="admin-form-group-title">Conteúdo</legend>
+            <div class="admin-quill-wrap">
+              <div id="editor-content-quill"></div>
+            </div>
+          </fieldset>
+
+          <div class="admin-editor-actions">
+            <button type="button" class="admin-editor-save-btn" id="editor-save-draft-btn">Salvar rascunho</button>
+            <button type="button" class="admin-editor-publish-btn" id="editor-publish-btn">Publicar</button>
+            <span class="admin-editor-save-status" id="editor-save-status" role="status" aria-live="polite"></span>
+          </div>
+
+          <!-- Confirmação antes de publicar — some ao cancelar ou ao concluir.
+               Protegido pela mesma regra global [hidden] de admin.css. -->
+          <div class="admin-publish-confirm" id="editor-publish-confirm" hidden>
+            <p class="admin-publish-confirm-text" id="editor-publish-confirm-text">Publicar agora deixa este artigo visível no Blog Decolar Consórcios imediatamente. Confirmar publicação?</p>
+            <div class="admin-publish-confirm-actions">
+              <button type="button" class="admin-editor-publish-btn" id="editor-publish-confirm-btn">Sim, publicar agora</button>
+              <button type="button" class="admin-slug-generate-btn" id="editor-publish-cancel-btn">Cancelar</button>
+            </div>
+          </div>
+
+        </form>
+
+        <section class="admin-preview-panel" aria-label="Pré-visualização do artigo">
+          <div class="admin-preview-panel-header">
+            <span class="admin-preview-label">Pré-visualização</span>
+            <span class="admin-preview-status-pill" id="preview-status-pill">Rascunho — não publicado</span>
+            <button
+              type="button"
+              class="admin-preview-toggle-btn"
+              id="admin-preview-toggle-btn"
+              aria-expanded="true"
+              aria-controls="admin-preview-collapsible"
+            >
+              <span id="admin-preview-toggle-label">Recolher</span>
+            </button>
+          </div>
+
+          <div class="admin-preview-collapsible" id="admin-preview-collapsible">
+            <article class="admin-preview-card">
+              <img class="admin-preview-cover" id="preview-cover" alt="" hidden>
+              <span class="admin-preview-badge" id="preview-category" hidden></span>
+              <h2 class="admin-preview-title" id="preview-title">Título do artigo</h2>
+              <div class="admin-preview-meta">
+                <span id="preview-author"></span>
+                <span id="preview-reading-time"></span>
+              </div>
+
+              <!-- Identificação dupla — só para artigos de visitante. Em
+                   artigos da equipe, a linha acima (Autor + tempo de leitura)
+                   já é suficiente e esta ficará oculta. -->
+              <div class="admin-preview-attribution" id="preview-attribution" hidden>
+                <div class="admin-preview-attribution-item">
+                  <span class="admin-preview-attribution-label">Escrito por</span>
+                  <span class="admin-preview-attribution-value" id="preview-attribution-author"></span>
+                  <span class="admin-preview-attribution-tag">Autor convidado</span>
+                </div>
+                <div class="admin-preview-attribution-item">
+                  <span class="admin-preview-attribution-label">Revisado e aprovado por</span>
+                  <span class="admin-preview-attribution-value" id="preview-attribution-reviewer"></span>
+                  <span class="admin-preview-attribution-tag">Equipe editorial Decolar Consórcios</span>
+                </div>
+              </div>
+
+              <p class="admin-preview-summary" id="preview-excerpt"></p>
+              <div class="admin-preview-body" id="preview-content"></div>
+              <p class="admin-preview-empty" id="preview-empty">Comece a escrever para ver a pré-visualização aqui.</p>
+            </article>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- SDK Supabase (CDN — site estático, sem npm/bundler) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-profile.js"></script>
+  <script src="js/admin-nav-mobile.js"></script>
+
+  <!-- Quill (editor visual) e DOMPurify (sanitização) — versões fixas.
+       Quill 2.0.3 é, no momento desta implementação, a versão estável mais
+       recente; não há versão corrigida publicada para o advisory
+       GHSA-v3m3-f69x-jf25 (XSS na exportação de HTML via innerHTML/
+       dangerouslyPasteHTML). Por isso todo HTML extraído do Quill
+       (quill.root.innerHTML) passa obrigatoriamente por DOMPurify antes de
+       tocar a tela — a mitigação recomendada pelo próprio advisório. -->
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.14/dist/purify.min.js"></script>
+
+  <script src="../js/reading-time.js"></script>
+  <script src="js/admin-editor.js"></script>
+</body>
+</html>

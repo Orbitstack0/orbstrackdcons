@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Redefinir Senha | Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <main class="admin-login-screen">
+    <div class="admin-login-card">
+
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-login-logo" width="150" height="38">
+      <span class="admin-login-eyebrow">Área restrita</span>
+      <h1 class="admin-login-title">Redefinir senha</h1>
+
+      <!-- Verificando o link de recuperação enviado por e-mail. Nenhum
+           formulário é exibido antes de confirmar uma sessão de recuperação
+           válida — evita expor o formulário para um link inválido/expirado. -->
+      <div class="admin-reset-state" id="reset-verifying-state">
+        <span class="admin-status-spinner" aria-hidden="true"></span>
+        <p class="admin-status-text">Verificando seu link de recuperação…</p>
+      </div>
+
+      <div class="admin-reset-state" id="reset-invalid-state" hidden>
+        <p class="admin-status-text">Este link de recuperação é inválido ou já expirou.</p>
+        <a href="login.html" class="admin-login-link-btn">Solicitar um novo link</a>
+      </div>
+
+      <form class="admin-login-form" id="admin-reset-form" hidden novalidate>
+
+        <p class="admin-login-error" id="admin-reset-error" role="alert" hidden></p>
+
+        <div class="admin-field">
+          <label for="reset-password">Nova senha</label>
+          <input type="password" id="reset-password" name="password" autocomplete="new-password" required>
+        </div>
+
+        <div class="admin-field">
+          <label for="reset-password-confirm">Confirmar nova senha</label>
+          <input type="password" id="reset-password-confirm" name="password-confirm" autocomplete="new-password" required>
+        </div>
+
+        <button type="submit" class="admin-login-submit" id="admin-reset-submit">Definir nova senha</button>
+
+      </form>
+
+      <div class="admin-reset-state" id="reset-success-state" hidden>
+        <p class="admin-login-success">Senha redefinida com sucesso. Redirecionando para o login…</p>
+      </div>
+
+      <p class="admin-login-footer">
+        <a href="login.html">← Voltar ao login administrativo</a>
+      </p>
+
+    </div>
+  </main>
+
+  <!-- SDK Supabase (CDN — site estático, sem npm/bundler) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-reset-password.js"></script>
+</body>
+</html>

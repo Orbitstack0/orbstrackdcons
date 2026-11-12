@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /supabase/
+Disallow: /scratch/
+
+# Páginas transacionais/temporárias sem valor de busca (também marcadas
+# com <meta name="robots" content="noindex"> na própria página).
+Disallow: /simulacao/
+Disallow: /simulacao
+Disallow: /simulacao.html
+Disallow: /manutencao/
+Disallow: /manutencao
+Disallow: /manutencao.html
+
+Sitemap: https://decolarconsorcios.com.br/sitemap.xml

@@ -1,0 +1,31 @@
+# ==============================================================================
+# DECOLAR CONSÓRCIOS — DIRETRIZES DE EXCLUSÃO PARA DEPLOY PÚBLICO
+# ==============================================================================
+# NUNCA envie os seguintes diretórios ou extensões para a raiz pública do servidor:
+#
+# 1. Pastas do Sistema e IDE:
+#    - .git/
+#    - .vscode/
+#    - .claude/
+#    - docs/
+#    - scratch/
+#    - assets/images/_hero_backup/
+#
+# 2. Arquivos Temporários de Auditoria e Teste:
+#    - broken_*.html
+#    - measure_*.html
+#    - res_*.html
+#    - check_*.html
+#    - *.bak
+#    - *.old
+#    - *.tmp
+#
+# 3. Esquemas de Banco de Dados e Scripts SQL:
+#    - supabase-metrics-schema.sql
+#    - supabase-views-and-admin-migration.sql
+#    - *.sql
+#
+# 4. Arquivos de Ambiente ou Segredos:
+#    - .env*
+#    - *.log
+# ==============================================================================

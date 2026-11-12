@@ -1,0 +1,889 @@
+/* ==========================================================================
+   Decolar Consórcios — admin-editor.css
+   Estilos exclusivos do editor de artigos (admin/artigo-editor.html).
+   Reaproveita o shell do painel (.admin-shell/.admin-sidebar/.admin-main)
+   e os tokens definidos em css/styles.css e css/admin.css.
+   ========================================================================== */
+
+.admin-editor-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: 1080px) {
+  .admin-editor-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Formulário
+   -------------------------------------------------------------------------- */
+.admin-editor-form {
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+}
+
+.admin-form-group {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-form-group + .admin-form-group {
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.admin-form-group-title {
+  padding: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+}
+
+.admin-type-toggle {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.admin-type-toggle-btn {
+  padding: 9px 18px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: 999px;
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: border-color var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-type-toggle-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.admin-type-toggle-btn.is-active {
+  border-color: var(--color-red);
+  background: var(--color-red);
+  color: var(--color-white);
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 480px) {
+  .admin-form-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.admin-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-form-field label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+}
+
+.admin-form-field input[type="text"],
+.admin-form-field input[type="url"],
+.admin-form-field select,
+.admin-form-field textarea {
+  padding: 11px 13px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--color-text);
+  background: var(--color-white);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.admin-form-field textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.admin-form-field input:focus-visible,
+.admin-form-field select:focus-visible,
+.admin-form-field textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 3px rgba(240, 68, 46, 0.12);
+}
+
+.admin-form-hint {
+  font-size: 0.76rem;
+  color: var(--color-gray-500);
+}
+
+.admin-form-error-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-red);
+}
+
+.admin-form-error-text:empty {
+  display: none;
+}
+
+.admin-slug-row {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-slug-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-slug-generate-btn {
+  flex: 0 0 auto;
+  padding: 0 14px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-slug-generate-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.admin-char-counter {
+  align-self: flex-end;
+  font-size: 0.72rem;
+  color: var(--color-gray-500);
+}
+
+.admin-char-counter.is-over {
+  color: var(--color-red);
+  font-weight: 700;
+}
+
+.admin-checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-checkbox-field input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-red);
+}
+
+.admin-checkbox-field label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+   Upload de imagem de capa (só em memória nesta etapa — sem envio)
+   -------------------------------------------------------------------------- */
+.admin-cover-upload {
+  border: 1.5px dashed var(--color-gray-300);
+  border-radius: var(--radius-lg);
+  background: var(--color-gray-50);
+  transition: border-color var(--transition-base), background-color var(--transition-base);
+}
+
+.admin-cover-upload.is-dragover {
+  border-color: var(--color-red);
+  background: rgba(240, 68, 46, 0.04);
+}
+
+.admin-cover-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.admin-cover-empty-text {
+  font-size: 0.86rem;
+  color: var(--color-gray-700);
+}
+
+.admin-cover-pick-btn {
+  padding: 9px 20px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: 999px;
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-cover-pick-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.admin-cover-preview {
+  padding: 14px;
+}
+
+.admin-cover-preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-100);
+}
+
+.admin-cover-preview-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.admin-cover-action-btn {
+  padding: 8px 18px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: 999px;
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-cover-action-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.admin-cover-action-btn--danger:hover {
+  border-color: #c4463a;
+  color: #c4463a;
+}
+
+/* --------------------------------------------------------------------------
+   Editor visual (Quill) — ajuste da toolbar "Snow" à identidade da Decolar
+   -------------------------------------------------------------------------- */
+.admin-quill-wrap {
+  min-width: 0;
+  max-width: 100%;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  /* Só para arredondar os cantos da toolbar/editor — não serve de rede de
+     segurança contra overflow: a contenção real vem do min-width/
+     max-width/overflow-wrap abaixo, que impedem o conteúdo de crescer
+     além da coluna em primeiro lugar. */
+  overflow: hidden;
+}
+
+.admin-quill-wrap .ql-toolbar.ql-snow {
+  border: none;
+  border-bottom: 1px solid var(--color-gray-200);
+  background: var(--color-gray-50);
+  font-family: inherit;
+}
+
+.admin-quill-wrap .ql-container.ql-snow {
+  min-width: 0;
+  max-width: 100%;
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  min-height: 260px;
+}
+
+.admin-quill-wrap .ql-editor {
+  min-width: 0;
+  max-width: 100%;
+  min-height: 260px;
+  line-height: 1.7;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Cobre especificamente cada tipo de bloco que o Quill pode gerar — um
+   parágrafo, item de lista ou link com uma sequência longa sem espaços
+   (ou uma URL longa) precisa quebrar dentro do próprio elemento, nunca
+   expandir o pai. */
+.admin-quill-wrap .ql-editor p,
+.admin-quill-wrap .ql-editor li,
+.admin-quill-wrap .ql-editor h1,
+.admin-quill-wrap .ql-editor h2,
+.admin-quill-wrap .ql-editor h3,
+.admin-quill-wrap .ql-editor h4,
+.admin-quill-wrap .ql-editor a {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-quill-wrap .ql-editor.ql-blank::before {
+  color: var(--color-gray-500);
+  font-style: normal;
+}
+
+.admin-quill-wrap .ql-snow.ql-toolbar button:hover,
+.admin-quill-wrap .ql-snow .ql-picker-label:hover,
+.admin-quill-wrap .ql-snow.ql-toolbar button.ql-active,
+.admin-quill-wrap .ql-snow .ql-picker-label.ql-active {
+  color: var(--color-red);
+}
+
+.admin-quill-wrap .ql-snow.ql-toolbar button:hover .ql-stroke,
+.admin-quill-wrap .ql-snow.ql-toolbar button.ql-active .ql-stroke {
+  stroke: var(--color-red);
+}
+
+.admin-quill-wrap .ql-snow.ql-toolbar button:hover .ql-fill,
+.admin-quill-wrap .ql-snow.ql-toolbar button.ql-active .ql-fill {
+  fill: var(--color-red);
+}
+
+.admin-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.admin-editor-save-btn {
+  padding: 12px 26px;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-graphite);
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity var(--transition-base), box-shadow var(--transition-base);
+}
+
+.admin-editor-save-btn:hover {
+  box-shadow: 0 10px 20px rgba(29, 33, 40, 0.18);
+}
+
+.admin-editor-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.admin-editor-publish-btn {
+  padding: 12px 26px;
+  border: none;
+  border-radius: 999px;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: box-shadow var(--transition-base), opacity var(--transition-base);
+}
+
+.admin-editor-publish-btn:hover {
+  box-shadow: 0 10px 20px rgba(240, 68, 46, 0.26);
+}
+
+.admin-editor-publish-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.admin-publish-confirm {
+  margin-top: 4px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid rgba(240, 68, 46, 0.3);
+  border-radius: var(--radius-sm);
+  background: rgba(240, 68, 46, 0.05);
+}
+
+.admin-publish-confirm-text {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.admin-publish-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-editor-save-status {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-gray-500);
+}
+
+.admin-editor-save-status.is-success {
+  color: #1f7a4d;
+}
+
+.admin-editor-save-status.is-error {
+  color: var(--color-red);
+}
+
+/* --------------------------------------------------------------------------
+   Pré-visualização
+   -------------------------------------------------------------------------- */
+.admin-preview-panel {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+}
+
+.admin-preview-panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-preview-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+}
+
+.admin-preview-status-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--color-gray-100);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-gray-500);
+}
+
+.admin-preview-status-pill.is-published {
+  background: rgba(34, 139, 87, 0.12);
+  color: #1f7a4d;
+}
+
+.admin-preview-card {
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 18px;
+}
+
+.admin-preview-cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-100);
+}
+
+.admin-preview-cover[hidden] {
+  display: none;
+}
+
+.admin-preview-badge {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--color-gray-100);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+}
+
+.admin-preview-title {
+  margin-top: 10px;
+  max-width: 100%;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.admin-preview-meta {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 100%;
+  font-size: 0.8rem;
+  color: var(--color-gray-500);
+  overflow-wrap: anywhere;
+}
+
+/* Identificação dupla (artigos de visitante) — discreta, com boa
+   hierarquia entre rótulo/nome/selo, sem competir com o título. */
+.admin-preview-attribution {
+  margin-top: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-50);
+}
+
+.admin-preview-attribution-item {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.admin-preview-attribution-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+}
+
+.admin-preview-attribution-value {
+  display: block;
+  margin-top: 2px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.admin-preview-attribution-tag {
+  display: block;
+  margin-top: 1px;
+  font-size: 0.76rem;
+  color: var(--color-gray-500);
+}
+
+.admin-preview-summary {
+  margin-top: 10px;
+  max-width: 100%;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+  overflow-wrap: anywhere;
+}
+
+/* Qualquer conteúdo gerado pelo Quill (parágrafos, títulos, listas, links,
+   imagens) precisa se manter dentro da largura do cartão — nunca cortado,
+   só quebrado corretamente. min-width: 0 é necessário aqui porque este é um
+   item de um container com display: block normal, mas que recebe filhos
+   (ex.: <pre>, <a> com URLs longas) cuja largura intrínseca pode exceder o
+   pai sem isso. */
+.admin-preview-body {
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-gray-200);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.admin-preview-body * {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.admin-preview-body p {
+  margin-bottom: 1em;
+}
+
+.admin-preview-body h1,
+.admin-preview-body h2,
+.admin-preview-body h3,
+.admin-preview-body h4 {
+  margin: 1.2em 0 0.5em;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.admin-preview-body ul,
+.admin-preview-body ol {
+  margin: 0 0 1em 1.2em;
+}
+
+.admin-preview-body a {
+  color: var(--color-red);
+  word-break: break-word;
+}
+
+.admin-preview-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.admin-preview-body pre,
+.admin-preview-body code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.admin-preview-body blockquote {
+  margin: 1em 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--color-gray-300);
+  color: var(--color-gray-700);
+}
+
+.admin-preview-empty {
+  margin-top: 18px;
+  font-size: 0.88rem;
+  color: var(--color-gray-500);
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Controle de recolher/expandir a pré-visualização — só existe no mobile
+   (ver bloco <=767px abaixo). No desktop fica sempre oculto e a prévia
+   sempre expandida, exatamente como já era.
+   -------------------------------------------------------------------------- */
+.admin-preview-toggle-btn {
+  display: none;
+}
+
+/* ==========================================================================
+   EDITOR DE ARTIGOS — MOBILE (<=767px)
+   Desktop/tablet (>=1080px grid de 2 colunas, e tudo entre 768-1079px)
+   permanecem exatamente como estão nos blocos acima. Nada aqui altera
+   validação, geração de slug, upload, publicação ou a renderização da
+   prévia — só espaçamento, tamanho de toque e organização visual.
+   ========================================================================== */
+@media (max-width: 767px) {
+
+  .admin-editor-grid {
+    margin-top: 16px;
+    gap: 18px;
+  }
+
+  .admin-editor-form,
+  .admin-preview-panel {
+    padding: 18px 16px;
+  }
+
+  .admin-form-group {
+    gap: 12px;
+  }
+
+  .admin-form-group + .admin-form-group {
+    padding-top: 16px;
+  }
+
+  /* Fonte >=16px em todo campo editável — abaixo disso o Safari iOS
+     aplica autozoom ao focar o campo, o que "pula" a tela. */
+  .admin-type-toggle-btn,
+  .admin-form-field input[type="text"],
+  .admin-form-field input[type="url"],
+  .admin-form-field select,
+  .admin-form-field textarea,
+  .admin-slug-generate-btn,
+  .admin-cover-pick-btn,
+  .admin-cover-action-btn {
+    font-size: 16px;
+  }
+
+  .admin-form-field input[type="text"],
+  .admin-form-field input[type="url"],
+  .admin-form-field select,
+  .admin-form-field textarea {
+    padding: 12px 14px;
+  }
+
+  .admin-type-toggle {
+    flex-wrap: wrap;
+  }
+
+  .admin-type-toggle-btn {
+    padding: 11px 16px;
+  }
+
+  .admin-slug-row {
+    flex-wrap: wrap;
+  }
+
+  .admin-slug-row input {
+    flex-basis: 100%;
+  }
+
+  .admin-slug-generate-btn {
+    flex: 1;
+    padding: 11px 14px;
+  }
+
+  .admin-checkbox-field input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+
+  .admin-cover-empty {
+    padding: 24px 16px;
+  }
+
+  /* --------------------------------------------------------------------
+     Barra de formatação do Quill: rolagem só dentro da barra (nunca na
+     página), ícones com área de toque confortável. Nenhuma ferramenta é
+     removida — só reorganizada numa única linha rolável.
+     -------------------------------------------------------------------- */
+  .admin-quill-wrap .ql-toolbar.ql-snow {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding: 8px 10px;
+  }
+
+  .admin-quill-wrap .ql-toolbar.ql-snow .ql-formats {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+
+  .admin-quill-wrap .ql-snow.ql-toolbar button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .admin-quill-wrap .ql-snow .ql-picker-label {
+    padding-right: 18px;
+  }
+
+  /* Área de escrita: mais respiro interno e altura inicial um pouco
+     maior, para não começar "espremida" antes mesmo do teclado abrir. */
+  .admin-quill-wrap .ql-container.ql-snow,
+  .admin-quill-wrap .ql-editor {
+    min-height: 280px;
+  }
+
+  .admin-quill-wrap .ql-editor {
+    font-size: 16px;
+    padding: 16px;
+  }
+
+  .admin-editor-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .admin-editor-save-btn,
+  .admin-editor-publish-btn {
+    width: 100%;
+    padding: 14px 26px;
+    text-align: center;
+  }
+
+  .admin-editor-save-status {
+    text-align: center;
+  }
+
+  .admin-publish-confirm-actions {
+    flex-direction: column;
+  }
+
+  .admin-publish-confirm-actions .admin-editor-publish-btn,
+  .admin-publish-confirm-actions .admin-slug-generate-btn {
+    width: 100%;
+  }
+
+  /* ----------------------------------------------------------------------
+     Pré-visualização: controle para recolher/expandir, pensado para
+     economizar espaço sem nunca depender de JS para ficar visível (o
+     wrapper só é escondido quando admin-editor.js adiciona o atributo
+     "hidden" nele — sem JS, a prévia continua sempre visível, igual
+     antes). O estado é sempre indicado no texto do botão e em
+     aria-expanded.
+     ---------------------------------------------------------------------- */
+  .admin-preview-panel-header {
+    position: relative;
+  }
+
+  .admin-preview-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    padding: 8px 16px;
+    min-height: 36px;
+    border: 1.5px solid var(--color-gray-300);
+    border-radius: 999px;
+    background: var(--color-white);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color var(--transition-base), color var(--transition-base);
+  }
+
+  .admin-preview-toggle-btn:hover {
+    border-color: var(--color-red);
+    color: var(--color-red);
+  }
+}

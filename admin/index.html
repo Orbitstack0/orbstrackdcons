@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel Administrativo | Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Estado de verificação — visível por padrão. Nenhum dado do painel
+       aparece antes da confirmação de sessão + autorização em blog_admins. -->
+  <section class="admin-status-screen" id="admin-loading-state">
+    <div class="admin-status-card">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text">Verificando acesso…</p>
+    </div>
+  </section>
+
+  <!-- Estado de erro de verificação (rede/SDK) — distinto de "não
+       autorizado", que redireciona para o login em vez de ficar aqui. -->
+  <section class="admin-status-screen" id="admin-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title">Não foi possível verificar seu acesso.</h2>
+      <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <!-- Painel — permanece oculto até a autorização ser confirmada por
+       admin-dashboard.js (via admin-auth-guard.js). -->
+  <div class="admin-shell" id="admin-shell" hidden>
+
+    <header class="admin-mobile-topbar">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-mobile-topbar-logo" width="104" height="26">
+      <span class="admin-mobile-topbar-tag">Painel Administrativo</span>
+      <button type="button" class="admin-nav-toggle" id="admin-nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="admin-sidebar-panel">
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <div class="admin-nav-overlay" id="admin-nav-overlay" hidden></div>
+
+    <aside class="admin-sidebar" id="admin-sidebar-panel">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-sidebar-logo" width="130" height="33">
+      <span class="admin-sidebar-tag">Painel Administrativo</span>
+
+      <nav class="admin-nav" aria-label="Navegação do painel">
+        <a href="index.html" class="admin-nav-item is-active" aria-current="page">
+          <span class="admin-nav-item-content">Dashboard</span>
+        </a>
+        <a href="crm.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            CRM Decolar
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="chat.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat da Equipe
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="artigos.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Artigos</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <button type="button" class="admin-switch-profile-btn" id="admin-switch-profile-btn">
+          <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <span>Trocar perfil</span>
+        </button>
+        <button type="button" class="admin-logout-btn" id="admin-logout-btn">
+          <svg class="admin-nav-item-icon admin-logout-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <span class="admin-header-eyebrow">Decolar Consórcios</span>
+          <h1 class="admin-header-title">Olá, <span id="admin-user-name">administrador</span>.</h1>
+        </div>
+        <p class="admin-header-user" id="admin-user-email"></p>
+      </header>
+
+      <!-- Aviso personalizado de rascunho pendente — só aparece quando o
+           perfil ativo tem ao menos um rascunho salvo em seu nome. Oculto
+           por padrão; admin-dashboard.js decide se exibe, com base em uma
+           consulta real a blog_articles (nunca conteúdo fictício). -->
+      <div class="admin-draft-notice" id="admin-draft-notice" hidden>
+        <div class="admin-draft-notice-body">
+          <h2 class="admin-draft-notice-title" id="admin-draft-notice-title"></h2>
+          <p class="admin-draft-notice-text" id="admin-draft-notice-text"></p>
+          <p class="admin-draft-notice-article" id="admin-draft-notice-article"></p>
+        </div>
+        <div class="admin-draft-notice-actions">
+          <a href="artigo-editor.html" class="admin-draft-notice-continue-btn" id="admin-draft-notice-continue-btn">Continuar escrevendo</a>
+          <button type="button" class="admin-draft-notice-dismiss-btn" id="admin-draft-notice-dismiss-btn" aria-label="Dispensar aviso">✕</button>
+        </div>
+      </div>
+
+      <!-- 1. Seção CRM Decolar — Prioridade Comercial (Em desenvolvimento) -->
+      <section class="admin-section admin-crm-preview-section" aria-labelledby="admin-crm-preview-title">
+        <div class="admin-crm-header-card">
+          <div class="admin-crm-header-content">
+            <div class="admin-crm-header-tags">
+              <span class="admin-crm-tag-badge">Central Comercial</span>
+              <span class="admin-crm-status-pill">
+                <span class="admin-crm-status-dot" aria-hidden="true"></span>
+                Em desenvolvimento
+              </span>
+            </div>
+            <h2 class="admin-crm-title" id="admin-crm-preview-title">CRM Decolar</h2>
+            <p class="admin-crm-description">
+              Uma nova central de relacionamento e gestão comercial está chegando. Em breve, clientes, negociações, relatórios e compromissos estarão reunidos em um único lugar.
+            </p>
+          </div>
+          <a href="crm.html" class="admin-crm-view-btn">Acessar Central do CRM</a>
+        </div>
+
+        <div class="admin-crm-modules-grid">
+          <!-- Módulo 1: Clientes -->
+          <a href="crm-clientes.html" class="admin-crm-module-card">
+            <div class="admin-crm-module-header">
+              <div class="admin-crm-module-icon-wrap" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <span class="admin-crm-module-badge">Em breve</span>
+            </div>
+            <h3 class="admin-crm-module-title">Clientes</h3>
+            <p class="admin-crm-module-desc">Cadastro, organização, histórico e importação de leads por planilhas.</p>
+            <div class="admin-crm-module-footer">
+              <span class="admin-crm-module-meta">Planejado: Manual, CSV/Excel e deduplicação &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Módulo 2: Oportunidades -->
+          <a href="crm-oportunidades.html" class="admin-crm-module-card">
+            <div class="admin-crm-module-header">
+              <div class="admin-crm-module-icon-wrap" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              </div>
+              <span class="admin-crm-module-badge">Em breve</span>
+            </div>
+            <h3 class="admin-crm-module-title">Oportunidades</h3>
+            <p class="admin-crm-module-desc">Funil comercial, acompanhamento de negociações e leads que não avançaram.</p>
+            <div class="admin-crm-module-footer">
+              <span class="admin-crm-module-meta">Planejado: Etapas de funil e motivos de perda &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Módulo 3: Relatórios -->
+          <a href="crm-relatorios.html" class="admin-crm-module-card">
+            <div class="admin-crm-module-header">
+              <div class="admin-crm-module-icon-wrap" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <span class="admin-crm-module-badge">Em breve</span>
+            </div>
+            <h3 class="admin-crm-module-title">Relatórios</h3>
+            <p class="admin-crm-module-desc">Indicadores comerciais, conversões, resultados e motivos de perda.</p>
+            <div class="admin-crm-module-footer">
+              <span class="admin-crm-module-meta">Planejado: Métricas de conversão e desempenho &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Módulo 4: Agenda -->
+          <a href="crm-agenda.html" class="admin-crm-module-card">
+            <div class="admin-crm-module-header">
+              <div class="admin-crm-module-icon-wrap" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <span class="admin-crm-module-badge">Em breve</span>
+            </div>
+            <h3 class="admin-crm-module-title">Agenda</h3>
+            <p class="admin-crm-module-desc">Compromissos, retornos comerciais e lembretes.</p>
+            <div class="admin-crm-module-footer">
+              <span class="admin-crm-module-meta">Planejado: Gestão de follow-ups e avisos &rarr;</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- 2. Seção Chat da Equipe — Comunicação Interna (Em desenvolvimento) -->
+      <section class="admin-section admin-chat-preview-section" aria-labelledby="admin-chat-preview-title">
+        <div class="admin-chat-header-card">
+          <div class="admin-chat-header-content">
+            <div class="admin-chat-header-tags">
+              <span class="admin-chat-tag-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: middle; margin-right: 3px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Comunicação Interna
+              </span>
+              <span class="admin-crm-status-pill">
+                <span class="admin-crm-status-dot" aria-hidden="true"></span>
+                Em desenvolvimento
+              </span>
+            </div>
+            <h2 class="admin-chat-title" id="admin-chat-preview-title">Chat da Equipe</h2>
+            <p class="admin-chat-description">
+              Um espaço exclusivo para a comunicação interna da Decolar Consórcios. Conversas em equipe, mensagens privadas e colaboração em tempo real, reunidas em um único ambiente.
+            </p>
+          </div>
+          <a href="chat.html" class="admin-chat-view-btn">Conhecer o Chat da Equipe</a>
+        </div>
+      </section>
+
+      <!-- 3. Seção Central Editorial / Gerenciamento de Artigos (Operacional e Ativa) -->
+      <section class="admin-section admin-articles-preview-section" aria-labelledby="admin-articles-preview-title">
+        <div class="admin-dashboard-hero-card">
+          <div class="admin-dashboard-hero-content">
+            <div class="admin-crm-header-tags">
+              <span class="admin-crm-tag-badge" style="color: var(--color-gray-600);">Central Editorial</span>
+              <span class="admin-crm-status-pill" style="background: rgba(16, 185, 129, 0.1); color: #059669;">
+                <span class="admin-crm-status-dot" style="background: #10b981;" aria-hidden="true"></span>
+                Operacional
+              </span>
+            </div>
+            <h2 class="admin-dashboard-hero-title" id="admin-articles-preview-title">Gerenciamento de artigos</h2>
+            <p class="admin-dashboard-hero-text">Crie, edite e organize os artigos da equipe e as contribuições de visitantes em um só lugar.</p>
+          </div>
+          <a href="artigos.html" class="admin-dashboard-hero-btn">Gerenciar artigos</a>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- SDK Supabase (CDN — site estático, sem npm/bundler) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-profile.js"></script>
+  <script src="js/admin-nav-mobile.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

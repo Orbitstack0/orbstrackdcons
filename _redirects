@@ -1,0 +1,39 @@
+# ==============================================================================
+# DECOLAR CONSÓRCIOS — REDIRECTS E REWRITES (NETLIFY / CLOUDFLARE PAGES)
+# ==============================================================================
+
+# 1. Redirecionamentos 301 permanentes de URLs legadas com .html para URLs limpas
+/index.html                     /                       301!
+/index                          /                       301!
+/como-funciona.html             /como-funciona          301!
+/nossa-historia.html            /nossa-historia         301!
+/contato.html                   /contato                301!
+/consorcio-imoveis.html         /consorcio-imoveis      301!
+/consorcio-veiculos.html        /consorcio-veiculos     301!
+/consorcio-pesados.html         /consorcio-pesados      301!
+/seja-um-representante.html     /seja-um-representante  301!
+/blog.html                      /blog                   301!
+/artigo.html                    /artigo                 301!
+/contribua-com-o-blog.html      /contribua-com-o-blog   301!
+/simulacao.html                 /simulacao              301!
+/politica-de-privacidade.html   /politica-de-privacidade 301!
+/termos-de-uso.html             /termos-de-uso          301!
+/politica-de-cookies.html       /politica-de-cookies    301!
+/manutencao.html                /manutencao             301!
+
+# 2. Resoluções internas silenciosas (HTTP 200 Rewrite) para os arquivos HTML físicos
+/como-funciona                  /como-funciona.html     200
+/nossa-historia                 /nossa-historia.html    200
+/contato                        /contato.html           200
+/consorcio-imoveis              /consorcio-imoveis.html 200
+/consorcio-veiculos             /consorcio-veiculos.html 200
+/consorcio-pesados              /consorcio-pesados.html 200
+/seja-um-representante          /seja-um-representante.html 200
+/blog                           /blog.html              200
+/artigo                         /artigo.html            200
+/contribua-com-o-blog           /contribua-com-o-blog.html 200
+/simulacao                      /simulacao.html         200
+/politica-de-privacidade        /politica-de-privacidade.html 200
+/termos-de-uso                  /termos-de-uso.html     200
+/politica-de-cookies            /politica-de-cookies.html 200
+/manutencao                     /manutencao.html        200

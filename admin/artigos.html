@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Gerenciamento de Artigos | Painel Administrativo Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin-articles.css">
+</head>
+<body class="admin-body">
+
+  <!-- Verificação de acesso — mesmo padrão das demais páginas do painel.
+       Nenhum artigo é listado antes da confirmação de autorização. -->
+  <section class="admin-status-screen" id="admin-loading-state">
+    <div class="admin-status-card">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text">Verificando acesso…</p>
+    </div>
+  </section>
+
+  <section class="admin-status-screen" id="admin-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title">Não foi possível verificar seu acesso.</h2>
+      <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <div class="admin-shell" id="admin-shell" hidden>
+
+    <header class="admin-mobile-topbar">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-mobile-topbar-logo" width="104" height="26">
+      <span class="admin-mobile-topbar-tag">Painel Administrativo</span>
+      <button type="button" class="admin-nav-toggle" id="admin-nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="admin-sidebar-panel">
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <div class="admin-nav-overlay" id="admin-nav-overlay" hidden></div>
+
+    <aside class="admin-sidebar" id="admin-sidebar-panel">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-sidebar-logo" width="130" height="33">
+      <span class="admin-sidebar-tag">Painel Administrativo</span>
+
+      <nav class="admin-nav" aria-label="Navegação do painel">
+        <a href="index.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Dashboard</span>
+        </a>
+        <a href="crm.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            CRM Decolar
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="chat.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat da Equipe
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="artigos.html" class="admin-nav-item is-active" aria-current="page">
+          <span class="admin-nav-item-content">Artigos</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <button type="button" class="admin-switch-profile-btn" id="admin-switch-profile-btn">
+          <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <span>Trocar perfil</span>
+        </button>
+        <button type="button" class="admin-logout-btn" id="admin-logout-btn">
+          <svg class="admin-nav-item-icon admin-logout-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <span class="admin-header-eyebrow">Decolar Consórcios</span>
+          <h1 class="admin-header-title">Gerenciamento de artigos</h1>
+        </div>
+        <a href="artigo-editor.html" class="admin-articles-new-btn">Novo artigo</a>
+      </header>
+
+      <div class="admin-articles-toolbar">
+        <div class="admin-articles-filters" role="group" aria-label="Filtrar artigos">
+          <button type="button" class="admin-articles-filter-btn is-active" id="admin-filter-all" data-filter="all">Todos</button>
+          <button type="button" class="admin-articles-filter-btn" id="admin-filter-draft" data-filter="draft">Ver rascunhos</button>
+        </div>
+      </div>
+
+      <p class="admin-articles-action-status" id="admin-articles-action-status" role="status" aria-live="polite"></p>
+
+      <!-- Estado de carregamento da listagem -->
+      <section class="admin-status-screen admin-status-screen--inline" id="admin-articles-loading-state">
+        <div class="admin-status-card">
+          <span class="admin-status-spinner" aria-hidden="true"></span>
+          <p class="admin-status-text">Carregando artigos…</p>
+        </div>
+      </section>
+
+      <!-- Estado de erro de conexão ao buscar a listagem -->
+      <section class="admin-status-screen admin-status-screen--inline" id="admin-articles-error-state" hidden>
+        <div class="admin-status-card">
+          <h2 class="admin-status-title">Não foi possível carregar os artigos.</h2>
+          <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+          <button type="button" class="admin-status-retry" id="admin-articles-retry-btn">Tentar novamente</button>
+        </div>
+      </section>
+
+      <!-- Lista vazia (sem nenhum artigo, ou nenhum resultado no filtro ativo) -->
+      <div class="admin-articles-empty" id="admin-articles-empty" hidden>
+        <h2 class="admin-articles-empty-title" id="admin-articles-empty-title">Nenhum artigo encontrado.</h2>
+        <p class="admin-articles-empty-text" id="admin-articles-empty-text">Comece criando o primeiro artigo do blog.</p>
+        <a href="artigo-editor.html" class="admin-articles-empty-new-btn">Novo artigo</a>
+      </div>
+
+      <div class="admin-articles-list" id="admin-articles-list" hidden></div>
+    </main>
+
+  </div>
+
+  <!-- Confirmação de exclusão — único modal compartilhado por todos os
+       cartões de rascunho da lista. Protegido pela regra global [hidden]
+       já definida em admin.css. -->
+  <div class="admin-delete-modal" id="admin-delete-modal" hidden>
+    <div class="admin-delete-modal-overlay" id="admin-delete-modal-overlay"></div>
+    <div class="admin-delete-modal-dialog" role="alertdialog" aria-modal="true" aria-labelledby="admin-delete-modal-title">
+      <h2 class="admin-delete-modal-title" id="admin-delete-modal-title">Excluir rascunho?</h2>
+      <p class="admin-delete-modal-text" id="admin-delete-modal-text"></p>
+      <p class="admin-delete-modal-error" id="admin-delete-modal-error" role="alert" hidden></p>
+      <div class="admin-delete-modal-actions">
+        <button type="button" class="admin-delete-modal-cancel-btn" id="admin-delete-modal-cancel-btn">Cancelar</button>
+        <button type="button" class="admin-delete-modal-confirm-btn" id="admin-delete-modal-confirm-btn">Sim, excluir rascunho</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDK Supabase (CDN — site estático, sem npm/bundler) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-profile.js"></script>
+  <script src="js/admin-nav-mobile.js"></script>
+  <script src="js/admin-articles.js"></script>
+</body>
+</html>

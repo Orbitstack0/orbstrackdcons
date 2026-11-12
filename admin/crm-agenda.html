@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agenda | CRM Decolar — Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Estado de verificação de acesso administrativo -->
+  <section class="admin-status-screen" id="admin-loading-state">
+    <div class="admin-status-card">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text">Verificando acesso…</p>
+    </div>
+  </section>
+
+  <section class="admin-status-screen" id="admin-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title">Não foi possível verificar seu acesso.</h2>
+      <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <!-- Shell do Painel -->
+  <div class="admin-shell" id="admin-shell" hidden>
+
+    <header class="admin-mobile-topbar">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-mobile-topbar-logo" width="104" height="26">
+      <span class="admin-mobile-topbar-tag">Painel Administrativo</span>
+      <button type="button" class="admin-nav-toggle" id="admin-nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="admin-sidebar-panel">
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <div class="admin-nav-overlay" id="admin-nav-overlay" hidden></div>
+
+    <aside class="admin-sidebar" id="admin-sidebar-panel">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-sidebar-logo" width="130" height="33">
+      <span class="admin-sidebar-tag">Painel Administrativo</span>
+
+      <nav class="admin-nav" aria-label="Navegação do painel">
+        <a href="index.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Dashboard</span>
+        </a>
+        <a href="crm.html" class="admin-nav-item is-active" aria-current="page">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            CRM Decolar
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="chat.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat da Equipe
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="artigos.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Artigos</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <button type="button" class="admin-switch-profile-btn" id="admin-switch-profile-btn">
+          <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <span>Trocar perfil</span>
+        </button>
+        <button type="button" class="admin-logout-btn" id="admin-logout-btn">
+          <svg class="admin-nav-item-icon admin-logout-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <!-- Barra superior de navegação com botão de voltar elegante -->
+      <div class="admin-crm-top-nav">
+        <a href="crm.html" class="admin-crm-back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span>Voltar ao CRM</span>
+        </a>
+      </div>
+
+      <header class="admin-header admin-crm-page-header">
+        <div>
+          <span class="admin-header-eyebrow">CRM Decolar — Organização Comercial</span>
+          <h1 class="admin-header-title">Agenda, Compromissos e Retornos</h1>
+        </div>
+        <p class="admin-header-user" id="admin-user-email"></p>
+      </header>
+
+      <!-- Aviso de Prévia Ilustrativa -->
+      <div class="admin-crm-module-notice">
+        <div>
+          <strong>Módulo em fase visual de planejamento.</strong>
+          Esta tela apresenta a estrutura corporativa projetada para controle de compromissos, agendamento de retornos comerciais, alertas de follow-up e tarefas prioritárias. Nenhuma funcionalidade de banco está ativa nesta etapa.
+        </div>
+        <span class="admin-crm-module-notice-badge">
+          <span class="admin-crm-status-dot" aria-hidden="true"></span>
+          Em desenvolvimento
+        </span>
+      </div>
+
+      <!-- Barra de Ações & Filtros da Agenda -->
+      <section class="admin-crm-action-bar" aria-label="Filtros e visualizações da agenda">
+        <div class="admin-crm-filters-group">
+          <select class="admin-crm-select" disabled aria-label="Visualização da agenda">
+            <option>Visão: Semana Atual</option>
+            <option>Visão: Dia (Hoje)</option>
+            <option>Visão: Lista de Retornos Prioritários</option>
+          </select>
+          <select class="admin-crm-select" disabled aria-label="Filtro de consultor responsável">
+            <option>Agenda: Todos os Consultores</option>
+            <option>Samir Mannaa</option>
+            <option>Andrey Roque</option>
+            <option>William Richer</option>
+          </select>
+          <select class="admin-crm-select" disabled aria-label="Filtro de tipo de compromisso">
+            <option>Todos os tipos (Reuniões, Retornos, Pós-assembleia)</option>
+            <option>Reunião de Consultoria Presencial</option>
+            <option>Vídeo-chamada / Apresentação</option>
+            <option>Retorno de Simulação / Proposta</option>
+            <option>Acompanhamento de Assembleia</option>
+          </select>
+        </div>
+        <div class="admin-crm-buttons-group">
+          <button type="button" class="admin-crm-btn admin-crm-btn--primary" id="crm-new-appointment-btn" disabled>
+            <span>+ Novo Compromisso</span> <span class="admin-crm-btn-tag">Em breve</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Barra de Controles de Navegação do Calendário (Semana / Mês / Anos Futuros) -->
+      <section class="admin-crm-cal-nav-bar" aria-label="Controles de período do calendário">
+        <div class="admin-crm-cal-period-nav">
+          <button type="button" class="admin-crm-cal-nav-btn" id="crm-cal-prev" aria-label="Período anterior">&lsaquo;</button>
+          <button type="button" class="admin-crm-cal-today-btn" id="crm-cal-today">Hoje</button>
+          <button type="button" class="admin-crm-cal-nav-btn" id="crm-cal-next" aria-label="Próximo período">&rsaquo;</button>
+          <h2 class="admin-crm-cal-period-title" id="crm-cal-period-title">Novembro de 2026</h2>
+        </div>
+
+        <div class="admin-crm-view-segmented" role="tablist" aria-label="Tipo de visualização">
+          <button type="button" class="admin-crm-view-toggle-btn is-active" id="crm-view-week-btn" role="tab" aria-selected="true">Visão Semanal</button>
+          <button type="button" class="admin-crm-view-toggle-btn" id="crm-view-month-btn" role="tab" aria-selected="false">Visão Mensal</button>
+        </div>
+      </section>
+
+      <!-- Barra Informativa da Data Selecionada -->
+      <div class="admin-crm-cal-selection-bar" id="crm-cal-selection-bar">
+        <div>
+          Data selecionada para agendamento futuro: <strong id="crm-cal-selected-label">Carregando…</strong>
+        </div>
+        <span class="admin-crm-cal-selection-tag">
+          <span class="admin-crm-status-dot" aria-hidden="true"></span>
+          Pronto para novo compromisso
+        </span>
+      </div>
+
+      <!-- VISÃO 1: Grade Semanal de Atendimentos -->
+      <div id="crm-calendar-week-view">
+        <div class="admin-crm-section-heading">
+          <h3 class="admin-crm-section-title">Grade Semanal de Atendimentos</h3>
+          <p class="admin-crm-section-subtitle">Distribuição por dias úteis para retornos comerciais e reuniões de consultoria.</p>
+        </div>
+
+        <section class="admin-crm-calendar-week" aria-label="Calendário semanal ilustrativo">
+          <!-- Segunda-feira -->
+          <div class="admin-crm-calendar-col">
+            <div class="admin-crm-calendar-day-header">Segunda-feira</div>
+            <div class="admin-crm-event-badge">
+              <span class="admin-crm-event-time">09:30 • Reunião Consultiva</span>
+              Apresentação de Consórcio Imobiliário
+            </div>
+            <div class="admin-crm-event-badge admin-crm-event-badge--warning">
+              <span class="admin-crm-event-time">14:00 • Retorno Comercial</span>
+              Follow-up de proposta enviada na semana anterior
+            </div>
+          </div>
+
+          <!-- Terça-feira -->
+          <div class="admin-crm-calendar-col">
+            <div class="admin-crm-calendar-day-header">Terça-feira</div>
+            <div class="admin-crm-event-badge admin-crm-event-badge--success">
+              <span class="admin-crm-event-time">10:30 • Fechamento de Cota</span>
+              Alinhamento de contrato e conferência de cota
+            </div>
+            <div class="admin-crm-event-badge">
+              <span class="admin-crm-event-time">16:00 • Simulação Online</span>
+              Consórcio de Pesados / Frotas
+            </div>
+          </div>
+
+          <!-- Quarta-feira -->
+          <div class="admin-crm-calendar-col">
+            <div class="admin-crm-calendar-day-header">Quarta-feira</div>
+            <div class="admin-crm-event-badge admin-crm-event-badge--warning">
+              <span class="admin-crm-event-time">11:00 • Retorno Comercial</span>
+              Contato pós-simulação de veículo
+            </div>
+          </div>
+
+          <!-- Quinta-feira -->
+          <div class="admin-crm-calendar-col">
+            <div class="admin-crm-calendar-day-header">Quinta-feira</div>
+            <div class="admin-crm-event-badge">
+              <span class="admin-crm-event-time">14:30 • Reunião Presencial</span>
+              Diagnóstico de planejamento financeiro
+            </div>
+            <div class="admin-crm-event-badge admin-crm-event-badge--warning">
+              <span class="admin-crm-event-time">17:00 • Follow-up Crítico</span>
+              Retorno pré-assembleia mensal
+            </div>
+          </div>
+
+          <!-- Sexta-feira -->
+          <div class="admin-crm-calendar-col">
+            <div class="admin-crm-calendar-day-header">Sexta-feira</div>
+            <div class="admin-crm-event-badge admin-crm-event-badge--success">
+              <span class="admin-crm-event-time">09:00 • Assembleia & Lances</span>
+              Acompanhamento dos resultados da assembleia
+            </div>
+            <div class="admin-crm-event-badge">
+              <span class="admin-crm-event-time">15:00 • Retorno Geral</span>
+              Contato com clientes contemplados
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- VISÃO 2: Grade Mensal Completa (Permite avançar para meses e anos futuros) -->
+      <div id="crm-calendar-month-view" class="admin-crm-month-view" hidden>
+        <div class="admin-crm-section-heading">
+          <h3 class="admin-crm-section-title">Grade Mensal Completa</h3>
+          <p class="admin-crm-section-subtitle">Navegue livremente entre meses e anos futuros para selecionar datas de agendamentos.</p>
+        </div>
+
+        <div class="admin-crm-month-header-row" aria-hidden="true">
+          <div class="admin-crm-month-header-cell">Dom</div>
+          <div class="admin-crm-month-header-cell">Seg</div>
+          <div class="admin-crm-month-header-cell">Ter</div>
+          <div class="admin-crm-month-header-cell">Qua</div>
+          <div class="admin-crm-month-header-cell">Qui</div>
+          <div class="admin-crm-month-header-cell">Sex</div>
+          <div class="admin-crm-month-header-cell">Sáb</div>
+        </div>
+
+        <div class="admin-crm-month-days-grid" id="crm-month-days-grid" role="grid" aria-label="Dias do mês">
+          <!-- Células geradas dinamicamente via admin-crm-calendar.js -->
+        </div>
+      </div>
+
+      <!-- Painéis: Tarefas Pendentes/Atrasadas & Histórico de Atividades -->
+      <section class="admin-crm-highlights-grid">
+        <div class="admin-crm-highlight-card">
+          <h4 class="admin-crm-highlight-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-red);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Gestão de Tarefas e Alertas de Atraso
+          </h4>
+          <p class="admin-crm-highlight-text">
+            O sistema destacará em vermelho ou amarelo retornos programados que ultrapassaram o horário estabelecido, garantindo que nenhum interessado fique sem resposta e otimizando a qualidade do atendimento consultivo da Decolar Consórcios.
+          </p>
+        </div>
+
+        <div class="admin-crm-highlight-card">
+          <h4 class="admin-crm-highlight-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-red);"><polyline points="20 6 9 17 4 12"/></svg>
+            Histórico de Atividades Concluídas
+          </h4>
+          <p class="admin-crm-highlight-text">
+            Ao finalizar uma reunião ou contato telefônico, a atividade é arquivada automaticamente no histórico do cliente correspondente com a data, hora e anotações do consultor, construindo uma trilha auditável de relacionamento.
+          </p>
+        </div>
+      </section>
+
+      <!-- Caixa de Governança -->
+      <section class="admin-crm-governance-box">
+        <h4 class="admin-crm-governance-title">Diretriz da Fase Visual</h4>
+        <p class="admin-crm-governance-text">
+          A grade de calendário e os eventos descritos acima são exemplos estáticos elaborados para ilustrar a experiência de uso. Nenhuma rotina de agendamento automático, integração com Google Calendar ou mensageria externa está ativa nesta fase.
+        </p>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- SDK Supabase e Scripts de Proteção Administrativa -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-profile.js"></script>
+  <script src="js/admin-nav-mobile.js"></script>
+  <script src="js/admin-crm.js"></script>
+  <script src="js/admin-crm-calendar.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,1034 @@
+/**
+ * Decolar Consórcios — admin-tv.css
+ * Estilos exclusivos para o Modo TV Decolar (admin/crm-tv.html).
+ * Interface escura de alto contraste, otimizada para HD (1280x720 / 1366x768) e Full HD (1920x1080).
+ * Garantia de zero rolagem vertical na tela principal em ambas as resoluções.
+ */
+
+:root {
+  --tv-bg-base: #0a0b0e;
+  --tv-bg-surface: #121318;
+  --tv-bg-card: #181a22;
+  --tv-bg-card-hover: #1f222d;
+  --tv-border: rgba(255, 255, 255, 0.08);
+  --tv-border-active: rgba(240, 68, 46, 0.4);
+  --tv-text-primary: #ffffff;
+  --tv-text-secondary: #9da3b4;
+  --tv-text-muted: #656b7c;
+  --tv-red: #f0442e;
+  --tv-orange: #ff7a1a;
+  --tv-gradient-primary: linear-gradient(135deg, #f0442e 0%, #ff7a1a 100%);
+  --tv-green: #10b981;
+  --tv-blue: #3b82f6;
+  --tv-radius-lg: 14px;
+  --tv-radius-md: 10px;
+  --tv-radius-sm: 6px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body.admin-tv-body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Elimina rolagem desnecessária no display da TV */
+  background-color: var(--tv-bg-base);
+  color: var(--tv-text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Estrutura do App: ocupa exatamente 100% da altura da janela */
+.admin-tv-app {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==========================================================================
+   BARRA DE PROGRESSO SUPERIOR (30 SEGUNDOS)
+   ========================================================================== */
+.admin-tv-progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 100;
+}
+
+.admin-tv-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--tv-gradient-primary);
+  transition: width 0.08s linear;
+}
+
+/* ==========================================================================
+   CABEÇALHO REORGANIZADO E COMPACTO
+   ========================================================================== */
+.admin-tv-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  background: var(--tv-bg-surface);
+  border-bottom: 1px solid var(--tv-border);
+  gap: 16px;
+  z-index: 50;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+
+/* Bloco 1: Identidade, Relógio Compacto e Status de Sincronização */
+.admin-tv-brand-cluster {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.admin-tv-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+.admin-tv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(240, 68, 46, 0.15);
+  border: 1px solid rgba(240, 68, 46, 0.3);
+  color: #ff6b57;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Relógio e Data em formato compacto de uma única linha */
+.admin-tv-clock-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--tv-border);
+  border-radius: 999px;
+  font-family: 'Manrope', sans-serif;
+  white-space: nowrap;
+}
+
+.admin-tv-clock-time {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--tv-text-primary);
+  letter-spacing: 0.04em;
+}
+
+.admin-tv-clock-sep {
+  color: var(--tv-text-muted);
+  font-size: 0.8rem;
+}
+
+.admin-tv-clock-date {
+  font-size: 0.72rem;
+  color: var(--tv-text-secondary);
+  font-weight: 600;
+}
+
+/* Indicador Discreto de Sincronização */
+.admin-tv-sync-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.68rem;
+  color: var(--tv-text-muted);
+  white-space: nowrap;
+}
+
+.admin-tv-sync-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+  animation: tvPulse 2s infinite ease-in-out;
+}
+
+@keyframes tvPulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Bloco 2: Seletor Central das 3 Telas */
+.admin-tv-view-switcher {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--tv-border);
+  gap: 3px;
+}
+
+.admin-tv-tab-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: none;
+  background: none;
+  color: var(--tv-text-secondary);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.admin-tv-tab-btn:hover {
+  color: var(--tv-text-primary);
+}
+
+.admin-tv-tab-btn.is-active {
+  background: var(--tv-gradient-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(240, 68, 46, 0.35);
+}
+
+/* Bloco 3: Controles da Direita */
+.admin-tv-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.admin-tv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--tv-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--tv-text-secondary);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.admin-tv-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--tv-text-primary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.admin-tv-btn--toggle.is-running {
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.admin-tv-btn--toggle.is-paused {
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.admin-tv-btn--presentation {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-tv-btn--back {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Botão Flutuante de Restauração de Controles (Modo Apresentação) */
+.admin-tv-restore-btn {
+  position: fixed;
+  top: 10px;
+  right: 14px;
+  z-index: 120;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(18, 19, 24, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  color: var(--tv-text-secondary);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.admin-tv-restore-btn:hover {
+  color: #ffffff;
+  border-color: var(--tv-orange);
+  background: rgba(24, 26, 34, 0.95);
+}
+
+/* ==========================================================================
+   ÁREA PRINCIPAL DE EXIBIÇÃO
+   ========================================================================== */
+.admin-tv-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(10px, 1.4vh, 20px) clamp(16px, 2vw, 32px);
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.admin-tv-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(8px, 1.2vh, 16px);
+  overflow: hidden;
+  animation: tvFadeIn 0.3s ease;
+}
+
+.admin-tv-view[hidden] {
+  display: none !important;
+}
+
+@keyframes tvFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Subcabeçalho da Visão */
+.admin-tv-view-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--tv-border);
+}
+
+.admin-tv-view-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-tv-view-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
+  font-weight: 800;
+  color: var(--tv-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+.admin-tv-view-subtitle {
+  font-size: 0.74rem;
+  color: var(--tv-text-secondary);
+}
+
+.admin-tv-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(240, 68, 46, 0.12);
+  border: 1px solid rgba(240, 68, 46, 0.25);
+  color: #ff6b57;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   BANNER DE META MENSAL
+   ========================================================================== */
+.admin-tv-target-card {
+  flex-shrink: 0;
+  background: var(--tv-bg-surface);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-tv-target-info {
+  flex: 0 0 240px;
+}
+
+.admin-tv-target-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tv-text-muted);
+}
+
+.admin-tv-target-val {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--tv-text-primary);
+}
+
+.admin-tv-target-progress-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-tv-target-status-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--tv-text-secondary);
+}
+
+.admin-tv-target-percent {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--tv-text-primary);
+}
+
+.admin-tv-target-bar-bg {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.admin-tv-target-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--tv-gradient-primary);
+  border-radius: 999px;
+}
+
+.admin-tv-target-status-line--sub {
+  font-size: 0.66rem;
+  color: var(--tv-text-muted);
+}
+
+/* ==========================================================================
+   GRADE DOS 6 INDICADORES PRINCIPAIS
+   ========================================================================== */
+.admin-tv-kpi-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 1.2vw, 16px);
+  align-content: stretch;
+}
+
+.admin-tv-kpi-card {
+  background: var(--tv-bg-card);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-tv-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.admin-tv-kpi-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.admin-tv-kpi-title-cluster {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-tv-kpi-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tv-text-muted);
+}
+
+.admin-tv-kpi-pill {
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-tv-kpi-pill--green {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.admin-tv-kpi-pill--orange {
+  background: rgba(255, 122, 26, 0.15);
+  color: #ffa057;
+  border: 1px solid rgba(255, 122, 26, 0.3);
+}
+
+.admin-tv-kpi-icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tv-text-secondary);
+  flex-shrink: 0;
+}
+
+.admin-tv-kpi-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  font-weight: 800;
+  color: var(--tv-text-primary);
+  line-height: 1.05;
+}
+
+.admin-tv-kpi-subtext {
+  font-size: 0.68rem;
+  color: var(--tv-text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   DESTAQUE MÁXIMO VISUAL: VENDAS DO MÊS E CRÉDITO COMERCIALIZADO
+   -------------------------------------------------------------------------- */
+.admin-tv-kpi-card--highlight {
+  border-width: 1.5px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Card Vendas do Mês */
+.admin-tv-kpi-card--sales {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(24, 26, 34, 0.95) 100%);
+  border-color: rgba(16, 185, 129, 0.45);
+}
+
+.admin-tv-kpi-card--sales::before {
+  background: var(--tv-green);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+.admin-tv-kpi-icon-wrap--green {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+}
+
+.admin-tv-kpi-value--green {
+  color: #10b981;
+  text-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+}
+
+/* Card Crédito Comercializado */
+.admin-tv-kpi-card--credit {
+  background: linear-gradient(135deg, rgba(255, 122, 26, 0.1) 0%, rgba(24, 26, 34, 0.95) 100%);
+  border-color: rgba(255, 122, 26, 0.45);
+}
+
+.admin-tv-kpi-card--credit::before {
+  background: var(--tv-gradient-primary);
+  box-shadow: 0 0 10px rgba(255, 122, 26, 0.6);
+}
+
+.admin-tv-kpi-icon-wrap--orange {
+  background: rgba(255, 122, 26, 0.12);
+  color: #ff9d42;
+}
+
+.admin-tv-kpi-value--orange {
+  color: #ff8a2b;
+  text-shadow: 0 0 16px rgba(255, 122, 26, 0.3);
+}
+
+/* ==========================================================================
+   PAINEL INFERIOR: COMPARATIVO E QUADRO DE PRODUTIVIDADE
+   ========================================================================== */
+.admin-tv-bottom-grid {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(8px, 1.2vw, 16px);
+}
+
+.admin-tv-panel {
+  background: var(--tv-bg-surface);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.admin-tv-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--tv-border);
+}
+
+.admin-tv-panel-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tv-text-primary);
+}
+
+.admin-tv-panel-badge {
+  font-size: 0.64rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--tv-text-muted);
+}
+
+/* Tabelas dos Painéis */
+.admin-tv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+}
+
+.admin-tv-table th {
+  padding: 4px 8px;
+  text-align: left;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tv-text-muted);
+  border-bottom: 1px solid var(--tv-border);
+}
+
+.admin-tv-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--tv-text-secondary);
+}
+
+.admin-tv-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-tv-table strong {
+  color: var(--tv-text-primary);
+}
+
+/* Quadro de Produtividade dos Vendedores (Sem registros falsos) */
+.admin-tv-empty-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: var(--tv-radius-sm);
+  margin-top: 4px;
+}
+
+.admin-tv-empty-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tv-text-muted);
+  flex-shrink: 0;
+}
+
+.admin-tv-empty-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-tv-empty-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tv-text-primary);
+}
+
+.admin-tv-empty-desc {
+  font-size: 0.7rem;
+  color: var(--tv-text-secondary);
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   RODAPÉ DE GOVERNANÇA E LGPD
+   ========================================================================== */
+.admin-tv-footer {
+  flex-shrink: 0;
+  padding: 6px 24px;
+  background: var(--tv-bg-surface);
+  border-top: 1px solid var(--tv-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--tv-text-muted);
+}
+
+.admin-tv-footer strong {
+  color: var(--tv-text-secondary);
+}
+
+/* ==========================================================================
+   MODO APRESENTAÇÃO / TELA CHEIA (CONTROLES OCULTADOS)
+   ========================================================================== */
+.admin-tv-app.is-presentation-mode .admin-tv-header {
+  transform: translateY(-85%);
+  opacity: 0.15;
+}
+
+.admin-tv-app.is-presentation-mode .admin-tv-header:hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.admin-tv-app.is-presentation-mode .admin-tv-restore-btn {
+  display: inline-flex;
+}
+
+/* ==========================================================================
+   OTIMIZAÇÃO ESPECÍFICA: HD (1280×720 e 1366×768)
+   ========================================================================== */
+@media (max-height: 820px), (max-width: 1400px) {
+  .admin-tv-header {
+    padding: 6px 16px;
+    gap: 10px;
+  }
+
+  .admin-tv-logo {
+    height: 24px;
+  }
+
+  .admin-tv-badge {
+    padding: 2px 6px;
+    font-size: 0.62rem;
+  }
+
+  .admin-tv-clock-cluster {
+    padding: 3px 8px;
+  }
+
+  .admin-tv-clock-time {
+    font-size: 0.84rem;
+  }
+
+  .admin-tv-clock-date {
+    font-size: 0.66rem;
+  }
+
+  .admin-tv-tab-btn {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+  }
+
+  .admin-tv-btn {
+    padding: 4px 9px;
+    font-size: 0.7rem;
+  }
+
+  .admin-tv-main {
+    padding: 8px 16px;
+  }
+
+  .admin-tv-view {
+    gap: 8px;
+  }
+
+  .admin-tv-view-title {
+    font-size: 1.15rem;
+  }
+
+  .admin-tv-view-subtitle {
+    font-size: 0.68rem;
+  }
+
+  .admin-tv-target-card {
+    padding: 6px 14px;
+  }
+
+  .admin-tv-target-info {
+    flex: 0 0 190px;
+  }
+
+  .admin-tv-target-val {
+    font-size: 0.95rem;
+  }
+
+  .admin-tv-kpi-grid {
+    gap: 8px;
+  }
+
+  .admin-tv-kpi-card {
+    padding: 8px 12px;
+  }
+
+  .admin-tv-kpi-title {
+    font-size: 0.66rem;
+  }
+
+  .admin-tv-kpi-value {
+    font-size: 1.75rem;
+  }
+
+  .admin-tv-kpi-value--highlight {
+    font-size: 2.05rem;
+  }
+
+  .admin-tv-panel {
+    padding: 8px 12px;
+  }
+
+  .admin-tv-table td {
+    padding: 4px 6px;
+    font-size: 0.72rem;
+  }
+
+  .admin-tv-footer {
+    padding: 4px 16px;
+    font-size: 0.64rem;
+  }
+}
+
+/* ==========================================================================
+   OTIMIZAÇÃO ESPECÍFICA: FULL HD (1920×1080)
+   ========================================================================== */
+@media (min-width: 1700px) and (min-height: 850px) {
+  .admin-tv-header {
+    padding: 16px 36px;
+    gap: 24px;
+  }
+
+  .admin-tv-logo {
+    height: 36px;
+  }
+
+  .admin-tv-badge {
+    padding: 4px 12px;
+    font-size: 0.78rem;
+  }
+
+  .admin-tv-clock-cluster {
+    padding: 6px 16px;
+    gap: 10px;
+  }
+
+  .admin-tv-clock-time {
+    font-size: 1.25rem;
+  }
+
+  .admin-tv-clock-date {
+    font-size: 0.85rem;
+  }
+
+  .admin-tv-sync-pill {
+    padding: 5px 12px;
+    font-size: 0.76rem;
+  }
+
+  .admin-tv-tab-btn {
+    padding: 8px 22px;
+    font-size: 0.88rem;
+  }
+
+  .admin-tv-btn {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+
+  .admin-tv-main {
+    padding: 20px 40px;
+  }
+
+  .admin-tv-view {
+    gap: 18px;
+  }
+
+  .admin-tv-view-title {
+    font-size: 1.75rem;
+  }
+
+  .admin-tv-view-subtitle {
+    font-size: 0.86rem;
+  }
+
+  .admin-tv-target-card {
+    padding: 14px 28px;
+    border-radius: var(--tv-radius-lg);
+  }
+
+  .admin-tv-target-info {
+    flex: 0 0 320px;
+  }
+
+  .admin-tv-target-label {
+    font-size: 0.78rem;
+  }
+
+  .admin-tv-target-val {
+    font-size: 1.35rem;
+  }
+
+  .admin-tv-target-bar-bg {
+    height: 14px;
+  }
+
+  .admin-tv-target-status-line {
+    font-size: 0.82rem;
+  }
+
+  .admin-tv-target-percent {
+    font-size: 1.1rem;
+  }
+
+  .admin-tv-kpi-grid {
+    gap: 18px;
+  }
+
+  .admin-tv-kpi-card {
+    padding: 18px 22px;
+    border-radius: var(--tv-radius-lg);
+  }
+
+  .admin-tv-kpi-title {
+    font-size: 0.8rem;
+  }
+
+  .admin-tv-kpi-value {
+    font-size: 2.85rem;
+  }
+
+  .admin-tv-kpi-value--highlight {
+    font-size: 3.4rem;
+  }
+
+  .admin-tv-kpi-subtext {
+    font-size: 0.8rem;
+  }
+
+  .admin-tv-bottom-grid {
+    gap: 18px;
+  }
+
+  .admin-tv-panel {
+    padding: 18px 24px;
+    border-radius: var(--tv-radius-lg);
+  }
+
+  .admin-tv-panel-title {
+    font-size: 0.98rem;
+  }
+
+  .admin-tv-table {
+    font-size: 0.88rem;
+  }
+
+  .admin-tv-table th {
+    padding: 8px 12px;
+    font-size: 0.74rem;
+  }
+
+  .admin-tv-table td {
+    padding: 10px 12px;
+  }
+
+  .admin-tv-empty-panel {
+    padding: 18px 20px;
+  }
+
+  .admin-tv-empty-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .admin-tv-empty-title {
+    font-size: 0.92rem;
+  }
+
+  .admin-tv-empty-desc {
+    font-size: 0.8rem;
+  }
+
+  .admin-tv-footer {
+    padding: 10px 36px;
+    font-size: 0.76rem;
+  }
+}
+
+/* Suporte gracioso para janelas de altura extremamente reduzida (<520px) */
+@media (max-height: 520px) {
+  html, body.admin-tv-body {
+    overflow-y: auto;
+  }
+  .admin-tv-app {
+    height: auto;
+    min-height: 100vh;
+  }
+}

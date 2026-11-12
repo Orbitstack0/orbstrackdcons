@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nossa História | Decolar Consórcios</title>
+  <meta name="description" content="Conheça a trajetória da Decolar Consórcios, iniciada a partir de uma história profissional em 1988 e consolidada com atuação nacional.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos base do site e estilos dedicados da história -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/historia.css">
+</head>
+<body class="story-page brand-header">
+
+  <!-- Barra de progresso de leitura no topo -->
+  <div class="story-progress-bar" aria-hidden="true"></div>
+
+  <!-- Header Institucional idêntico ao da Home -->
+  <header class="site-header" id="site-header">
+    <div class="top-strip">
+      <div class="container top-strip-inner">
+        <a href="manutencao.html">Área do Cliente</a>
+        <a href="manutencao.html">Área do Representante</a>
+      </div>
+    </div>
+
+    <div class="header-inner container">
+
+      <a href="index.html#inicio" class="logo-link" aria-label="Decolar Consórcios - página inicial">
+        <img src="assets/images/LOGO.png" alt="Decolar Consórcios" class="logo-img" width="200" height="50">
+      </a>
+
+      <div class="mobile-menu-panel" id="mobile-menu-panel">
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="index.html#inicio">Início</a></li>
+          <li class="nav-item-dropdown">
+            <a href="index.html#consorcios" class="has-submenu" aria-haspopup="true" aria-expanded="false">
+              Consórcios
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </a>
+            <ul class="submenu">
+              <li><a href="consorcio-imoveis.html">Consórcio de Imóveis</a></li>
+              <li><a href="consorcio-veiculos.html">Consórcio de Veículos</a></li>
+              <li><a href="consorcio-pesados.html">Consórcio de Pesados</a></li>
+            </ul>
+          </li>
+          <li><a href="como-funciona.html">Como Funciona</a></li>
+          <li><a href="nossa-historia.html" class="active" aria-current="page">Sobre a Decolar</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contato.html">Fale Conosco</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions" id="header-actions">
+        <a href="seja-um-representante.html" class="btn btn-primary">Seja um Representante Decolar</a>
+        <a href="simulacao.html" class="btn btn-secondary">Simule seu Consórcio</a>
+
+        <div class="social-links" aria-label="Redes sociais da Decolar Consórcios">
+          <a href="#" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13.5 9H16V6h-2.5C11.6 6 10 7.6 10 9.7V11H8v3h2v7h3v-7h2.4l.6-3H13V9.8c0-.5.4-.8.9-.8Z"></path>
+            </svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="4.5"></rect>
+              <circle cx="12" cy="12" r="3.3"></circle>
+              <circle cx="16.3" cy="7.7" r="0.6" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/decolar-cons%C3%B3rcio-9899462ba/" class="social-link" aria-label="LinkedIn da Decolar Consórcios" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <g transform="translate(12 12) scale(1.4) translate(-13.2 -11.825)">
+                <circle cx="8.7" cy="8.1" r="1.05"></circle>
+                <rect x="7.65" y="10.3" width="2.1" height="6.3" rx="1.05"></rect>
+                <path d="M11.55 16.6v-6.3h2.1v1.05c.55-.75 1.35-1.25 2.35-1.25 1.85 0 2.95 1.25 2.95 3.35v3.15h-2.1v-2.75c0-1.15-.45-1.85-1.5-1.85-.85 0-1.5.55-1.7 1.35v3.25Z"></path>
+              </g>
+            </svg>
+          </a>
+        </div>
+      </div>
+        <!-- Extras do menu mobile (ocultos no desktop): ações e contato -->
+        <div class="menu-extra-links">
+          <a href="manutencao.html">Área do Cliente</a>
+          <a href="manutencao.html">Área do Representante</a>
+        </div>
+
+        <div class="menu-extra-contact">
+          <a href="mailto:atendimento@decolarconsorcios.com.br"><span class="email-local">atendimento@</span><wbr><span class="email-domain">decolarconsorcios.com.br</span></a>
+          <span>Porto Alegre, RS</span>
+        </div>
+      </div>
+
+      <a href="simulacao.html" class="btn btn-primary header-cta-mobile">Simular</a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+
+    <!-- ====================================================================
+         01 — ABERTURA — NOSSA HISTÓRIA (EDITORIAL EM 2 COLUNAS)
+         ==================================================================== -->
+    <section class="story-section section-about-intro" id="sobre-decolar" aria-labelledby="intro-heading">
+      <div class="container">
+        <div class="editorial-grid editorial-grid--intro">
+          
+          <!-- Coluna Esquerda: Texto Institucional -->
+          <div class="editorial-col-text reveal-item">
+            <span class="editorial-eyebrow">Sobre a Decolar</span>
+            <h1 class="editorial-title" id="intro-heading">
+              Uma história construída<br>
+              com <span class="editorial-highlight">experiência</span>.
+            </h1>
+            <p class="editorial-lead">
+              A Decolar Consórcios nasceu em 2007, em Porto Alegre, a partir de uma trajetória profissional iniciada em 1988. Nossa história reúne experiência no mercado, relacionamento próximo e compromisso com um planejamento financeiro responsável.
+            </p>
+          </div>
+
+          <!-- Coluna Direita: Fotografia Institucional 01 — Fachada da Decolar -->
+          <div class="editorial-col-media reveal-item">
+            <figure class="institutional-photo-frame" id="foto-institucional-abertura">
+              <img src="assets/images/decolar-fachada-otimizada.webp" 
+                   alt="Fachada oficial da sede da Decolar Consórcios" 
+                   class="institutional-img institutional-img--fachada" 
+                   width="516" 
+                   height="515" 
+                   loading="eager" 
+                   fetchpriority="high">
+            </figure>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         02 — TRAJETÓRIA — LINHA DO TEMPO (CARROSSEL AUTOMÁTICO COMPACTO)
+         ==================================================================== -->
+    <section class="story-section section-timeline" id="cena-trajetoria" aria-labelledby="timeline-heading">
+      <div class="container">
+
+        <div class="section-header reveal-item">
+          <span class="editorial-eyebrow editorial-eyebrow--center">Linha do Tempo</span>
+          <h2 class="section-title" id="timeline-heading">Nossa trajetória</h2>
+          <p class="section-subtitle">
+            Uma história construída ao longo dos anos, marcada por experiência, desenvolvimento e novos caminhos.
+          </p>
+        </div>
+
+        <!-- Carrossel 3D Coverflow Moderado & Compacto -->
+        <div class="coverflow-3d-wrap reveal-item" id="coverflow-trajetoria" role="region" aria-roledescription="carousel" aria-label="Marcos históricos da trajetória">
+          
+          <div class="coverflow-stage" id="coverflow-stage" tabindex="0" aria-live="polite" aria-atomic="true">
+            <div class="coverflow-track" id="coverflow-track">
+              
+              <!-- Marco 1: 1988 -->
+              <article class="coverflow-card slot-center is-center" data-index="0" role="group" aria-roledescription="slide" aria-label="1 de 4: 1988 — Início da trajetória no mercado de consórcios">
+                <div class="coverflow-card-accent" aria-hidden="true"></div>
+                <div class="coverflow-card-media">
+                  <img src="assets/images/claudemir-oliveira-escritorio-retro.webp" 
+                       alt="Claudemir Oliveira no início de sua trajetória no mercado de consórcios, 1988" 
+                       class="coverflow-card-img coverflow-card-img--1988" 
+                       width="1531" 
+                       height="1027">
+                </div>
+                <div class="coverflow-card-body">
+                  <div class="coverflow-card-year">1988</div>
+                  <h3 class="coverflow-card-title">Início da trajetória no mercado de consórcios</h3>
+                  <p class="coverflow-card-desc">Primeiros passos no mercado de consórcios, construindo uma reputação baseada em transparência, relacionamento próximo e solidez técnica.</p>
+                </div>
+              </article>
+
+              <!-- Marco 2: 1990 -->
+              <article class="coverflow-card slot-right" data-index="1" role="group" aria-roledescription="slide" aria-label="2 de 4: 1990 — Desenvolvimento profissional e liderança">
+                <div class="coverflow-card-accent" aria-hidden="true"></div>
+                <div class="coverflow-card-media">
+                  <img src="assets/images/claudemir-oliveira-reuniao-historica.webp" 
+                       alt="Reunião comercial e desenvolvimento profissional de Claudemir Oliveira, 1990" 
+                       class="coverflow-card-img coverflow-card-img--1990" 
+                       width="1672" 
+                       height="941" 
+                       loading="lazy">
+                </div>
+                <div class="coverflow-card-body">
+                  <div class="coverflow-card-year">1990</div>
+                  <h3 class="coverflow-card-title">Desenvolvimento profissional e liderança</h3>
+                  <p class="coverflow-card-desc">Estruturação de operações comerciais, ampliação da carteira de clientes e liderança na capacitação de equipes especializadas.</p>
+                </div>
+              </article>
+
+              <!-- Marco 3: 1990 a 2006 -->
+              <article class="coverflow-card slot-back" data-index="2" role="group" aria-roledescription="slide" aria-label="3 de 4: 1990 a 2006 — Consolidação da experiência e reconhecimento">
+                <div class="coverflow-card-accent" aria-hidden="true"></div>
+                <div class="coverflow-card-media">
+                  <img src="assets/images/claudemir-oliveira-reuniao-corporativa.webp" 
+                       alt="Claudemir Oliveira em liderança corporativa e consolidação da experiência" 
+                       class="coverflow-card-img coverflow-card-img--1990-2006" 
+                       width="1399" 
+                       height="1124" 
+                       loading="lazy">
+                </div>
+                <div class="coverflow-card-body">
+                  <div class="coverflow-card-year">1990 a 2006</div>
+                  <h3 class="coverflow-card-title">Consolidação da experiência e reconhecimento</h3>
+                  <p class="coverflow-card-desc">Quase duas décadas de maturidade técnica no setor, estabelecendo alianças sólidas e aprofundando o modelo consultivo.</p>
+                </div>
+              </article>
+
+              <!-- Marco 4: 2007 -->
+              <article class="coverflow-card slot-left" data-index="3" role="group" aria-roledescription="slide" aria-label="4 de 4: 2007 — Fundação da Decolar Consórcios em Porto Alegre">
+                <div class="coverflow-card-accent coverflow-card-accent--highlight" aria-hidden="true"></div>
+                <div class="coverflow-card-media">
+                  <img src="assets/images/claudemir-oliveira-retrato-corporativo.webp" 
+                       alt="Claudemir Oliveira na fundação da Decolar Consórcios em Porto Alegre, 2007" 
+                       class="coverflow-card-img coverflow-card-img--2007" 
+                       width="1538" 
+                       height="1023" 
+                       loading="lazy">
+                </div>
+                <div class="coverflow-card-body">
+                  <div class="coverflow-card-year">2007</div>
+                  <h3 class="coverflow-card-title">Fundação da Decolar Consórcios em Porto Alegre</h3>
+                  <p class="coverflow-card-desc">Criação da Decolar Consórcios em Porto Alegre, integrando décadas de experiência prática ao compromisso com planejamento financeiro responsável.</p>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Controles do Carrossel -->
+          <div class="coverflow-controls">
+            <button type="button" class="coverflow-btn coverflow-btn--prev" id="coverflow-btn-prev" aria-label="Marco anterior" title="Anterior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+
+            <div class="coverflow-pills" role="tablist" aria-label="Selecione um marco histórico">
+              <button type="button" class="coverflow-pill-btn is-active" data-index="0" role="tab" aria-selected="true" aria-label="Ir para 1988">
+                <span class="coverflow-pill-year">1988</span>
+              </button>
+              <button type="button" class="coverflow-pill-btn" data-index="1" role="tab" aria-selected="false" aria-label="Ir para 1990">
+                <span class="coverflow-pill-year">1990</span>
+              </button>
+              <button type="button" class="coverflow-pill-btn" data-index="2" role="tab" aria-selected="false" aria-label="Ir para 1990 a 2006">
+                <span class="coverflow-pill-year">1990 a 2006</span>
+              </button>
+              <button type="button" class="coverflow-pill-btn" data-index="3" role="tab" aria-selected="false" aria-label="Ir para 2007">
+                <span class="coverflow-pill-year">2007</span>
+              </button>
+            </div>
+
+            <button type="button" class="coverflow-btn coverflow-btn--next" id="coverflow-btn-next" aria-label="Próximo marco" title="Próximo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Nota editorial externa e discreta -->
+          <p class="timeline-disclaimer">Registros visuais de reconstituição histórica em caráter ilustrativo.</p>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         03 — A DECOLAR CONSÓRCIOS HOJE (EDITORIAL ALTERNADO: FOTO NA ESQUERDA)
+         ==================================================================== -->
+    <section class="story-section section-today" id="decolar-hoje" aria-labelledby="today-heading">
+      <div class="container">
+        <div class="editorial-grid editorial-grid--reversed">
+          
+          <!-- Coluna Esquerda: Fotografia Institucional 02 — Equipe e Atendimento -->
+          <div class="editorial-col-media reveal-item">
+            <figure class="institutional-photo-frame" id="foto-institucional-equipe">
+              <img src="assets/images/decolar_equipe_16x9.webp" 
+                   alt="Equipe de atendimento consultivo da Decolar Consórcios em reunião institucional" 
+                   class="institutional-img institutional-img--equipe" 
+                   width="1672" 
+                   height="941" 
+                   loading="lazy">
+            </figure>
+          </div>
+
+          <!-- Coluna Direita: Conteúdo Institucional & Linha de Informações -->
+          <div class="editorial-col-text reveal-item">
+            <span class="editorial-eyebrow">A Decolar Hoje</span>
+            <h2 class="editorial-title" id="today-heading">
+              Experiência que se transforma<br>
+              em <span class="editorial-highlight">atendimento</span>.
+            </h2>
+            <p class="editorial-lead">
+              Com sede de origem em Porto Alegre, a Decolar Consórcios desenvolveu sua atuação comercial por meio de uma rede de representantes, conectando clientes a soluções de planejamento e aquisição por consórcio.
+            </p>
+
+            <!-- Linha de Informações Institucionais com Separadores Sutis (Sem grandes cards) -->
+            <div class="institutional-facts-row" role="list">
+              <div class="fact-item" role="listitem">
+                <span class="fact-tag">Desde 1988</span>
+                <span class="fact-desc">Trajetória profissional no setor.</span>
+              </div>
+              <div class="fact-divider" aria-hidden="true"></div>
+              <div class="fact-item" role="listitem">
+                <span class="fact-tag">Desde 2007</span>
+                <span class="fact-desc">Decolar Consórcios.</span>
+              </div>
+              <div class="fact-divider" aria-hidden="true"></div>
+              <div class="fact-item" role="listitem">
+                <span class="fact-tag">Atuação nacional</span>
+                <span class="fact-desc">Rede comercial de representantes.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         04 — NOSSO COMPROMISSO (3 PILARES COM DIVISÓRIAS FINAS)
+         ==================================================================== -->
+    <section class="story-section section-commitment" id="nosso-compromisso" aria-labelledby="commitment-heading">
+      <div class="container">
+
+        <div class="section-header reveal-item">
+          <span class="editorial-eyebrow editorial-eyebrow--center">Diretrizes Institucionais</span>
+          <h2 class="section-title" id="commitment-heading">Compromisso em cada etapa.</h2>
+        </div>
+
+        <div class="pillars-editorial-grid reveal-item">
+          
+          <div class="pillar-editorial-item">
+            <span class="pillar-number" aria-hidden="true">01</span>
+            <h3 class="pillar-title">Transparência</h3>
+            <p class="pillar-desc">Informações claras para decisões conscientes.</p>
+          </div>
+
+          <div class="pillar-editorial-divider" aria-hidden="true"></div>
+
+          <div class="pillar-editorial-item">
+            <span class="pillar-number" aria-hidden="true">02</span>
+            <h3 class="pillar-title">Proximidade</h3>
+            <p class="pillar-desc">Atendimento consultivo e relacionamento humano.</p>
+          </div>
+
+          <div class="pillar-editorial-divider" aria-hidden="true"></div>
+
+          <div class="pillar-editorial-item">
+            <span class="pillar-number" aria-hidden="true">03</span>
+            <h3 class="pillar-title">Planejamento</h3>
+            <p class="pillar-desc">Soluções alinhadas aos objetivos de cada cliente.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         05 — ENCERRAMENTO INSTITUCIONAL (PRETO/GRAFITE COM AÇÕES)
+         ==================================================================== -->
+    <section class="story-section section-closing" id="cena-final" aria-labelledby="closing-heading">
+      <div class="container">
+        <div class="closing-editorial-content reveal-item">
+          <h2 class="closing-title" id="closing-heading">
+            O próximo capítulo da nossa história<br>
+            <span class="closing-highlight">pode começar com você.</span>
+          </h2>
+          <p class="closing-subtitle">
+            Conheça nossas soluções e encontre o próximo passo para seus objetivos.
+          </p>
+          <div class="closing-actions">
+            <a href="simulacao.html" class="btn btn-primary">Simule seu Consórcio</a>
+            <a href="seja-um-representante.html" class="btn btn-secondary">Seja um Representante</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé Institucional -->
+  <footer class="home-footer">
+    <div class="container">
+
+      <div class="home-footer-top">
+        <div class="home-footer-brand">
+          <a href="index.html#inicio" class="home-footer-logo-link" aria-label="Decolar Consórcios - página inicial">
+            <img src="assets/images/LOGO-claro.png" alt="Decolar Consórcios" class="home-footer-logo" width="220" height="55">
+          </a>
+          <p class="home-footer-tagline">Planejamento financeiro estratégico e consórcios sob medida para suas conquistas.</p>
+        </div>
+      </div>
+
+      <div class="home-footer-columns">
+
+        <div class="home-footer-col">
+          <h3 class="home-footer-col-title">Contato</h3>
+
+          <div class="home-footer-item">
+            <span class="home-footer-label">WhatsApp oficial</span>
+            <a href="https://wa.me/5551997191616" class="home-footer-value home-footer-value-link" target="_blank" rel="noopener noreferrer">+55 (51) 99719-1616</a>
+          </div>
+
+          <div class="home-footer-item">
+            <span class="home-footer-label">E-mail principal</span>
+            <a href="mailto:atendimento@decolarconsorcios.com.br" class="home-footer-value home-footer-value-link"><span class="email-local">atendimento@</span><wbr><span class="email-domain">decolarconsorcios.com.br</span></a>
+          </div>
+
+          <div class="home-footer-item">
+            <span class="home-footer-label">CNPJ</span>
+            <span class="home-footer-value">09.250.049/0001-77</span>
+          </div>
+        </div>
+
+        <div class="home-footer-col">
+          <h3 class="home-footer-col-title">Mapa do site</h3>
+          <nav class="home-footer-nav" aria-label="Mapa do site">
+            <a href="index.html#inicio">Início</a>
+            <a href="index.html#consorcios">Consórcios</a>
+            <a href="como-funciona.html">Como Funciona</a>
+            <a href="nossa-historia.html">Nossa História</a>
+            <a href="blog.html">Blog</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </div>
+
+        <div class="home-footer-col">
+          <h3 class="home-footer-col-title">Fale com a Decolar</h3>
+          <p class="home-footer-text">Planeje seus próximos passos com informação, transparência e atendimento próximo.</p>
+          <a href="https://wa.me/5551997191616" class="home-footer-cta" target="_blank" rel="noopener noreferrer">
+            <svg class="home-footer-cta-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.91-2.2-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"></path>
+              <path d="M12.02 2C6.5 2 2.02 6.48 2.02 12c0 1.77.46 3.45 1.27 4.9L2 22l5.24-1.37A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2Zm0 18.1c-1.6 0-3.1-.43-4.4-1.19l-.32-.19-3.11.82.83-3.03-.2-.31A8.09 8.09 0 0 1 3.9 12c0-4.48 3.65-8.11 8.12-8.11 4.48 0 8.12 3.63 8.12 8.11 0 4.48-3.64 8.1-8.12 8.1Z"></path>
+            </svg>
+            <span>Conversar no WhatsApp</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Faixa inferior exclusiva para documentos legais -->
+      <div class="footer-legal-row">
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+        <a href="termos-de-uso.html">Termos de Uso</a>
+        <a href="politica-de-cookies.html">Política de Cookies</a>
+        <button type="button" class="footer-legal-link js-manage-cookies">Preferências de cookies</button>
+      </div>
+
+      <!-- Linha final com copyright/CNPJ à esquerda e ROQUE ADS à direita -->
+      <div class="home-footer-bottom">
+        <p class="home-footer-copy">© 2026 Decolar Consórcios. Todos os direitos reservados. CNPJ: 09.250.049/0001-77</p>
+        <div class="home-footer-credit">
+          <span>Site desenvolvido por</span>
+          <img src="assets/images/ROQUE ADS.png" alt="Roque Ads">
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/script.js"></script>
+  <script src="js/consent.js"></script>
+  <script src="js/historia.js"></script>
+</body>
+</html>
+

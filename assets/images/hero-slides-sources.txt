@@ -1,0 +1,64 @@
+Fontes e licenças — fotografias do hero cinematográfico da Home (index.html)
+Todas obtidas via Pexels (licença Pexels: uso comercial livre, sem atribuição obrigatória, sem IA/renders 3D).
+https://www.pexels.com/license/
+
+1. hero-slide-consorcio.webp (Slide 01 — Consórcio/Principal)
+   SUBSTITUÍDA no polimento final (a versão anterior tinha uma construção
+   inacabada visível à direita, competindo com o imóvel principal).
+   https://www.pexels.com/photo/modern-tropical-house-with-minimalist-design-34277704/
+   Pexels (residência tropical moderna, fachada em madeira e pedra, sem
+   elementos indesejados nas laterais)
+   Versão anterior preservada para reversão em:
+   assets/images/_hero_backup/hero-slide-consorcio.webp.bak
+   (fonte da versão anterior: https://www.pexels.com/photo/modern-luxury-home-with-poolside-view-28652349/ — Fotógrafo David Vinicius)
+
+2. hero-slide-imoveis.webp (Slide 02 — Imóveis)
+   https://www.pexels.com/photo/facade-of-an-apartment-building-illuminated-by-golden-sunset-light-19803911/
+   Fotógrafo: Elmir Jafarov — Pexels
+
+3. hero-slide-veiculos.webp (Slide 03 — Veículos)
+   https://www.pexels.com/photo/silhouette-of-car-at-sunset-with-dramatic-sky-33980803/
+   Pexels (silhueta/close-up, sem placa ou logotipo de marca visível)
+
+4. hero-slide-pesados.webp (Slide 04 — Pesados)
+   https://www.pexels.com/photo/a-trailer-truck-on-the-road-5410923/
+   Fotógrafo: Ahmet Polat — Pexels
+
+5. hero-slide-agro.webp (Slide 05 — Agronegócio)
+   https://www.pexels.com/photo/silhouette-of-tractor-on-field-during-sunset-4878974/
+   Fotógrafo: Connor Martin — Pexels
+
+Baixadas diretamente do CDN da Pexels já em formato WebP (parâmetro fm=webp),
+sem conversão local — não há ferramenta de conversão de imagem disponível
+neste ambiente (sem cwebp/ImageMagick/ffmpeg/Pillow instalados).
+
+---
+
+advantages-residencia-contemporanea.webp (seção "Não existe uma única
+maneira..." — antiga "Decole com inteligência", Home)
+https://www.pexels.com/photo/modern-luxury-house-with-glass-windows-and-wooden-finish-35361412/
+Pexels (residência contemporânea, fachada em pedra e madeira, luz quente
+de fim de tarde, licença comercial livre)
+
+---
+
+Histórico de fotografias já usadas e substituídas nesta mesma seção
+("Consórcio não é sobre esperar..."), removidas do disco nesta rodada
+(ARQUIVO APAGADO por engano nesta tarefa — ver nota no fim; ambas
+recuperáveis pela URL abaixo caso seja necessário reverter):
+
+- horizon-casal-planejamento-aberto.webp
+  https://www.pexels.com/photo/a-couple-looking-at-house-plans-8729977/
+  Pexels (casal sorrindo à mesa, plantas de uma casa, ambiente amplo)
+
+- horizon-atendimento-consultivo-escritorio.webp
+  https://www.pexels.com/photo/man-in-gray-jacket-showing-papers-to-a-couple-to-sign-7641853/
+  Pexels (consultor em terno cinza mostrando planta a um casal cliente)
+
+---
+
+horizon-atendimento-maos-documentos.webp (seção "Consórcio não é sobre
+esperar. É sobre se preparar.", Home — versão atual)
+https://www.pexels.com/photo/a-real-estate-agent-making-a-deal-with-his-client-8293653/
+Pexels (aperto de mãos entre consultor e cliente sobre mesa de madeira,
+documentos e gráficos de planejamento, ambiente com tons quentes)

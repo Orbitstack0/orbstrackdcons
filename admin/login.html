@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Acesso Administrativo | Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <main class="admin-login-screen">
+
+    <!-- Fundo em vídeo — decorativo, sem áudio, sem controles. Se não
+         carregar, some (onerror) e o fundo estático (gradiente definido em
+         .admin-login-screen) permanece visível por trás da camada escura. -->
+    <video
+      class="admin-login-video-bg"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="metadata"
+      aria-hidden="true"
+      onerror="this.style.display='none'"
+    >
+      <source src="../assets/videos/decolar-login-background.mp4" type="video/mp4">
+    </video>
+    <div class="admin-login-video-overlay" aria-hidden="true"></div>
+
+    <div class="admin-login-card">
+
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-login-logo" width="150" height="38">
+      <span class="admin-login-eyebrow" id="admin-login-eyebrow">Bem-vindo à Decolar</span>
+      <h1 class="admin-login-title" id="admin-login-title">Painel Administrativo</h1>
+
+      <form class="admin-login-form" id="admin-login-form" novalidate>
+
+        <p class="admin-login-error" id="admin-login-error" role="alert" hidden></p>
+
+        <div class="admin-field">
+          <label for="admin-email">E-mail</label>
+          <input type="email" id="admin-email" name="email" autocomplete="username" required>
+        </div>
+
+        <div class="admin-field">
+          <label for="admin-password">Senha</label>
+          <div class="admin-password-wrap">
+            <input type="password" id="admin-password" name="password" autocomplete="current-password" required>
+            <button type="button" class="admin-password-toggle" id="admin-password-toggle" aria-label="Mostrar senha" aria-pressed="false">
+              <svg class="admin-eye-icon admin-eye-icon--show" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+              <svg class="admin-eye-icon admin-eye-icon--hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false" hidden>
+                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <line x1="3" y1="21" x2="21" y2="3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="admin-login-submit" id="admin-login-submit">Entrar</button>
+
+        <button type="button" class="admin-login-link-btn" id="admin-forgot-link">Esqueceu sua senha?</button>
+
+      </form>
+
+      <!-- Formulário de solicitação de recuperação — oculto desde o carregamento
+           (atributo hidden no markup, não depende do JS para começar oculto) -->
+      <form class="admin-login-form" id="admin-forgot-form" novalidate hidden>
+
+        <p class="admin-login-error" id="admin-forgot-error" role="alert" hidden></p>
+        <p class="admin-login-success" id="admin-forgot-success" hidden></p>
+
+        <p class="admin-forgot-intro">Informe seu e-mail administrativo para receber um link de recuperação.</p>
+
+        <div class="admin-field">
+          <label for="admin-forgot-email">E-mail</label>
+          <input type="email" id="admin-forgot-email" name="email" autocomplete="username" required>
+        </div>
+
+        <button type="submit" class="admin-login-submit" id="admin-forgot-submit">Enviar link de recuperação</button>
+
+        <button type="button" class="admin-login-link-btn" id="admin-back-to-login">Voltar ao login</button>
+
+      </form>
+
+      <p class="admin-login-footer">
+        <a href="../index.html">Voltar para o site Decolar Consórcios</a>
+      </p>
+
+    </div>
+  </main>
+
+  <!-- SDK Supabase (CDN — site estático, sem npm/bundler) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-login.js"></script>
+</body>
+</html>

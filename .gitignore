@@ -1,0 +1,44 @@
+# ==============================================================================
+# DECOLAR CONSÓRCIOS — .gitignore
+# Exclusão de arquivos de desenvolvimento, temporários, testes e segredos
+# ==============================================================================
+
+# Dependências e ambientes locais
+node_modules/
+.env
+.env.*
+*.local
+
+# Configurações de IDEs e editores locais
+.vscode/
+.claude/
+.idea/
+*.suo
+*.user
+
+# Diretório de trabalho, scripts de teste locais e relatórios
+scratch/
+scratch_downloads/
+dist/
+*.log
+
+# Arquivos de diagnóstico, medição e backups de sessões de auditoria
+broken_*.html
+measure_*.html
+res_*.html
+check_*.html
+*.bak
+*.old
+*.tmp
+assets/images/_hero_backup/
+
+# Scripts SQL e migrações internas do banco de dados (não devem ir para o deploy público)
+*.sql
+
+# Documentação interna de planejamento e arquitetura interna
+docs/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,818 @@
+/* ==========================================================================
+   Decolar Consórcios — admin-article-details.css
+   Estilos da Central de Detalhes dos Artigos do Blog.
+   Design refinado, alta legibilidade e responsividade fluida em 100% de zoom.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Barra superior de navegação e ações
+   -------------------------------------------------------------------------- */
+.admin-details-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  margin-bottom: 20px;
+  min-width: 0;
+}
+
+.admin-details-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--transition-base);
+}
+
+.admin-details-back-link:hover {
+  color: var(--color-red);
+}
+
+.admin-details-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-details-btn-public {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-gray-300);
+  background: var(--color-white);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color var(--transition-base), color var(--transition-base), background-color var(--transition-base);
+}
+
+.admin-details-btn-public:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+  background: rgba(240, 68, 46, 0.04);
+}
+
+.admin-details-btn-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--color-primary-gradient, linear-gradient(135deg, #f0442e 0%, #ff6b4a 100%));
+  color: var(--color-white);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(240, 68, 46, 0.18);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.admin-details-btn-edit:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.admin-details-btn-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #fbd5d5;
+  background: #fdf2f2;
+  color: #c4463a;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-details-btn-delete:hover {
+  border-color: #c4463a;
+  background: #fae2e2;
+  color: #9b1c1c;
+}
+
+/* --------------------------------------------------------------------------
+   Grade de métricas e agrupamentos (Métricas Reais de Audiência e Editoriais)
+   -------------------------------------------------------------------------- */
+.admin-details-stats-group {
+  margin-bottom: 22px;
+}
+
+.admin-details-stats-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.admin-details-stats-group-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gray-600);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-details-stats-group-title svg {
+  color: var(--color-primary);
+}
+
+.admin-details-stats-group-badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
+  border: 1px solid var(--color-gray-200);
+}
+
+.admin-details-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.admin-details-stats-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-details-stat-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.admin-details-stat-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gray-500);
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-details-stat-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+.admin-details-stat-desc {
+  font-size: 0.78rem;
+  color: var(--color-gray-500);
+  line-height: 1.35;
+}
+
+.admin-details-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.admin-details-stat-pill--published {
+  background: rgba(34, 139, 87, 0.12);
+  color: #1f7a4d;
+}
+
+.admin-details-stat-pill--draft {
+  background: rgba(255, 122, 26, 0.12);
+  color: #a15a10;
+}
+
+.admin-details-stat-pill--featured {
+  background: rgba(240, 68, 46, 0.1);
+  color: #f0442e;
+}
+
+.admin-details-stat-pill--neutral {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+/* --------------------------------------------------------------------------
+   Estrutura de duas colunas balanceadas
+   -------------------------------------------------------------------------- */
+.admin-details-panels-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.admin-details-panels-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.admin-details-panel {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-details-panel-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+/* --------------------------------------------------------------------------
+   Identificação e Conteúdo
+   -------------------------------------------------------------------------- */
+.admin-details-article-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.32rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.35;
+  margin-bottom: 14px;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.admin-details-excerpt-block {
+  background: var(--color-gray-50);
+  border-left: 3px solid var(--color-red);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-gray-700);
+  margin-bottom: 16px;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.admin-details-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+  min-width: 0;
+}
+
+.admin-details-meta-item:last-child {
+  margin-bottom: 0;
+}
+
+.admin-details-meta-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-gray-500);
+}
+
+.admin-details-meta-item .admin-details-meta-val {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: left;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* Campo de URL com rolagem horizontal interna contida */
+.admin-details-url-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  margin-top: 4px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-details-url-text {
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--color-gray-700);
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+}
+
+.admin-details-url-text::-webkit-scrollbar {
+  height: 4px;
+}
+
+.admin-details-url-text::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: 4px;
+}
+
+.admin-details-url-note {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  color: var(--color-gray-500);
+  line-height: 1.4;
+}
+
+.admin-details-copy-btn {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-gray-300);
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-base);
+}
+
+.admin-details-copy-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.admin-details-copy-btn--block {
+  width: 100%;
+  padding: 8px 16px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Painel de Imagem de Capa
+   -------------------------------------------------------------------------- */
+.admin-details-cover-wrap {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.admin-details-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-details-cover-empty {
+  font-size: 0.84rem;
+  color: var(--color-gray-500);
+}
+
+.admin-details-cover-actions {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Coluna Lateral: Pares de Metadados Claros e Bem Espaçados
+   -------------------------------------------------------------------------- */
+.admin-details-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+  min-width: 0;
+}
+
+.admin-details-meta-grid--full {
+  grid-column: 1 / -1;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-gray-100);
+}
+
+.admin-details-meta-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.admin-details-meta-cell .admin-details-meta-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-gray-500);
+  line-height: 1.35;
+}
+
+.admin-details-meta-cell .admin-details-meta-val {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.45;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+.admin-details-meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.admin-details-meta-item--horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-gray-100);
+  min-width: 0;
+}
+
+.admin-details-meta-item--horizontal:first-child {
+  padding-top: 0;
+}
+
+.admin-details-meta-item--horizontal:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.admin-details-meta-item--horizontal .admin-details-meta-label {
+  flex: 0 0 auto;
+  max-width: 44%;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-gray-500);
+  line-height: 1.4;
+}
+
+.admin-details-meta-item--horizontal .admin-details-meta-val {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: right;
+  line-height: 1.45;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+/* --------------------------------------------------------------------------
+   Transparência e LGPD sobre visualizações
+   -------------------------------------------------------------------------- */
+.admin-details-tracking-notice {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--color-gray-500);
+  margin-top: 10px;
+  background: var(--color-gray-50);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.admin-details-tracking-notice strong {
+  color: var(--color-gray-700);
+}
+
+.admin-details-migration-alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: #fff8e6;
+  border: 1px solid #ffd591;
+  color: #ad6800;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin-top: 10px;
+}
+
+.admin-details-migration-alert code {
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Modal de confirmação de exclusão
+   -------------------------------------------------------------------------- */
+.admin-delete-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-delete-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 11, 13, 0.55);
+}
+
+.admin-delete-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: clamp(24px, 3vw, 32px);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.admin-delete-modal-dialog--warning {
+  max-width: 480px;
+}
+
+.admin-delete-modal-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+.admin-delete-modal-text {
+  margin-top: 12px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-gray-700);
+}
+
+.admin-delete-modal-warning-box {
+  background: #fdf2f2;
+  border-left: 3px solid #c4463a;
+  padding: 12px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 14px 0 18px 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: #9b1c1c;
+}
+
+.admin-delete-modal-error {
+  margin-top: 12px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-red);
+}
+
+.admin-delete-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.admin-delete-modal-cancel-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-gray-300);
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-delete-modal-cancel-btn:hover {
+  border-color: var(--color-gray-500);
+  color: var(--color-text);
+}
+
+.admin-delete-modal-confirm-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: none;
+  background: #c4463a;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-white);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(196, 70, 58, 0.25);
+  transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+.admin-delete-modal-confirm-btn:hover {
+  background: #a93b30;
+  transform: translateY(-1px);
+}
+
+.admin-delete-modal-confirm-btn:disabled,
+.admin-delete-modal-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   Responsividade Cuidadosa — Breakpoints Limpos
+   -------------------------------------------------------------------------- */
+/* Telas intermediárias / Laptops menores: 4 cards viram 2x2 */
+@media (max-width: 1180px) {
+  .admin-details-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .admin-details-stats-grid--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Quando a largura total da janela atinge 1080px ou menos,
+   empilha as duas colunas em fluxo vertical natural para garantir total conforto */
+@media (max-width: 1080px) {
+  .admin-details-panels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile e telas pequenas */
+@media (max-width: 640px) {
+  .admin-details-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .admin-details-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .admin-details-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-details-meta-item--horizontal {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px 0;
+  }
+
+  .admin-details-meta-item--horizontal .admin-details-meta-label {
+    max-width: 100%;
+  }
+
+  .admin-details-meta-item--horizontal .admin-details-meta-val {
+    text-align: left;
+  }
+
+  .admin-details-meta-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* ==========================================================================
+   DETALHES DO ARTIGO — MOBILE (<=767px)
+   Desktop/tablet continuam exatamente como estão nos blocos acima; isto
+   só compacta espaçamento e reordena visualmente as três ações do topo
+   (edição em primeiro lugar), sem remover nenhuma informação, métrica ou
+   confirmação de exclusão.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .admin-details-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* "Editar artigo" é a ação principal — aparece primeiro ao empilhar no
+     mobile, mesmo continuando depois de "Ver no site" no HTML (ordem de
+     leitura/teclado nunca muda, só a ordem visual destes 3 botões
+     independentes). */
+  #admin-details-edit-btn {
+    order: 1;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  #admin-details-view-public-btn {
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  #admin-details-delete-btn {
+    order: 3;
+    flex: 0 0 100%;
+    justify-content: center;
+  }
+
+  .admin-details-stats-group {
+    margin-bottom: 16px;
+  }
+
+  .admin-details-stats-grid,
+  .admin-details-stats-grid--3 {
+    gap: 10px;
+  }
+
+  .admin-details-stat-card {
+    padding: 14px 14px;
+  }
+
+  .admin-details-stat-value {
+    font-size: 1.4rem;
+  }
+
+  .admin-details-panels-grid {
+    gap: 14px;
+  }
+
+  .admin-details-panels-col {
+    gap: 14px;
+  }
+
+  .admin-details-panel {
+    padding: 16px 16px;
+  }
+
+  .admin-details-panel-title {
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+  }
+
+  .admin-details-copy-btn {
+    padding: 9px 16px;
+    min-height: 36px;
+  }
+
+  .admin-details-url-box {
+    gap: 8px;
+  }
+}

@@ -1,0 +1,559 @@
+/**
+ * Decolar Consórcios — Consórcio de Pesados (consorcio-pesados.html)
+ * Estilos específicos do Carrossel Cinematográfico 3D Coverflow de Pesados.
+ */
+
+/* Enquadramento do hero: antes em inline style (desktop), agora em classe
+   para permitir um enquadramento mobile próprio (object-position não pode
+   ser sobrescrito por media query quando fica em atributo style). */
+.pesados-hero-img {
+  object-position: 70% center;
+}
+
+@media (max-width: 767px) {
+  .pesados-hero-img {
+    object-position: 65% 42%;
+  }
+}
+
+/* ==========================================================================
+   CARROSSEL CINEMATOGRÁFICO 3D COVERFLOW — Pesados
+   Fundo grafite escuro com luz ambiente, título branco e cards 3D expandidos
+   ========================================================================== */
+
+.pesados-carousel-section {
+  min-height: calc(100vh - var(--header-height) + 1px);
+  min-height: calc(100dvh - var(--header-height) + 1px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: clamp(24px, 3.5vh, 44px) 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 24%, #161c28 0%, #0d1017 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  scroll-margin-top: var(--header-height);
+}
+
+.pesados-carousel-section > .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin: auto 0;
+}
+
+/* Reflexo sutil de profundidade na seção escura */
+.pesados-carousel-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(960px, 100%);
+  height: clamp(260px, 38vh, 360px);
+  background: radial-gradient(circle, rgba(255, 122, 26, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pesados-carousel-header {
+  text-align: center;
+  margin-bottom: clamp(12px, 1.8vh, 20px);
+  position: relative;
+  z-index: 1;
+}
+
+.pesados-carousel-header .mod-section-title {
+  color: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.6rem, 2.2vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: -0.024em;
+  margin: 0 auto;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+
+.pesados-coverflow-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 6px 0 10px;
+  z-index: 1;
+  --ps-card-w: clamp(465px, 41vw, 588px);
+  --ps-card-h: min(358px, 46vh);
+  --ps-stage-h: min(400px, 51vh);
+  --ps-spacing: clamp(295px, 27vw, 378px);
+  --ps-rot-y: 13deg;
+  --ps-side-scale: 0.83;
+  --ps-center-scale: 1.03;
+}
+
+.pesados-coverflow-stage {
+  position: relative;
+  width: 100%;
+  height: var(--ps-stage-h);
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: pan-y;
+  user-select: none;
+  outline: none;
+}
+
+.pesados-coverflow-stage:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 4px;
+  border-radius: 18px;
+}
+
+.pesados-coverflow-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.pesados-coverflow-card {
+  position: absolute;
+  top: calc(50% - (var(--ps-card-h) / 2));
+  left: calc(50% - (var(--ps-card-w) / 2));
+  width: var(--ps-card-w);
+  height: var(--ps-card-h);
+  border-radius: 18px;
+  overflow: hidden;
+  background-color: #0b0f19;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 32px -8px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  transition: transform 900ms cubic-bezier(0.25, 1, 0.33, 1),
+              opacity 900ms cubic-bezier(0.25, 1, 0.33, 1),
+              box-shadow 900ms ease,
+              border-color 900ms ease;
+  will-change: transform, opacity;
+  box-sizing: border-box;
+}
+
+/* Slot Center (0): Ativo, centralizado, cinematográfico e nítido */
+.pesados-coverflow-card.slot-center {
+  transform: translate3d(0, 0, 52px) rotateY(0deg) scale(var(--ps-center-scale));
+  opacity: 1;
+  z-index: 10;
+  cursor: default;
+  border: 1.5px solid rgba(255, 122, 26, 0.85);
+  box-shadow:
+    0 24px 54px -10px rgba(0, 0, 0, 0.85),
+    0 0 26px rgba(255, 122, 26, 0.25),
+    0 0 0 1px rgba(255, 122, 26, 0.35);
+}
+
+/* Slot Left (-1): Lateral esquerdo, showroom com profundidade */
+.pesados-coverflow-card.slot-left {
+  transform: translate3d(calc(var(--ps-spacing) * -1), 0, -50px) rotateY(var(--ps-rot-y)) scale(var(--ps-side-scale));
+  opacity: 0.65;
+  z-index: 5;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pesados-coverflow-card.slot-left:hover {
+    opacity: 0.88;
+    transform: translate3d(calc(var(--ps-spacing) * -1), -3px, -38px) rotateY(var(--ps-rot-y)) scale(calc(var(--ps-side-scale) + 0.02));
+    border-color: rgba(255, 255, 255, 0.32);
+  }
+}
+
+/* Slot Right (+1): Lateral direito, showroom com profundidade */
+.pesados-coverflow-card.slot-right {
+  transform: translate3d(calc(var(--ps-spacing) * 1), 0, -50px) rotateY(calc(var(--ps-rot-y) * -1)) scale(var(--ps-side-scale));
+  opacity: 0.65;
+  z-index: 5;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pesados-coverflow-card.slot-right:hover {
+    opacity: 0.88;
+    transform: translate3d(calc(var(--ps-spacing) * 1), -3px, -38px) rotateY(calc(var(--ps-rot-y) * -1)) scale(calc(var(--ps-side-scale) + 0.02));
+    border-color: rgba(255, 255, 255, 0.32);
+  }
+}
+
+/* Imagem e Enquadramento */
+.pesados-coverflow-card-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #0b0f19;
+}
+
+.pesados-coverflow-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: translateZ(0);
+  transition: transform 700ms cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.pesados-coverflow-card[data-index="0"] .pesados-coverflow-card-img {
+  object-position: center 48%;
+}
+
+.pesados-coverflow-card[data-index="1"] .pesados-coverflow-card-img {
+  object-position: center 50%;
+}
+
+.pesados-coverflow-card[data-index="2"] .pesados-coverflow-card-img {
+  object-position: center 50%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pesados-coverflow-card.slot-center:hover .pesados-coverflow-card-img {
+    transform: scale(1.035);
+  }
+}
+
+/* Degradê escuro para máxima legibilidade editorial */
+.pesados-coverflow-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 15, 25, 0.04) 0%,
+    rgba(11, 15, 25, 0.2) 36%,
+    rgba(11, 15, 25, 0.82) 72%,
+    rgba(11, 15, 25, 0.98) 100%
+  );
+  opacity: 0.72;
+  transition: opacity 600ms ease;
+  pointer-events: none;
+}
+
+.pesados-coverflow-card.slot-center .pesados-coverflow-card-overlay {
+  opacity: 1;
+}
+
+/* Conteúdo sobre a fotografia */
+.pesados-coverflow-card-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(16px, 2.5vh, 26px) clamp(18px, 2.5vw, 28px);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.pesados-coverflow-card.slot-center .pesados-coverflow-card-body {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 550ms cubic-bezier(0.2, 1, 0.3, 1) 120ms,
+              transform 550ms cubic-bezier(0.2, 1, 0.3, 1) 120ms;
+}
+
+.pesados-coverflow-card-tag {
+  display: inline-block;
+  font-size: 0.70rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+  margin-bottom: 4px;
+}
+
+.pesados-coverflow-card-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0 0 5px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+.pesados-coverflow-card-phrase {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.86rem, 1vw, 0.96rem);
+  line-height: 1.42;
+  color: rgba(255, 255, 255, 0.94);
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  max-width: 520px;
+}
+
+/* Controles de Navegação (Setas e Pílulas Dark Glass) */
+.pesados-coverflow-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 18px);
+  margin-top: clamp(28px, 4vw, 42px);
+  position: relative;
+  z-index: 2;
+}
+
+.pesados-coverflow-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-base);
+}
+
+.pesados-coverflow-btn:hover {
+  background: rgba(255, 122, 26, 0.2);
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 122, 26, 0.35);
+}
+
+.pesados-coverflow-btn:active {
+  transform: translateY(0);
+}
+
+.pesados-coverflow-btn:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
+}
+
+.pesados-coverflow-pills {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  gap: 4px;
+}
+
+.pesados-coverflow-pill {
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.pesados-coverflow-pill:hover {
+  color: #ffffff;
+}
+
+.pesados-coverflow-pill.is-active {
+  background: var(--color-orange);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(255, 122, 26, 0.45);
+}
+
+.pesados-coverflow-pill:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 1px;
+}
+
+/* Ocultação total da barra inferior de controles (categorias e setas) */
+.pesados-coverflow-controls {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Responsividade Desktop para telas com menor altura útil (ex: 1366x768) */
+@media (max-height: 800px) and (min-width: 901px) {
+  .pesados-carousel-section {
+    min-height: calc(100vh - var(--header-height) + 1px);
+    min-height: calc(100dvh - var(--header-height) + 1px);
+    padding: clamp(14px, 2vh, 22px) 0;
+  }
+
+  .pesados-carousel-header {
+    margin-bottom: clamp(10px, 1.6vh, 16px);
+  }
+
+  .pesados-carousel-header .mod-section-title {
+    font-size: clamp(1.48rem, 2vw, 1.85rem);
+  }
+
+  .pesados-coverflow-wrap {
+    --ps-card-w: clamp(450px, 40vw, 556px);
+    --ps-card-h: min(336px, 45vh);
+    --ps-stage-h: min(372px, 50vh);
+    --ps-spacing: clamp(272px, 26vw, 355px);
+    padding: 2px 0 6px;
+  }
+
+  .pesados-coverflow-card-body {
+    padding: 16px 20px;
+  }
+
+  .pesados-coverflow-card-title {
+    font-size: 1.35rem;
+    margin-bottom: 3px;
+  }
+
+  .pesados-coverflow-card-phrase {
+    font-size: 0.83rem;
+    line-height: 1.35;
+  }
+}
+
+/* Responsividade Tablet — Carrossel Showroom */
+@media (max-width: 1024px) {
+  .pesados-carousel-section {
+    min-height: min(calc(100vh - var(--header-height)), 860px);
+    min-height: min(calc(100dvh - var(--header-height)), 860px);
+    padding: 30px 0 24px;
+  }
+
+  .pesados-carousel-header {
+    margin-bottom: 14px;
+  }
+
+  .pesados-coverflow-wrap {
+    --ps-card-w: clamp(355px, 48vw, 440px);
+    --ps-card-h: clamp(284px, 37vh, 336px);
+    --ps-stage-h: clamp(310px, 41vh, 368px);
+    --ps-spacing: clamp(180px, 24vw, 230px);
+    --ps-rot-y: 11deg;
+    --ps-side-scale: 0.82;
+    --ps-center-scale: 1.02;
+    padding: 4px 0 8px;
+  }
+}
+
+/* Responsividade Mobile — Carrossel Showroom Proporcional */
+@media (max-width: 767px) {
+  .pesados-carousel-section {
+    min-height: auto;
+    padding: clamp(28px, 4.5vh, 40px) 0 clamp(24px, 4vh, 36px);
+  }
+
+  .pesados-carousel-header {
+    margin-bottom: 12px;
+    padding: 0 16px;
+  }
+
+  .pesados-carousel-header .mod-section-title {
+    font-size: clamp(1.4rem, 5.6vw, 1.7rem);
+    line-height: 1.22;
+  }
+
+  .pesados-coverflow-wrap {
+    --ps-card-w: clamp(258px, 75vw, 305px);
+    --ps-card-h: clamp(315px, 46vh, 362px);
+    --ps-stage-h: clamp(336px, 50vh, 388px);
+    --ps-spacing: clamp(40px, 13vw, 54px);
+    --ps-rot-y: 8deg;
+    --ps-side-scale: 0.82;
+    --ps-center-scale: 1.0;
+    padding: 2px 0 6px;
+  }
+
+  .pesados-coverflow-card {
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.65);
+  }
+
+  .pesados-coverflow-card.slot-center {
+    border-color: rgba(255, 122, 26, 0.85);
+    box-shadow:
+      0 16px 40px -8px rgba(0, 0, 0, 0.85),
+      0 0 20px rgba(255, 122, 26, 0.3);
+  }
+
+  .pesados-coverflow-card-body {
+    padding: 16px 14px;
+  }
+
+  .pesados-coverflow-card-tag {
+    font-size: 0.66rem;
+    margin-bottom: 3px;
+  }
+
+  .pesados-coverflow-card-title {
+    font-size: 1.35rem;
+    margin-bottom: 4px;
+  }
+
+  .pesados-coverflow-card-phrase {
+    font-size: 0.82rem;
+    line-height: 1.36;
+  }
+}
+
+@media (max-width: 360px) {
+  .pesados-carousel-section {
+    min-height: auto;
+    padding: 22px 0 18px;
+  }
+
+  .pesados-coverflow-wrap {
+    --ps-card-w: 248px;
+    --ps-card-h: 299px;
+    --ps-stage-h: 320px;
+    --ps-spacing: 30px;
+    --ps-rot-y: 6deg;
+    --ps-side-scale: 0.80;
+    --ps-center-scale: 1.0;
+  }
+
+  .pesados-coverflow-card-body {
+    padding: 12px 10px;
+  }
+
+  .pesados-coverflow-card-title {
+    font-size: 1.2rem;
+  }
+
+  .pesados-coverflow-card-phrase {
+    font-size: 0.78rem;
+    line-height: 1.32;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pesados-coverflow-card {
+    transition: none !important;
+    animation: none !important;
+  }
+}

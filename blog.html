@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Decolar Consórcios | Conteúdo sobre Consórcios</title>
+  <meta name="description" content="Conteúdos sobre consórcio, contemplação, lances, imóveis, veículos, pesados, segurança e mercado para ajudar você a entender melhor o Sistema de Consórcios.">
+
+  <!-- Fontes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos Globais e do Blog -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/blog.css">
+</head>
+<body class="brand-header">
+
+  <!-- ====================================================================
+       HEADER INSTITUCIONAL DECOLAR CONSÓRCIOS
+       ==================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="top-strip">
+      <div class="container top-strip-inner">
+        <a href="manutencao.html">Área do Cliente</a>
+        <a href="manutencao.html">Área do Representante</a>
+      </div>
+    </div>
+
+    <div class="header-inner container">
+
+      <a href="index.html#inicio" class="logo-link" aria-label="Decolar Consórcios - página inicial">
+        <img src="assets/images/LOGO.png" alt="Decolar Consórcios" class="logo-img" width="200" height="50">
+      </a>
+
+      <div class="mobile-menu-panel" id="mobile-menu-panel">
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="index.html#inicio">Início</a></li>
+          <li class="nav-item-dropdown">
+            <a href="index.html#consorcios" class="has-submenu" aria-haspopup="true" aria-expanded="false">
+              Consórcios
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </a>
+            <ul class="submenu">
+              <li><a href="consorcio-imoveis.html">Consórcio de Imóveis</a></li>
+              <li><a href="consorcio-veiculos.html">Consórcio de Veículos</a></li>
+              <li><a href="consorcio-pesados.html">Consórcio de Pesados</a></li>
+            </ul>
+          </li>
+          <li><a href="como-funciona.html">Como Funciona</a></li>
+          <li><a href="nossa-historia.html">Sobre a Decolar</a></li>
+          <li><a href="blog.html" class="active" aria-current="page">Blog</a></li>
+          <li><a href="contato.html">Fale Conosco</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions" id="header-actions">
+        <a href="#" id="nav-rep-link" class="btn btn-primary js-rep-trigger">Seja um Representante Decolar</a>
+        <a href="simulacao.html" class="btn btn-secondary">Simule seu Consórcio</a>
+
+        <div class="social-links" aria-label="Redes sociais da Decolar Consórcios">
+          <span class="social-link" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13.5 9H16V6h-2.5C11.6 6 10 7.6 10 9.7V11H8v3h2v7h3v-7h2.4l.6-3H13V9.8c0-.5.4-.8.9-.8Z"></path>
+            </svg>
+          </span>
+          <span class="social-link" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="4.5"></rect>
+              <circle cx="12" cy="12" r="3.3"></circle>
+              <circle cx="16.3" cy="7.7" r="0.6" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </span>
+          <a href="https://www.linkedin.com/in/decolar-cons%C3%B3rcio-9899462ba/" class="social-link" aria-label="LinkedIn da Decolar Consórcios" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <g transform="translate(12 12) scale(1.4) translate(-13.2 -11.825)">
+                <circle cx="8.7" cy="8.1" r="1.05"></circle>
+                <rect x="7.65" y="10.3" width="2.1" height="6.3" rx="1.05"></rect>
+                <path d="M11.55 16.6v-6.3h2.1v1.05c.55-.75 1.35-1.25 2.35-1.25 1.85 0 2.95 1.25 2.95 3.35v3.15h-2.1v-2.75c0-1.15-.45-1.85-1.5-1.85-.85 0-1.5.55-1.7 1.35v3.25Z"></path>
+              </g>
+            </svg>
+          </a>
+        </div>
+      </div>
+        <!-- Extras do menu mobile (ocultos no desktop): ações e contato -->
+        <div class="menu-extra-links">
+          <a href="manutencao.html">Área do Cliente</a>
+          <a href="manutencao.html">Área do Representante</a>
+        </div>
+
+        <div class="menu-extra-contact">
+          <a href="mailto:atendimento@decolarconsorcios.com.br"><span class="email-local">atendimento@</span><wbr><span class="email-domain">decolarconsorcios.com.br</span></a>
+          <span>Porto Alegre, RS</span>
+        </div>
+      </div>
+
+      <a href="simulacao.html" class="btn btn-primary header-cta-mobile">Simular</a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <div class="menu-overlay" id="menu-overlay" aria-hidden="true"></div>
+
+  <!-- Os artigos são carregados dinamicamente do Supabase: sem JavaScript
+       não há como exibi-los neste site estático (GitHub Pages, sem
+       servidor próprio). -->
+  <noscript>
+    <div class="blog-noscript-notice">
+      <div class="container">Ative o JavaScript no seu navegador para ver os artigos do Blog Decolar.</div>
+    </div>
+  </noscript>
+
+  <main id="main-content">
+
+    <!-- ====================================================================
+         HERO EDITORIAL CINEMATOGRÁFICO
+         ==================================================================== -->
+    <section class="blog-hero">
+      <!-- Camada da Fotografia de Fundo Integrada -->
+      <div class="blog-hero-backdrop" aria-hidden="true">
+        <img src="assets/images/decolar-blog-hero-casal.webp" alt="" class="blog-hero-backdrop-img" width="2048" height="1387" fetchpriority="high" loading="eager">
+        <div class="blog-hero-gradient-overlay"></div>
+      </div>
+
+      <div class="blog-hero-motif" aria-hidden="true">
+        <svg viewBox="0 0 440 440" class="blog-hero-motif-svg" focusable="false">
+          <circle class="blog-motif-ring blog-motif-ring--1" cx="340" cy="110" r="150"></circle>
+          <circle class="blog-motif-ring blog-motif-ring--2" cx="340" cy="110" r="100"></circle>
+          <circle class="blog-motif-dot" cx="340" cy="110" r="4"></circle>
+        </svg>
+      </div>
+
+      <div class="container blog-hero-inner">
+        <div class="blog-hero-content">
+          <span class="blog-eyebrow reveal-on-scroll">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+            BLOG DECOLAR
+          </span>
+
+          <h1 class="blog-hero-title reveal-on-scroll">O mundo do consórcio,<br><span class="blog-hero-title-accent">sem complicação.</span></h1>
+          <p class="blog-hero-lead reveal-on-scroll">Informação para entender, planejar e acompanhar o mercado de consórcios com mais clareza.</p>
+
+          <!-- Barra de Busca -->
+          <div class="blog-search-container reveal-on-scroll" id="blog-search-container">
+            <div class="blog-search-box">
+              <svg class="blog-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="blog-search-input" class="blog-search-input" placeholder="Buscar artigos, termos, lances, modalidades..." aria-label="Buscar no Blog Decolar">
+              <button type="button" id="blog-search-clear" class="blog-search-clear" aria-label="Limpar busca">×</button>
+              <button type="button" id="blog-search-submit" class="blog-search-submit" aria-label="Pesquisar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <ul class="blog-hero-tags reveal-on-scroll">
+            <li class="blog-hero-tag">Planejamento</li>
+            <li class="blog-hero-tag">Mercado</li>
+            <li class="blog-hero-tag">Conquista</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         NAVEGAÇÃO POR CATEGORIAS (TABS / PÍLULAS)
+         ==================================================================== -->
+    <nav class="blog-categories-bar" id="blog-categories-bar" aria-label="Categorias do Blog">
+      <div class="container blog-categories-scroll">
+        <button type="button" class="blog-cat-btn is-active" data-category="all">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Todos</span>
+        </button>
+        <button type="button" class="blog-cat-btn" data-category="entenda">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <span>Entenda o Consórcio</span>
+        </button>
+        <button type="button" class="blog-cat-btn" data-category="lances">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+          <span>Lances e Contemplação</span>
+        </button>
+        <button type="button" class="blog-cat-btn" data-category="imoveis">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Imóveis</span>
+        </button>
+        <button type="button" class="blog-cat-btn" data-category="veiculos">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+          <span>Veículos</span>
+        </button>
+        <button type="button" class="blog-cat-btn" data-category="pesados">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Pesados</span>
+        </button>
+        <button type="button" class="blog-cat-btn" data-category="seguranca">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Segurança e Planejamento</span>
+        </button>
+        <button type="button" class="blog-cat-btn" data-category="mercado">
+          <svg class="blog-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+          <span>Mercado e Atualidade</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ====================================================================
+         ESTADO DE CARREGAMENTO — exibido enquanto blog.js consulta o
+         Supabase. Some assim que a resposta chega (sucesso ou erro).
+         ==================================================================== -->
+    <section class="blog-status-state" id="blog-loading-state">
+      <div class="container blog-status-state-inner">
+        <span class="blog-status-spinner" aria-hidden="true"></span>
+        <p class="blog-status-text">Carregando artigos…</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ESTADO DE ERRO — exibido quando a consulta ao Supabase falha
+         (sem conexão, serviço indisponível etc.). Nunca é confundido com
+         "nenhum artigo publicado".
+         ==================================================================== -->
+    <section class="blog-status-state blog-status-state--error" id="blog-error-state" hidden>
+      <div class="container blog-status-state-inner">
+        <svg class="blog-status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"></circle>
+          <line x1="12" y1="8" x2="12" y2="13"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <h2 class="blog-status-title">Não foi possível carregar os artigos agora.</h2>
+        <p class="blog-status-text">Verifique sua conexão e tente novamente em instantes.</p>
+        <button type="button" id="blog-error-retry" class="blog-empty-reset-btn">Tentar novamente</button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ESTADO EDITORIAL ÚNICO — exibido via blog.js somente quando não
+         houver nenhum artigo publicado. Substitui os três avisos antigos.
+         ==================================================================== -->
+    <section class="blog-empty-editorial reveal-on-scroll" id="blog-empty-editorial">
+      <div class="blog-empty-editorial-motif" aria-hidden="true"></div>
+      <div class="container blog-empty-editorial-inner">
+        <span class="blog-eyebrow">Em construção</span>
+        <h2 class="blog-empty-editorial-title">Boas histórias começam por aqui.</h2>
+        <p class="blog-empty-editorial-text">Estamos preparando um espaço para compartilhar conhecimento, perspectivas e experiências sobre o universo dos consórcios.</p>
+      </div>
+    </section>
+
+    <!-- Estado Vazio de busca (quando a busca ou filtro não encontrar resultados entre artigos existentes) -->
+    <div class="container">
+      <div class="blog-empty-state" id="blog-empty-state">
+        <svg class="blog-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <line x1="8" y1="11" x2="14" y2="11"></line>
+        </svg>
+        <h3 class="blog-empty-title">Nenhum artigo encontrado</h3>
+        <p class="blog-empty-text">Não encontramos conteúdos com os termos pesquisados. Tente usar palavras-chave mais gerais ou explore por categoria.</p>
+        <button type="button" id="blog-empty-reset" class="blog-empty-reset-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          Limpar filtros e ver todos os artigos
+        </button>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         MATÉRIA EM DESTAQUE (EDITORIAL HERO CARD)
+         ==================================================================== -->
+    <section class="blog-featured-section" id="blog-featured-section">
+      <div class="container">
+        <div class="blog-section-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Matéria em Destaque
+        </div>
+
+        <!-- Renderizado dinamicamente por blog.js a partir dos artigos publicados no Supabase -->
+        <div id="blog-featured-mount"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SEÇÃO "ÚLTIMOS ARTIGOS" (GRADE EDITORIAL)
+         ==================================================================== -->
+    <section class="blog-recent-section" id="artigos">
+      <div class="container">
+        <div class="blog-section-header">
+          <div class="blog-section-header-text">
+            <span class="blog-section-tag">Acervo Editorial</span>
+            <h2 class="blog-section-title">Últimos artigos</h2>
+            <p class="blog-section-desc">Conteúdos publicados e revisados pela Decolar Consórcios.</p>
+          </div>
+          <div class="blog-sort-control">
+            <label for="blog-sort-select" class="blog-sort-label">Ordenar:</label>
+            <div class="blog-sort-select-wrapper">
+              <select id="blog-sort-select" class="blog-sort-select" aria-label="Ordenar artigos">
+                <option value="recent">Mais recentes</option>
+                <option value="oldest">Mais antigos</option>
+              </select>
+              <svg class="blog-sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Renderizado dinamicamente por blog.js: artigos com status = 'published' na tabela blog_articles do Supabase -->
+        <div class="blog-recent-grid" id="blog-posts-grid"></div>
+
+        <!-- Paginação Funcional (gerenciada por blog.js, oculta com apenas 1 página) -->
+        <nav class="blog-pagination" id="blog-pagination" aria-label="Paginação de artigos" hidden></nav>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SEÇÃO "MERCADO EM MOVIMENTO" — só aparece quando houver ao menos
+         um artigo publicado na categoria "mercado" (ver blog.js)
+         ==================================================================== -->
+    <section class="blog-market-section" id="mercado">
+      <div class="container">
+        <div class="blog-section-header">
+          <span class="blog-section-tag" style="color: var(--color-orange);">MERCADO E ATUALIDADE</span>
+          <h2 class="blog-section-title">Mercado em movimento</h2>
+          <p class="blog-section-desc">Dados, tendências e atualizações do Sistema de Consórcios.</p>
+        </div>
+
+        <!-- SOMENTE publicar dados de mercado após validação da fonte e período -->
+        <div id="blog-market-mount"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ESPAÇO PARA COLABORADORES (#contribuir)
+         ==================================================================== -->
+    <section class="blog-contributors-section reveal-on-scroll" id="contribuir">
+      <div class="blog-contributors-backdrop-wrap" aria-hidden="true">
+        <img src="assets/images/planejamento financeiro documentos.webp" alt="" class="blog-contributors-backdrop-img" loading="lazy">
+        <div class="blog-contributors-backdrop-overlay"></div>
+      </div>
+      <div class="container blog-contributors-inner">
+        <span class="blog-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          Colaboração Aberta
+        </span>
+        <h2 class="blog-contributors-title">Quer mandar seu artigo?</h2>
+        <p class="blog-contributors-text">Compartilhe seu conhecimento, análises ou experiências sobre consórcios e planejamento financeiro. Nossa equipe avaliará sua contribuição antes da publicação.</p>
+
+        <!-- Canal direto de envio com e-mail em destaque -->
+        <div class="blog-contributors-contact-card">
+          <span class="blog-contributors-contact-label">Canal direto de envio</span>
+          <a href="mailto:artigo@decolarconsorcios.com.br?subject=Contribuição%20para%20o%20Blog%20Decolar" class="blog-contributors-email-link" title="Clique para enviar um e-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            artigo@decolarconsorcios.com.br
+          </a>
+        </div>
+
+        <!-- Ações principais -->
+        <div class="blog-contributors-actions">
+          <a href="mailto:artigo@decolarconsorcios.com.br?subject=Contribuição%20para%20o%20Blog%20Decolar" class="btn-contrib-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            Enviar artigo por e-mail
+          </a>
+          <button type="button" class="btn-contrib-secondary" id="btn-copy-template">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copiar modelo do artigo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CHAMADA COMERCIAL — discreta, secundária ao conteúdo editorial
+         ==================================================================== -->
+    <section class="blog-cta-section reveal-on-scroll">
+      <div class="container blog-cta-inner">
+        <p class="blog-cta-text-inline">Quer planejar sua próxima conquista?</p>
+        <a href="simulacao.html" class="blog-cta-link-inline">Simule seu consórcio</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       RODAPÉ INSTITUCIONAL (PADRONIZADO)
+       ==================================================================== -->
+  <footer class="home-footer">
+    <div class="container">
+
+      <div class="home-footer-top">
+        <div class="home-footer-brand">
+          <a href="index.html#inicio" class="home-footer-logo-link" aria-label="Decolar Consórcios - página inicial">
+            <img src="assets/images/LOGO-claro.png" alt="Decolar Consórcios" class="home-footer-logo" width="220" height="55">
+          </a>
+          <p class="home-footer-tagline">Planejamento financeiro estratégico e consórcios sob medida para suas conquistas.</p>
+        </div>
+      </div>
+
+      <div class="home-footer-columns">
+
+        <div class="home-footer-col">
+          <h3 class="home-footer-col-title">Contato</h3>
+
+          <div class="home-footer-item">
+            <span class="home-footer-label">WhatsApp oficial</span>
+            <a href="https://wa.me/5551997191616" class="home-footer-value home-footer-value-link" target="_blank" rel="noopener noreferrer">+55 (51) 99719-1616</a>
+          </div>
+
+          <div class="home-footer-item">
+            <span class="home-footer-label">E-mail principal</span>
+            <a href="mailto:atendimento@decolarconsorcios.com.br" class="home-footer-value home-footer-value-link"><span class="email-local">atendimento@</span><wbr><span class="email-domain">decolarconsorcios.com.br</span></a>
+          </div>
+
+          <div class="home-footer-item">
+            <span class="home-footer-label">CNPJ</span>
+            <span class="home-footer-value">09.250.049/0001-77</span>
+          </div>
+        </div>
+
+        <div class="home-footer-col">
+          <h3 class="home-footer-col-title">Mapa do site</h3>
+          <nav class="home-footer-nav" aria-label="Mapa do site">
+            <a href="index.html#inicio">Início</a>
+            <a href="index.html#consorcios">Consórcios</a>
+            <a href="como-funciona.html">Como Funciona</a>
+            <a href="nossa-historia.html">Nossa História</a>
+            <a href="blog.html">Blog</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </div>
+
+        <div class="home-footer-col">
+          <h3 class="home-footer-col-title">Fale com a Decolar</h3>
+          <p class="home-footer-text">Planeje seus próximos passos com informação, transparência e atendimento próximo.</p>
+          <a href="https://wa.me/5551997191616" class="home-footer-cta" target="_blank" rel="noopener noreferrer">
+            <svg class="home-footer-cta-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.91-2.2-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"></path>
+              <path d="M12.02 2C6.5 2 2.02 6.48 2.02 12c0 1.77.46 3.45 1.27 4.9L2 22l5.24-1.37A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2Zm0 18.1c-1.6 0-3.1-.43-4.4-1.19l-.32-.19-3.11.82.83-3.03-.2-.31A8.09 8.09 0 0 1 3.9 12c0-4.48 3.65-8.11 8.12-8.11 4.48 0 8.12 3.63 8.12 8.11 0 4.48-3.64 8.1-8.12 8.1Z"></path>
+            </svg>
+            <span>Conversar no WhatsApp</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Faixa inferior exclusiva para documentos legais -->
+      <div class="footer-legal-row">
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+        <a href="termos-de-uso.html">Termos de Uso</a>
+        <a href="politica-de-cookies.html">Política de Cookies</a>
+        <button type="button" class="footer-legal-link js-manage-cookies">Preferências de cookies</button>
+      </div>
+
+      <!-- Linha final com copyright/CNPJ à esquerda e ROQUE ADS à direita -->
+      <div class="home-footer-bottom">
+        <p class="home-footer-copy">© 2026 Decolar Consórcios. Todos os direitos reservados. CNPJ: 09.250.049/0001-77</p>
+        <div class="home-footer-credit">
+          <span>Site desenvolvido por</span>
+          <img src="assets/images/ROQUE ADS.png" alt="Roque Ads">
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Modal "Representantes em breve" -->
+  <div class="blog-modal" id="rep-modal" aria-hidden="true">
+    <div class="blog-modal-overlay" data-rep-modal-overlay></div>
+    <div class="blog-modal-dialog blog-modal-dialog--with-close" role="dialog" aria-modal="true" aria-labelledby="rep-modal-title" tabindex="-1">
+      <button type="button" class="blog-modal-close-x" data-rep-modal-close-x aria-label="Fechar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"></path></svg>
+      </button>
+      <span class="blog-modal-eyebrow">Representantes Decolar</span>
+      <h2 class="blog-modal-title" id="rep-modal-title">Em breve.</h2>
+      <p class="blog-modal-text">Estamos preparando uma área exclusiva para você, nosso representante.</p>
+      <p class="blog-modal-text">Um espaço pensado para facilitar seu dia a dia, com mais apoio, organização e acesso às informações da Decolar Consórcios.</p>
+      <p class="blog-modal-note">Novidades em breve.</p>
+      <button type="button" class="btn btn-primary blog-modal-close" data-rep-modal-close>Entendi</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/script.js"></script>
+  <script src="js/consent.js"></script>
+  <!-- SDK Supabase (CDN — site estático, sem npm/bundler) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/reading-time.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,382 @@
+/* ==========================================================================
+   Decolar Consórcios — seja-um-representante.html
+   Página institucional de captação de representantes comerciais.
+   Reaproveita integralmente os componentes já padronizados em
+   css/modalidade.css (.mod-hero, .mod-pillars-section, .mod-closing);
+   este arquivo cuida apenas do que é exclusivo desta página: a âncora de
+   rolagem até o CTA final e o botão verde do WhatsApp.
+   ========================================================================== */
+
+.rep-closing {
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+/* Enquadramento do hero: mantém o aperto de mãos (parte superior/central
+   da fotografia) visível no corte widescreen do .mod-hero-img (cover). */
+.rep-hero-img {
+  object-position: center 28%;
+}
+
+@media (max-width: 576px) {
+  .rep-hero-img {
+    object-position: center 22%;
+  }
+}
+
+/* ==========================================================================
+   HERO — mesmo container padrão do site (.container, 32/24/20px de
+   padding lateral conforme a tela — nada próprio desta página), com
+   título no mesmo porte imponente dos demais banners da Decolar
+   (~52-58px no desktop) e degradê ajustado para essa largura maior.
+   ========================================================================== */
+.rep-hero-content {
+  max-width: 680px;
+  gap: 0;
+}
+
+.rep-hero-content .mod-eyebrow {
+  margin-bottom: 20px;
+}
+
+/* Título no mesmo padrão de porte dos outros heros (.mod-hero-title
+   já nasce em clamp(2.6rem,3.9vw,3.75rem) ~ 42-60px); aqui só reforça
+   o piso para garantir ~52-58px mesmo em telas menores, sem travar a
+   largura (herda os 680px do container acima — quebra em 2 linhas
+   equilibradas, sem invadir a área principal da fotografia). */
+.rep-hero-content .mod-hero-title {
+  font-size: clamp(2.6rem, 3.6vw, 3.625rem);
+  text-wrap: balance;
+}
+
+.rep-hero-content .mod-hero-lead {
+  margin-top: 20px;
+  max-width: 540px;
+}
+
+.rep-hero-content .mod-hero-cta {
+  margin-top: clamp(30px, 3.6vh, 40px);
+}
+
+@media (max-width: 480px) {
+  .rep-hero-content .mod-hero-title {
+    font-size: clamp(2rem, 7.5vw, 2.3rem);
+  }
+
+  .rep-hero-content .mod-hero-lead {
+    font-size: 0.95rem;
+  }
+
+  .rep-hero-content .mod-hero-cta {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Degradê mais forte só na faixa onde o texto fica (esquerda), sem
+   escurecer o resto da fotografia — paradas recalibradas para a
+   largura maior do conteúdo (680px) acima. */
+.rep-hero .mod-hero-media::after {
+  background: linear-gradient(
+    90deg,
+    rgba(8, 9, 12, 0.92) 0%,
+    rgba(8, 9, 12, 0.84) 38%,
+    rgba(8, 9, 12, 0.56) 58%,
+    rgba(8, 9, 12, 0.18) 76%,
+    rgba(8, 9, 12, 0) 90%
+  );
+}
+
+@media (max-width: 991px) {
+  .rep-hero .mod-hero-media::after {
+    background: linear-gradient(
+      100deg,
+      rgba(8, 9, 12, 0.92) 0%,
+      rgba(8, 9, 12, 0.84) 42%,
+      rgba(8, 9, 12, 0.4) 72%,
+      rgba(8, 9, 12, 0.08) 100%
+    );
+  }
+}
+
+@media (max-width: 576px) {
+  .rep-hero .mod-hero-media::after {
+    background: linear-gradient(
+      180deg,
+      rgba(8, 9, 12, 0.55) 0%,
+      rgba(8, 9, 12, 0.82) 42%,
+      rgba(8, 9, 12, 0.95) 100%
+    );
+  }
+}
+
+/* ==========================================================================
+   REDE DE REPRESENTANTES — composição assimétrica: bloco "+30" em
+   destaque + três cards discretos (sem grade de 4 colunas numeradas).
+   ========================================================================== */
+.rep-network-section .mod-pillars-title {
+  margin-bottom: clamp(40px, 5vw, 56px);
+}
+
+.rep-network-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 4.5vw, 56px);
+}
+
+@media (min-width: 900px) {
+  .rep-network-grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: center;
+  }
+}
+
+/* Bloco principal: "+30 representantes pelo Brasil" — tipografia grande
+   carregando o destaque, sem card/borda/sombra ao redor. Interação
+   sutil ao passar o mouse (não parece botão: sem fundo/borda, só um
+   leve brilho no número e um micro-deslocamento do conjunto). */
+.rep-network-main {
+  padding-right: clamp(0px, 2vw, 24px);
+  transition: transform 250ms ease;
+}
+
+.rep-stat-number {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(3.4rem, 6vw, 5.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: filter 250ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rep-network-main:hover {
+    transform: translateY(-2px);
+  }
+
+  .rep-network-main:hover .rep-stat-number {
+    filter: brightness(1.1);
+  }
+}
+
+.rep-network-main-title {
+  margin-top: 10px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--color-text);
+}
+
+.rep-network-main-text {
+  margin-top: 14px;
+  max-width: 420px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--color-gray-500);
+}
+
+/* Três cards discretos: ícone + título + texto, divisória horizontal
+   fina entre eles (não blocos fechados/dashboard) */
+.rep-network-cards {
+  display: flex;
+  flex-direction: column;
+}
+
+.rep-network-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding-block: clamp(20px, 2.6vw, 26px);
+  border-top: 1px solid rgba(221, 214, 206, 0.6);
+  border-radius: var(--radius-md);
+  transition: background-color 250ms ease, transform 250ms ease;
+}
+
+.rep-network-card:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.rep-network-card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 122, 26, 0.1);
+  color: var(--color-orange);
+  transition: background-color 250ms ease, color 250ms ease;
+}
+
+/* Destaque suave ao passar o mouse — fundo laranja muito claro, leve
+   deslocamento e ícone reforçado. Só em dispositivos com hover real:
+   no toque, a informação já está toda visível sem depender disso. */
+@media (min-width: 769px) and (hover: hover) and (pointer: fine) {
+  .rep-network-card {
+    padding-inline: 16px;
+    margin-inline: -16px;
+  }
+
+  .rep-network-card:hover {
+    background-color: rgba(255, 122, 26, 0.05);
+    transform: translateX(4px);
+  }
+
+  .rep-network-card:hover .rep-network-card-icon {
+    background: rgba(255, 122, 26, 0.2);
+    color: var(--color-red);
+  }
+}
+
+.rep-network-card-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rep-network-card-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.rep-network-card-text {
+  margin-top: 5px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-gray-500);
+}
+
+/* Único botão da página com cor fora da paleta laranja/preto/branco —
+   verde do WhatsApp, pedido explicitamente para o CTA final. */
+.rep-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: clamp(28px, 3.6vw, 42px);
+  padding: 16px 36px;
+  border-radius: 999px;
+  border: none;
+  background: #25d366;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.35);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
+}
+
+.rep-whatsapp-btn:hover {
+  background: #1ebc5a;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(37, 211, 102, 0.5);
+}
+
+.rep-whatsapp-btn:active {
+  transform: translateY(0);
+}
+
+.rep-whatsapp-icon {
+  flex-shrink: 0;
+}
+
+@media (max-width: 520px) {
+  .rep-whatsapp-btn {
+    margin-top: 24px;
+    width: 100%;
+    max-width: 320px;
+    padding: 15px 20px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+}
+
+/* ==========================================================================
+   MOBILE COMPACT (<=767px) — Seja um Representante
+   Desktop e tablet (>=768px) permanecem como estão nos blocos acima. Este
+   bloco vem depois no arquivo, então só sobrescreve — e só nesta faixa —
+   o degradê do hero (mais específico que o já ajustado em modalidade.css,
+   por isso precisa do próprio ajuste aqui) e os espaçamentos da seção de
+   representantes.
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* 1) Hero: troca o degradê pesado (180deg, quase preto no rodapé) por
+     um degradê localizado atrás do texto, igual à filosofia já aplicada
+     nas páginas de modalidade — sem escurecer a foto inteira. */
+  .rep-hero .mod-hero-media::after {
+    background: radial-gradient(
+      ellipse 130% 95% at 24% 46%,
+      rgba(8, 9, 12, 0.88) 0%,
+      rgba(8, 9, 12, 0.6) 42%,
+      rgba(8, 9, 12, 0.2) 70%,
+      rgba(8, 9, 12, 0) 92%
+    );
+  }
+
+  .rep-hero-content .mod-hero-lead {
+    margin-top: 14px;
+  }
+
+  .rep-hero-content .mod-hero-cta {
+    margin-top: 22px;
+  }
+
+  /* 2) Rede de representantes: espaçamentos mais contidos e ícone
+     centralizado em relação ao bloco de texto (title + descrição), em
+     vez de alinhado só com a primeira linha. */
+  .rep-network-section .mod-pillars-title {
+    margin-bottom: clamp(24px, 5vw, 32px);
+  }
+
+  .rep-network-grid {
+    gap: clamp(28px, 6vw, 36px);
+  }
+
+  .rep-network-main {
+    padding-right: 0;
+  }
+
+  .rep-stat-number {
+    font-size: clamp(2.8rem, 11vw, 3.6rem);
+  }
+
+  .rep-network-main-title {
+    margin-top: 8px;
+    font-size: clamp(1.15rem, 4.6vw, 1.35rem);
+  }
+
+  .rep-network-main-text {
+    margin-top: 10px;
+    font-size: 0.93rem;
+  }
+
+  .rep-network-card {
+    align-items: center;
+    gap: 14px;
+    padding-block: clamp(16px, 3vw, 20px);
+  }
+
+  .rep-network-card-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .rep-network-card-title {
+    font-size: 0.98rem;
+  }
+
+  .rep-network-card-text {
+    font-size: 0.89rem;
+    line-height: 1.5;
+  }
+}

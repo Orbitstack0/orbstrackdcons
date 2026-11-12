@@ -1,0 +1,406 @@
+/* ==========================================================================
+   Decolar Consórcios — admin-articles.css
+   Estilos exclusivos da listagem de artigos (admin/artigos.html).
+   Reaproveita o shell do painel (.admin-shell/.admin-sidebar/.admin-main)
+   e os tokens definidos em css/styles.css e css/admin.css.
+   ========================================================================== */
+
+.admin-status-screen--inline {
+  min-height: 0;
+  padding: 60px 0;
+}
+
+.admin-articles-toolbar {
+  margin-top: clamp(20px, 2.4vw, 28px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.admin-articles-filters {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-articles-filter-btn {
+  padding: 8px 18px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: 999px;
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: border-color var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-articles-filter-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.admin-articles-filter-btn.is-active {
+  border-color: var(--color-red);
+  background: var(--color-red);
+  color: var(--color-white);
+}
+
+.admin-articles-new-btn {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: box-shadow var(--transition-base);
+}
+
+.admin-articles-new-btn:hover {
+  box-shadow: 0 10px 20px rgba(240, 68, 46, 0.22);
+}
+
+.admin-articles-list {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-article-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+}
+
+.admin-article-row-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.admin-article-row-title-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.admin-article-row-title {
+  min-width: 0;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.admin-article-row-meta {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--color-gray-500);
+}
+
+.admin-article-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.admin-article-status-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin-article-status-pill--draft {
+  background: rgba(255, 122, 26, 0.1);
+  color: #a15a10;
+}
+
+.admin-article-status-pill--published {
+  background: rgba(34, 139, 87, 0.1);
+  color: #1f7a4d;
+}
+
+.admin-article-continue-btn,
+.admin-article-details-btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-gray-300);
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color var(--transition-base), color var(--transition-base), background-color var(--transition-base);
+}
+
+.admin-article-continue-btn:hover,
+.admin-article-details-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+  background: rgba(240, 68, 46, 0.04);
+}
+
+.admin-article-locked-note {
+  font-size: 0.78rem;
+  color: var(--color-gray-500);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Ação destrutiva — discreta, só aparece em rascunhos.
+   -------------------------------------------------------------------------- */
+.admin-article-delete-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-gray-200);
+  background: none;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-gray-500);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--transition-base), color var(--transition-base), background-color var(--transition-base);
+}
+
+.admin-article-delete-btn:hover {
+  border-color: #c4463a;
+  color: #c4463a;
+  background: rgba(196, 70, 58, 0.06);
+}
+
+.admin-article-delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-articles-action-status {
+  margin-top: 12px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-gray-500);
+  min-height: 1.2em;
+}
+
+.admin-articles-action-status.is-success {
+  color: #1f7a4d;
+}
+
+.admin-articles-action-status.is-warning {
+  color: #a15a10;
+}
+
+.admin-articles-action-status.is-error {
+  color: var(--color-red);
+}
+
+/* --------------------------------------------------------------------------
+   Modal de confirmação de exclusão
+   -------------------------------------------------------------------------- */
+.admin-delete-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-delete-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 11, 13, 0.55);
+}
+
+.admin-delete-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: clamp(24px, 3vw, 32px);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.admin-delete-modal-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.admin-delete-modal-text {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+
+.admin-delete-modal-error {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(240, 68, 46, 0.3);
+  background: rgba(240, 68, 46, 0.06);
+  font-size: 0.84rem;
+  color: var(--color-red);
+}
+
+.admin-delete-modal-actions {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.admin-delete-modal-cancel-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-gray-300);
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.admin-delete-modal-cancel-btn:hover {
+  border-color: var(--color-gray-500);
+}
+
+.admin-delete-modal-cancel-btn:disabled,
+.admin-delete-modal-confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-delete-modal-confirm-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 999px;
+  background: #c4463a;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: box-shadow var(--transition-base), opacity var(--transition-base);
+}
+
+.admin-delete-modal-confirm-btn:hover {
+  box-shadow: 0 10px 20px rgba(196, 70, 58, 0.28);
+}
+
+.admin-articles-empty {
+  margin-top: 18px;
+  padding: 40px 20px;
+  text-align: center;
+  border: 1px dashed var(--color-gray-300);
+  border-radius: var(--radius-lg);
+}
+
+.admin-articles-empty-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.admin-articles-empty-text {
+  margin-top: 6px;
+  font-size: 0.88rem;
+  color: var(--color-gray-700);
+}
+
+.admin-articles-empty-new-btn {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 560px) {
+  .admin-article-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-article-row-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* ==========================================================================
+   LISTAGEM DE ARTIGOS — MOBILE (<=767px)
+   Estende a mesma lógica de empilhamento (já aprovada em <=560px) para o
+   restante da faixa mobile, e compacta o espaçamento. Desktop/tablet
+   continuam intactos.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .admin-articles-toolbar {
+    margin-top: 18px;
+    gap: 10px;
+  }
+
+  .admin-articles-filters {
+    flex-wrap: wrap;
+  }
+
+  .admin-articles-new-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .admin-article-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 16px;
+    gap: 12px;
+  }
+
+  .admin-article-row-actions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .admin-article-continue-btn,
+  .admin-article-details-btn,
+  .admin-article-delete-btn {
+    min-height: 36px;
+  }
+}

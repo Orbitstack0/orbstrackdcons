@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Relatórios | CRM Decolar — Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Estado de verificação de acesso administrativo -->
+  <section class="admin-status-screen" id="admin-loading-state">
+    <div class="admin-status-card">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text">Verificando acesso…</p>
+    </div>
+  </section>
+
+  <section class="admin-status-screen" id="admin-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title">Não foi possível verificar seu acesso.</h2>
+      <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <!-- Shell do Painel -->
+  <div class="admin-shell" id="admin-shell" hidden>
+
+    <header class="admin-mobile-topbar">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-mobile-topbar-logo" width="104" height="26">
+      <span class="admin-mobile-topbar-tag">Painel Administrativo</span>
+      <button type="button" class="admin-nav-toggle" id="admin-nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="admin-sidebar-panel">
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+        <span class="admin-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <div class="admin-nav-overlay" id="admin-nav-overlay" hidden></div>
+
+    <aside class="admin-sidebar" id="admin-sidebar-panel">
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-sidebar-logo" width="130" height="33">
+      <span class="admin-sidebar-tag">Painel Administrativo</span>
+
+      <nav class="admin-nav" aria-label="Navegação do painel">
+        <a href="index.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Dashboard</span>
+        </a>
+        <a href="crm.html" class="admin-nav-item is-active" aria-current="page">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            CRM Decolar
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="chat.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">
+            <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat da Equipe
+          </span>
+          <span class="admin-nav-badge">Em breve</span>
+        </a>
+        <a href="artigos.html" class="admin-nav-item">
+          <span class="admin-nav-item-content">Artigos</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <button type="button" class="admin-switch-profile-btn" id="admin-switch-profile-btn">
+          <svg class="admin-nav-item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <span>Trocar perfil</span>
+        </button>
+        <button type="button" class="admin-logout-btn" id="admin-logout-btn">
+          <svg class="admin-nav-item-icon admin-logout-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <!-- Barra superior de navegação com botão de voltar elegante -->
+      <div class="admin-crm-top-nav">
+        <a href="crm.html" class="admin-crm-back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span>Voltar ao CRM</span>
+        </a>
+      </div>
+
+      <header class="admin-header admin-crm-page-header">
+        <div>
+          <span class="admin-header-eyebrow">CRM Decolar — Inteligência Comercial</span>
+          <h1 class="admin-header-title">Relatórios e Indicadores Comerciais</h1>
+        </div>
+        <p class="admin-header-user" id="admin-user-email"></p>
+      </header>
+
+      <!-- Aviso de Prévia Ilustrativa -->
+      <div class="admin-crm-module-notice">
+        <div>
+          <strong>Módulo em fase visual de planejamento.</strong>
+          Esta tela apresenta os indicadores estruturais de conversão, volume de oportunidades, desempenho individual e motivos de perda. Nenhum cálculo fictício foi gerado.
+        </div>
+        <span class="admin-crm-module-notice-badge">
+          <span class="admin-crm-status-dot" aria-hidden="true"></span>
+          Em desenvolvimento
+        </span>
+      </div>
+
+      <!-- Barra de Filtros por Período & Consultor -->
+      <section class="admin-crm-action-bar" aria-label="Filtros de relatórios comerciais">
+        <div class="admin-crm-filters-group">
+          <select class="admin-crm-select" disabled aria-label="Filtro de período">
+            <option>Período: Este Mês (Atual)</option>
+            <option>Hoje</option>
+            <option>Últimos 7 dias</option>
+            <option>Últimos 30 dias</option>
+            <option>Último Trimestre</option>
+            <option>Ano Corrente (2026)</option>
+            <option>Período Personalizado</option>
+          </select>
+          <select class="admin-crm-select" disabled aria-label="Filtro de consultor">
+            <option>Todos os Consultores</option>
+            <option>Samir Mannaa</option>
+            <option>Andrey Roque</option>
+            <option>William Richer</option>
+          </select>
+          <select class="admin-crm-select" disabled aria-label="Filtro de modalidade">
+            <option>Todas as Modalidades</option>
+            <option>Imóveis</option>
+            <option>Automóveis</option>
+            <option>Pesados</option>
+            <option>Serviços</option>
+          </select>
+        </div>
+        <div class="admin-crm-buttons-group">
+          <button type="button" class="admin-crm-btn admin-crm-btn--secondary" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar Relatório <span class="admin-crm-btn-tag">Em breve</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Grade de 4 KPIs Estruturais -->
+      <section class="admin-crm-kpi-grid" aria-label="Principais indicadores comerciais">
+        <div class="admin-crm-kpi-card">
+          <span class="admin-crm-kpi-label">Leads e Clientes Ativos</span>
+          <div class="admin-crm-kpi-value-placeholder">—</div>
+          <span class="admin-crm-kpi-note">Volume total cadastrado no período sob gestão consultiva.</span>
+        </div>
+
+        <div class="admin-crm-kpi-card">
+          <span class="admin-crm-kpi-label">Oportunidades em Negociação</span>
+          <div class="admin-crm-kpi-value-placeholder">—</div>
+          <span class="admin-crm-kpi-note">Cartas de crédito em andamento no funil comercial.</span>
+        </div>
+
+        <div class="admin-crm-kpi-card">
+          <span class="admin-crm-kpi-label">Taxa de Conversão Global</span>
+          <div class="admin-crm-kpi-value-placeholder">— %</div>
+          <span class="admin-crm-kpi-note">Percentual de leads convertidos em cotas formalizadas.</span>
+        </div>
+
+        <div class="admin-crm-kpi-card">
+          <span class="admin-crm-kpi-label">Volume de Cotas Concluídas</span>
+          <div class="admin-crm-kpi-value-placeholder">—</div>
+          <span class="admin-crm-kpi-note">Total de adesões confirmadas no período filtrado.</span>
+        </div>
+      </section>
+
+      <!-- Visualização Estrutural do Afunilamento de Conversão por Etapa -->
+      <section class="admin-crm-funnel-box" aria-label="Estrutura de conversão do funil">
+        <h3 class="admin-crm-table-title" style="margin-bottom: 16px;">Estrutura do Funil de Conversão Comercial</h3>
+
+        <div class="admin-crm-funnel-step">
+          <span class="admin-crm-funnel-step-label">1. Recepção de Leads</span>
+          <div class="admin-crm-funnel-step-bar-wrap">
+            <div class="admin-crm-funnel-step-bar" style="width: 100%;"></div>
+          </div>
+          <span class="admin-crm-funnel-step-pct">100%</span>
+        </div>
+
+        <div class="admin-crm-funnel-step">
+          <span class="admin-crm-funnel-step-label">2. Qualificação & Simulação</span>
+          <div class="admin-crm-funnel-step-bar-wrap">
+            <div class="admin-crm-funnel-step-bar" style="width: 72%;"></div>
+          </div>
+          <span class="admin-crm-funnel-step-pct">Etapa 2</span>
+        </div>
+
+        <div class="admin-crm-funnel-step">
+          <span class="admin-crm-funnel-step-label">3. Proposta Apresentada</span>
+          <div class="admin-crm-funnel-step-bar-wrap">
+            <div class="admin-crm-funnel-step-bar" style="width: 48%;"></div>
+          </div>
+          <span class="admin-crm-funnel-step-pct">Etapa 3</span>
+        </div>
+
+        <div class="admin-crm-funnel-step">
+          <span class="admin-crm-funnel-step-label">4. Negociação & Lance</span>
+          <div class="admin-crm-funnel-step-bar-wrap">
+            <div class="admin-crm-funnel-step-bar" style="width: 32%;"></div>
+          </div>
+          <span class="admin-crm-funnel-step-pct">Etapa 4</span>
+        </div>
+
+        <div class="admin-crm-funnel-step">
+          <span class="admin-crm-funnel-step-label">5. Cota Concluída</span>
+          <div class="admin-crm-funnel-step-bar-wrap">
+            <div class="admin-crm-funnel-step-bar" style="width: 18%; background: #10b981;"></div>
+          </div>
+          <span class="admin-crm-funnel-step-pct" style="color: #10b981;">Fechado</span>
+        </div>
+      </section>
+
+      <!-- Painéis: Análise de Motivos de Perda & Desempenho por Consultor -->
+      <section class="admin-crm-highlights-grid">
+        <div class="admin-crm-highlight-card">
+          <h4 class="admin-crm-highlight-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-red);"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+            Análise Estruturada de Motivos de Perda
+          </h4>
+          <p class="admin-crm-highlight-text">
+            O painel consolidará as principais objeções enfrentadas nas negociações (preço de parcela, concorrência, prazo do bem, desistência temporária), permitindo à diretoria orientar treinamentos e otimizar as simulações comerciais.
+          </p>
+        </div>
+
+        <div class="admin-crm-highlight-card">
+          <h4 class="admin-crm-highlight-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-red);"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Desempenho por Consultor
+          </h4>
+          <p class="admin-crm-highlight-text">
+            Acompanhamento individual e por equipe do volume de atendimentos, agilidade nos retornos, taxa de conversão em vendas e satisfação dos consorciados, preservando a transparência na gestão comercial da Decolar.
+          </p>
+        </div>
+      </section>
+
+      <!-- Caixa de Governança -->
+      <section class="admin-crm-governance-box">
+        <h4 class="admin-crm-governance-title">Diretriz da Fase Visual</h4>
+        <p class="admin-crm-governance-text">
+          Nenhuma métrica financeira ou número fictício é apresentado neste módulo. As barras de afunilamento e indicadores representam exclusivamente a arquitetura visual projetada para o futuro motor analítico do CRM.
+        </p>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- SDK Supabase e Scripts de Proteção Administrativa -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-profile.js"></script>
+  <script src="js/admin-nav-mobile.js"></script>
+  <script src="js/admin-crm.js"></script>
+</body>
+</html>
+

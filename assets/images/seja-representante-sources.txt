@@ -1,0 +1,12 @@
+Fonte e licença — fotografia do hero de seja-um-representante.html
+
+rep-hero-aperto-maos.webp
+https://www.pexels.com/photo/men-shaking-hands-at-the-meeting-7794049/
+Pexels (licença comercial livre, sem atribuição obrigatória, sem IA)
+Profissionais apertando as mãos em sala de reunião — fotografia
+ilustrativa de parceria/colaboração, não é uma foto da equipe real da
+Decolar (alt text no HTML não afirma isso).
+
+Baixada diretamente do CDN da Pexels já em formato WebP (parâmetro
+fm=webp), sem conversão local — não há ferramenta de conversão de
+imagem disponível neste ambiente.

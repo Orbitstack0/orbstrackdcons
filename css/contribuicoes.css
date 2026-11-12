@@ -1,0 +1,304 @@
+/* ==========================================================================
+   Decolar Consórcios — Página pública "Contribua com o Blog"
+   (contribua-com-o-blog.html). Reaproveita tokens, container, botões e
+   header/footer já definidos em styles.css. Carregado depois de styles.css
+   e blog.css (este último só pelo modal "Representante em breve").
+   ========================================================================== */
+
+/* Garante que nenhuma regra de display desta folha sobrescreva o atributo
+   hidden — sem isso, .contrib-template-fallback { display: block } (regra
+   de autor) tem prioridade sobre o [hidden] { display: none } padrão do
+   navegador (regra de user-agent), e o textarea de fallback ficaria visível
+   mesmo com hidden presente no HTML. */
+[hidden] {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Hero (fundo grafite, mesmo padrão institucional usado em legal.css)
+   -------------------------------------------------------------------------- */
+.contrib-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(150deg, #1d1b22 0%, #14131a 60%, #0d0c10 100%);
+  padding: clamp(64px, 8vw, 104px) 0 clamp(48px, 6vw, 72px);
+}
+
+.contrib-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 620px 420px at 8% -10%, rgba(255, 122, 26, 0.12), transparent 65%),
+    radial-gradient(ellipse 560px 440px at 96% 108%, rgba(240, 68, 46, 0.1), transparent 65%);
+  pointer-events: none;
+}
+
+.contrib-hero-inner {
+  position: relative;
+  max-width: 760px;
+}
+
+.contrib-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+}
+
+.contrib-hero-title {
+  margin-top: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(2rem, 3.6vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--color-white);
+}
+
+.contrib-hero-lead {
+  margin-top: 18px;
+  max-width: 620px;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* --------------------------------------------------------------------------
+   Seções de conteúdo (claras, alternando fundo levemente)
+   -------------------------------------------------------------------------- */
+.contrib-section {
+  padding-block: clamp(48px, 6vw, 76px);
+  background: var(--color-white);
+}
+
+.contrib-section--alt {
+  background: var(--color-gray-50);
+}
+
+.contrib-section-inner {
+  max-width: 760px;
+}
+
+.contrib-section-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.contrib-section-lead {
+  margin-top: 10px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--color-gray-700);
+}
+
+/* Destaques "Por que seu artigo é importante" — texto corrido com uma
+   marca lateral discreta, sem cartões. */
+.contrib-highlights {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contrib-highlight {
+  display: flex;
+  gap: 16px;
+}
+
+.contrib-highlight-mark {
+  flex: 0 0 auto;
+  width: 3px;
+  margin-top: 4px;
+  border-radius: 999px;
+  background: var(--gradient-primary);
+  align-self: stretch;
+}
+
+.contrib-highlight-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.04rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.contrib-highlight-text {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--color-gray-700);
+}
+
+/* --------------------------------------------------------------------------
+   Lista de informações necessárias ("Prepare seu artigo")
+   -------------------------------------------------------------------------- */
+.contrib-fields-list {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contrib-field {
+  padding: 16px 0;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.contrib-field:last-child {
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.contrib-field dt {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.contrib-field-optional {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-gray-500);
+}
+
+.contrib-field dd {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+
+.contrib-template-action {
+  margin-top: 32px;
+}
+
+.contrib-template-feedback {
+  display: inline-block;
+  margin: 10px 0 0;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-gray-500);
+  min-height: 1.2em;
+}
+
+.contrib-template-feedback.is-success {
+  color: #1f7a4d;
+}
+
+.contrib-template-feedback.is-error {
+  color: var(--color-red);
+}
+
+.contrib-template-fallback {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  font-family: 'Inter', monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--color-text);
+  background: var(--color-white);
+  resize: vertical;
+}
+
+/* --------------------------------------------------------------------------
+   Envio por e-mail (fechamento, fundo grafite — mesma linguagem do hero)
+   -------------------------------------------------------------------------- */
+.contrib-send-section {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(56px, 7vw, 88px);
+  background: var(--color-graphite);
+  text-align: center;
+}
+
+.contrib-send-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 560px 360px at 12% 15%, rgba(255, 122, 26, 0.14), transparent 65%),
+    radial-gradient(ellipse 480px 360px at 92% 95%, rgba(240, 68, 46, 0.1), transparent 62%);
+  pointer-events: none;
+}
+
+.contrib-send-inner {
+  position: relative;
+  max-width: 640px;
+}
+
+.contrib-send-title {
+  margin-top: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-white);
+}
+
+.contrib-send-text {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.contrib-email-display {
+  display: inline-block;
+  margin-top: 26px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 800;
+  color: var(--color-white);
+  text-decoration: none;
+  border-bottom: 2px solid rgba(255, 122, 26, 0.5);
+  padding-bottom: 2px;
+  transition: border-color var(--transition-base);
+}
+
+.contrib-email-display:hover {
+  border-color: var(--color-orange);
+}
+
+.contrib-send-btn {
+  display: block;
+  width: fit-content;
+  margin: 22px auto 0;
+}
+
+.contrib-notes {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: left;
+}
+
+.contrib-notes p {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.contrib-notes p + p {
+  margin-top: 8px;
+}
+
+@media (max-width: 560px) {
+  .contrib-highlight {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contrib-highlight-mark {
+    width: 100%;
+    height: 3px;
+    align-self: auto;
+  }
+}

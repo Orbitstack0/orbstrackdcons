@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Modo TV Decolar | Painel Comercial Coletivo</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin-tv.css">
+</head>
+<body class="admin-tv-body">
+
+  <!-- Estado de verificação de acesso administrativo (padrão de segurança existente) -->
+  <section class="admin-status-screen" id="admin-loading-state" style="background: var(--tv-bg-base); color: #fff;">
+    <div class="admin-status-card" style="background: var(--tv-bg-surface); border-color: var(--tv-border);">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text" style="color: var(--tv-text-secondary);">Verificando acesso ao Modo TV…</p>
+    </div>
+  </section>
+
+  <section class="admin-status-screen" id="admin-error-state" style="background: var(--tv-bg-base); color: #fff;" hidden>
+    <div class="admin-status-card" style="background: var(--tv-bg-surface); border-color: var(--tv-border);">
+      <h2 class="admin-status-title" style="color: #fff;">Não foi possível validar o acesso à TV.</h2>
+      <p class="admin-status-text" style="color: var(--tv-text-secondary);">Verifique sua conexão ou realize login administrativo.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <!-- Aplicativo do Modo TV (revelado apenas após autenticação administrativa confirmada) -->
+  <div id="tv-app" class="admin-tv-app" hidden>
+
+    <!-- Barra de Progresso Superior (Ciclo de 30 segundos) -->
+    <div class="admin-tv-progress-track" aria-hidden="true">
+      <div class="admin-tv-progress-bar" id="tv-progress-bar"></div>
+    </div>
+
+    <!-- Botão Flutuante Discreto para Restaurar Controles (quando ocultados no Modo Apresentação) -->
+    <button type="button" class="admin-tv-restore-btn" id="tv-btn-restore-controls" title="Revelar barra de controles" aria-label="Revelar controles">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Controles</span>
+    </button>
+
+    <!-- Cabeçalho Superior da TV Reorganizado -->
+    <header class="admin-tv-header" id="tv-header">
+      <!-- Bloco 1: Marca, Modo TV, Horário/Data Compactos e Indicador de Sincronização -->
+      <div class="admin-tv-brand-cluster">
+        <img src="../assets/images/LOGO-claro.png" alt="Decolar Consórcios" class="admin-tv-logo" width="120" height="30" onerror="this.src='../assets/images/LOGO.png'">
+        <span class="admin-tv-badge">
+          <span class="admin-crm-status-dot" aria-hidden="true"></span>
+          Modo TV
+        </span>
+        <div class="admin-tv-clock-cluster" aria-label="Relógio em tempo real">
+          <span class="admin-tv-clock-time" id="tv-clock-time">--:--:--</span>
+          <span class="admin-tv-clock-sep">•</span>
+          <span class="admin-tv-clock-date" id="tv-clock-date">--/--/----</span>
+        </div>
+        <div class="admin-tv-sync-pill" id="tv-sync-pill" title="Status de sincronização com o banco de dados">
+          <span class="admin-tv-sync-dot" aria-hidden="true"></span>
+          <span class="admin-tv-sync-text">Aguardando integração</span>
+        </div>
+      </div>
+
+      <!-- Bloco 2: Seletor Central das 3 Telas -->
+      <nav class="admin-tv-view-switcher" role="tablist" aria-label="Seleção de visão da TV">
+        <button type="button" class="admin-tv-tab-btn is-active" id="tv-tab-general" role="tab" aria-selected="true">
+          Visão Geral
+        </button>
+        <button type="button" class="admin-tv-tab-btn" id="tv-tab-sup1" role="tab" aria-selected="false">
+          Supervisor 1
+        </button>
+        <button type="button" class="admin-tv-tab-btn" id="tv-tab-sup2" role="tab" aria-selected="false">
+          Supervisor 2
+        </button>
+      </nav>
+
+      <!-- Bloco 3: Controles da Direita -->
+      <div class="admin-tv-controls" id="tv-controls-group">
+        <!-- Alternar Automático / Manual -->
+        <button type="button" class="admin-tv-btn admin-tv-btn--toggle is-running" id="tv-btn-auto-toggle" title="Alternar entre modo automático (30s) e modo fixo">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          <span id="tv-auto-toggle-text">Auto 30s</span>
+        </button>
+
+        <!-- Modo Apresentação (Ocultar Controles Secundários) -->
+        <button type="button" class="admin-tv-btn admin-tv-btn--presentation" id="tv-btn-toggle-presentation" title="Ocultar controles para foco total na transmissão">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          <span id="tv-presentation-toggle-text">Ocultar Controles</span>
+        </button>
+
+        <!-- Botão Tela Cheia -->
+        <button type="button" class="admin-tv-btn" id="tv-btn-fullscreen" title="Entrar em tela cheia">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          <span id="tv-fullscreen-text">Tela Cheia</span>
+        </button>
+
+        <!-- Voltar ao CRM -->
+        <a href="crm.html" class="admin-tv-btn admin-tv-btn--back" id="tv-btn-back" title="Retornar à Central do CRM">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span>CRM</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Área Principal de Exibição da TV -->
+    <main class="admin-tv-main">
+
+      <!-- ===================================================================
+           TELA 1: VISÃO GERAL (CONSOLIDADO DA DECOLAR)
+           =================================================================== -->
+      <section id="tv-view-general" class="admin-tv-view" aria-label="Visão Geral Consolidada">
+        <!-- Subcabeçalho da Visão -->
+        <div class="admin-tv-view-header">
+          <div class="admin-tv-view-heading">
+            <h1 class="admin-tv-view-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tv-red);"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Visão Geral Consolidada • Operação Comercial
+            </h1>
+            <p class="admin-tv-view-subtitle">Resultados consolidados das duas equipes comerciais • Consolidação transparente</p>
+          </div>
+          <span class="admin-tv-status-badge">
+            <span class="admin-crm-status-dot" aria-hidden="true"></span>
+            Operação Unificada
+          </span>
+        </div>
+
+        <!-- Meta Mensal Consolidada da Empresa -->
+        <div class="admin-tv-target-card">
+          <div class="admin-tv-target-info">
+            <span class="admin-tv-target-label">Meta Global do Mês</span>
+            <div class="admin-tv-target-val">Consolidado da Empresa</div>
+          </div>
+          <div class="admin-tv-target-progress-wrap">
+            <div class="admin-tv-target-status-line">
+              <span>Progresso Acumulado</span>
+              <strong class="admin-tv-target-percent">— %</strong>
+            </div>
+            <div class="admin-tv-target-bar-bg">
+              <div class="admin-tv-target-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div class="admin-tv-target-status-line admin-tv-target-status-line--sub">
+              <span>Aguardando ativação do banco de dados</span>
+              <span>Alvo: 100% da meta consolidada</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grade dos 6 Indicadores Principais (Destaque em Vendas e Crédito) -->
+        <div class="admin-tv-kpi-grid">
+          <!-- KPI 1: Leads do Mês -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Leads do Mês</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Captação comercial</div>
+          </div>
+
+          <!-- KPI 2: Oportunidades em Negociação -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Oportunidades Ativas</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Funil de negociação</div>
+          </div>
+
+          <!-- KPI 3: VENDAS DO MÊS (DESTAQUE MÁXIMO) -->
+          <div class="admin-tv-kpi-card admin-tv-kpi-card--highlight admin-tv-kpi-card--sales">
+            <div class="admin-tv-kpi-card-top">
+              <div class="admin-tv-kpi-title-cluster">
+                <span class="admin-tv-kpi-title">Vendas do Mês</span>
+                <span class="admin-tv-kpi-pill admin-tv-kpi-pill--green">Destaque</span>
+              </div>
+              <div class="admin-tv-kpi-icon-wrap admin-tv-kpi-icon-wrap--green" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value admin-tv-kpi-value--highlight admin-tv-kpi-value--green">—</div>
+            <div class="admin-tv-kpi-subtext">Cotas formalizadas no mês</div>
+          </div>
+
+          <!-- KPI 4: CRÉDITO COMERCIALIZADO (DESTAQUE MÁXIMO) -->
+          <div class="admin-tv-kpi-card admin-tv-kpi-card--highlight admin-tv-kpi-card--credit">
+            <div class="admin-tv-kpi-card-top">
+              <div class="admin-tv-kpi-title-cluster">
+                <span class="admin-tv-kpi-title">Crédito Comercializado</span>
+                <span class="admin-tv-kpi-pill admin-tv-kpi-pill--orange">Volume Total</span>
+              </div>
+              <div class="admin-tv-kpi-icon-wrap admin-tv-kpi-icon-wrap--orange" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value admin-tv-kpi-value--highlight admin-tv-kpi-value--orange">R$ —</div>
+            <div class="admin-tv-kpi-subtext">Volume financeiro consolidado</div>
+          </div>
+
+          <!-- KPI 5: Atingimento da Meta -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Atingimento da Meta</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">— %</div>
+            <div class="admin-tv-kpi-subtext">Percentual atingido</div>
+          </div>
+
+          <!-- KPI 6: Retornos Pendentes -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Retornos Pendentes</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Follow-ups agendados</div>
+          </div>
+        </div>
+
+        <!-- Painel Secundário da Visão Geral: Comparativo de Equipes & Modalidades -->
+        <div class="admin-tv-bottom-grid">
+          <div class="admin-tv-panel">
+            <div class="admin-tv-panel-header">
+              <h3 class="admin-tv-panel-title">Participação por Equipe Comercial</h3>
+              <span class="admin-tv-panel-badge">Consolidado</span>
+            </div>
+            <table class="admin-tv-table">
+              <thead>
+                <tr>
+                  <th>Equipe / Supervisor</th>
+                  <th>Leads</th>
+                  <th>Cotas</th>
+                  <th>Meta Atingida</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Equipe 1 (Supervisor 1)</strong></td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td><span class="admin-crm-tag admin-crm-tag--gray">Em definição</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Equipe 2 (Supervisor 2)</strong></td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td><span class="admin-crm-tag admin-crm-tag--gray">Em definição</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="admin-tv-panel">
+            <div class="admin-tv-panel-header">
+              <h3 class="admin-tv-panel-title">Distribuição por Modalidade de Consórcio</h3>
+              <span class="admin-tv-panel-badge">Planejado</span>
+            </div>
+            <table class="admin-tv-table">
+              <thead>
+                <tr>
+                  <th>Modalidade</th>
+                  <th>Em Negociação</th>
+                  <th>Fechamentos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Consórcio Imobiliário</td>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>Consórcio de Veículos</td>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>Consórcio de Pesados / Frotas</td>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>Consórcio de Serviços / Reformas</td>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TELA 2: SUPERVISOR 1 (EQUIPE 1)
+           =================================================================== -->
+      <section id="tv-view-sup1" class="admin-tv-view" aria-label="Equipe Supervisor 1" hidden>
+        <div class="admin-tv-view-header">
+          <div class="admin-tv-view-heading">
+            <h1 class="admin-tv-view-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tv-orange);"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Equipe Comercial — Supervisor 1
+            </h1>
+            <p class="admin-tv-view-subtitle">Indicadores exclusivos da equipe sob coordenação do Supervisor 1</p>
+          </div>
+          <span class="admin-tv-status-badge" style="background: rgba(255,122,26,0.15); color: #ffa057; border-color: rgba(255,122,26,0.3);">
+            <span class="admin-crm-status-dot" style="background: var(--tv-orange);" aria-hidden="true"></span>
+            Equipe 1
+          </span>
+        </div>
+
+        <!-- Meta da Equipe 1 -->
+        <div class="admin-tv-target-card">
+          <div class="admin-tv-target-info">
+            <span class="admin-tv-target-label">Meta da Equipe 1</span>
+            <div class="admin-tv-target-val">Meta Mensal da Equipe</div>
+          </div>
+          <div class="admin-tv-target-progress-wrap">
+            <div class="admin-tv-target-status-line">
+              <span>Progresso da Equipe 1</span>
+              <strong class="admin-tv-target-percent">— %</strong>
+            </div>
+            <div class="admin-tv-target-bar-bg">
+              <div class="admin-tv-target-bar-fill" style="width: 0%; background: linear-gradient(90deg, #ff7a1a, #f0442e);"></div>
+            </div>
+            <div class="admin-tv-target-status-line admin-tv-target-status-line--sub">
+              <span>Aguardando ativação do banco de dados</span>
+              <span>Alvo: 100% da meta da equipe</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 Indicadores da Equipe 1 (Destaque em Vendas e Crédito) -->
+        <div class="admin-tv-kpi-grid">
+          <!-- KPI 1 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Leads da Equipe 1</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Distribuídos no mês</div>
+          </div>
+
+          <!-- KPI 2 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Oportunidades Ativas</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Pipeline ativo da equipe</div>
+          </div>
+
+          <!-- KPI 3: VENDAS (DESTAQUE) -->
+          <div class="admin-tv-kpi-card admin-tv-kpi-card--highlight admin-tv-kpi-card--sales">
+            <div class="admin-tv-kpi-card-top">
+              <div class="admin-tv-kpi-title-cluster">
+                <span class="admin-tv-kpi-title">Vendas da Equipe 1</span>
+                <span class="admin-tv-kpi-pill admin-tv-kpi-pill--green">Destaque</span>
+              </div>
+              <div class="admin-tv-kpi-icon-wrap admin-tv-kpi-icon-wrap--green" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value admin-tv-kpi-value--highlight admin-tv-kpi-value--green">—</div>
+            <div class="admin-tv-kpi-subtext">Cotas fechadas no mês</div>
+          </div>
+
+          <!-- KPI 4: CRÉDITO (DESTAQUE) -->
+          <div class="admin-tv-kpi-card admin-tv-kpi-card--highlight admin-tv-kpi-card--credit">
+            <div class="admin-tv-kpi-card-top">
+              <div class="admin-tv-kpi-title-cluster">
+                <span class="admin-tv-kpi-title">Crédito Comercializado</span>
+                <span class="admin-tv-kpi-pill admin-tv-kpi-pill--orange">Volume Equipe</span>
+              </div>
+              <div class="admin-tv-kpi-icon-wrap admin-tv-kpi-icon-wrap--orange" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value admin-tv-kpi-value--highlight admin-tv-kpi-value--orange">R$ —</div>
+            <div class="admin-tv-kpi-subtext">Volume da Equipe 1</div>
+          </div>
+
+          <!-- KPI 5 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Atingimento da Meta</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">— %</div>
+            <div class="admin-tv-kpi-subtext">Percentual da Equipe 1</div>
+          </div>
+
+          <!-- KPI 6 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Retornos Pendentes</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Compromissos agendados</div>
+          </div>
+        </div>
+
+        <!-- Quadro de Produtividade dos Vendedores (Equipe 1) — Sem integrantes fictícios -->
+        <div class="admin-tv-panel">
+          <div class="admin-tv-panel-header">
+            <h3 class="admin-tv-panel-title">Quadro de Produtividade dos Integrantes — Equipe 1</h3>
+            <span class="admin-tv-panel-badge">Estrutura de Consultores</span>
+          </div>
+          <div class="admin-tv-empty-panel">
+            <div class="admin-tv-empty-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="admin-tv-empty-content">
+              <strong class="admin-tv-empty-title">Nenhum vendedor registrado nesta equipe</strong>
+              <p class="admin-tv-empty-desc">O ranking de produtividade individual (cotas, volume de crédito e status) será exibido automaticamente após o cadastro dos consultores no módulo do CRM.</p>
+            </div>
+            <span class="admin-crm-tag admin-crm-tag--gray">Aguardando cadastro</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TELA 3: SUPERVISOR 2 (EQUIPE 2)
+           =================================================================== -->
+      <section id="tv-view-sup2" class="admin-tv-view" aria-label="Equipe Supervisor 2" hidden>
+        <div class="admin-tv-view-header">
+          <div class="admin-tv-view-heading">
+            <h1 class="admin-tv-view-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tv-blue);"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Equipe Comercial — Supervisor 2
+            </h1>
+            <p class="admin-tv-view-subtitle">Indicadores exclusivos da equipe sob coordenação do Supervisor 2</p>
+          </div>
+          <span class="admin-tv-status-badge" style="background: rgba(59,130,246,0.15); color: #60a5fa; border-color: rgba(59,130,246,0.3);">
+            <span class="admin-crm-status-dot" style="background: var(--tv-blue);" aria-hidden="true"></span>
+            Equipe 2
+          </span>
+        </div>
+
+        <!-- Meta da Equipe 2 -->
+        <div class="admin-tv-target-card">
+          <div class="admin-tv-target-info">
+            <span class="admin-tv-target-label">Meta da Equipe 2</span>
+            <div class="admin-tv-target-val">Meta Mensal da Equipe</div>
+          </div>
+          <div class="admin-tv-target-progress-wrap">
+            <div class="admin-tv-target-status-line">
+              <span>Progresso da Equipe 2</span>
+              <strong class="admin-tv-target-percent">— %</strong>
+            </div>
+            <div class="admin-tv-target-bar-bg">
+              <div class="admin-tv-target-bar-fill" style="width: 0%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+            </div>
+            <div class="admin-tv-target-status-line admin-tv-target-status-line--sub">
+              <span>Aguardando ativação do banco de dados</span>
+              <span>Alvo: 100% da meta da equipe</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 Indicadores da Equipe 2 (Destaque em Vendas e Crédito) -->
+        <div class="admin-tv-kpi-grid">
+          <!-- KPI 1 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Leads da Equipe 2</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Distribuídos no mês</div>
+          </div>
+
+          <!-- KPI 2 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Oportunidades Ativas</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Pipeline ativo da equipe</div>
+          </div>
+
+          <!-- KPI 3: VENDAS (DESTAQUE) -->
+          <div class="admin-tv-kpi-card admin-tv-kpi-card--highlight admin-tv-kpi-card--sales">
+            <div class="admin-tv-kpi-card-top">
+              <div class="admin-tv-kpi-title-cluster">
+                <span class="admin-tv-kpi-title">Vendas da Equipe 2</span>
+                <span class="admin-tv-kpi-pill admin-tv-kpi-pill--green">Destaque</span>
+              </div>
+              <div class="admin-tv-kpi-icon-wrap admin-tv-kpi-icon-wrap--green" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value admin-tv-kpi-value--highlight admin-tv-kpi-value--green">—</div>
+            <div class="admin-tv-kpi-subtext">Cotas fechadas no mês</div>
+          </div>
+
+          <!-- KPI 4: CRÉDITO (DESTAQUE) -->
+          <div class="admin-tv-kpi-card admin-tv-kpi-card--highlight admin-tv-kpi-card--credit">
+            <div class="admin-tv-kpi-card-top">
+              <div class="admin-tv-kpi-title-cluster">
+                <span class="admin-tv-kpi-title">Crédito Comercializado</span>
+                <span class="admin-tv-kpi-pill admin-tv-kpi-pill--orange">Volume Equipe</span>
+              </div>
+              <div class="admin-tv-kpi-icon-wrap admin-tv-kpi-icon-wrap--orange" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value admin-tv-kpi-value--highlight admin-tv-kpi-value--orange">R$ —</div>
+            <div class="admin-tv-kpi-subtext">Volume da Equipe 2</div>
+          </div>
+
+          <!-- KPI 5 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Atingimento da Meta</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">— %</div>
+            <div class="admin-tv-kpi-subtext">Percentual da Equipe 2</div>
+          </div>
+
+          <!-- KPI 6 -->
+          <div class="admin-tv-kpi-card">
+            <div class="admin-tv-kpi-card-top">
+              <span class="admin-tv-kpi-title">Retornos Pendentes</span>
+              <div class="admin-tv-kpi-icon-wrap" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+            </div>
+            <div class="admin-tv-kpi-value">—</div>
+            <div class="admin-tv-kpi-subtext">Compromissos agendados</div>
+          </div>
+        </div>
+
+        <!-- Quadro de Produtividade dos Vendedores (Equipe 2) — Sem integrantes fictícios -->
+        <div class="admin-tv-panel">
+          <div class="admin-tv-panel-header">
+            <h3 class="admin-tv-panel-title">Quadro de Produtividade dos Integrantes — Equipe 2</h3>
+            <span class="admin-tv-panel-badge">Estrutura de Consultores</span>
+          </div>
+          <div class="admin-tv-empty-panel">
+            <div class="admin-tv-empty-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="admin-tv-empty-content">
+              <strong class="admin-tv-empty-title">Nenhum vendedor registrado nesta equipe</strong>
+              <p class="admin-tv-empty-desc">O ranking de produtividade individual (cotas, volume de crédito e status) será exibido automaticamente após o cadastro dos consultores no módulo do CRM.</p>
+            </div>
+            <span class="admin-crm-tag admin-crm-tag--gray">Aguardando cadastro</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Rodapé de Governança e Privacidade da TV -->
+    <footer class="admin-tv-footer">
+      <div class="admin-tv-footer-left">
+        <strong>Modo TV Decolar</strong> • Painel Comercial Coletivo • Somente Leitura • Dados Pessoais Protegidos (LGPD)
+      </div>
+      <div class="admin-tv-footer-right">
+        Fase Visual de Planejamento • Sem conexões ativas ao banco nesta etapa
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SDK Supabase e Scripts de Proteção Administrativa -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-crm-tv.js"></script>
+</body>
+</html>

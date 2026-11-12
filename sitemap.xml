@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Decolar Consórcios — sitemap.xml
+  Lista apenas páginas estáticas públicas e indexáveis no padrão do GitHub Pages (com barra final /).
+  Os artigos do Blog (artigo/?slug=...) são dinâmicos, armazenados no Supabase.
+  simulacao/ e manutencao/ ficam de fora por serem páginas transacionais/temporárias
+  (marcadas como noindex nas próprias páginas).
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://decolarconsorcios.com.br/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/consorcio-imoveis/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/consorcio-veiculos/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/consorcio-pesados/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/como-funciona/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/nossa-historia/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/contato/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/seja-um-representante/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/contribua-com-o-blog/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/politica-de-privacidade/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/termos-de-uso/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://decolarconsorcios.com.br/politica-de-cookies/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Área em Atualização | Decolar Consórcios</title>
+  <meta name="description" content="Estamos preparando novidades para você na Decolar Consórcios. Nossa equipe continua à disposição para ajudar.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Tipografia Institucional Decolar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       Reset e Variáveis da Identidade Decolar Consórcios
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --color-white: #ffffff;
+      --color-offwhite: #FAF9F6;
+      --color-dark: #14131A;
+      --color-text: #1F2024;
+      --color-muted: #5A5D66;
+      --color-subtle: #8C9099;
+      --color-border: #E8E3DC;
+      --color-orange: #FF6A00;
+      --color-orange-dark: #EE4D2D;
+      --gradient-orange: linear-gradient(135deg, #FF6A00 0%, #EE4D2D 100%);
+      --gradient-bg: radial-gradient(circle at 50% 28%, rgba(255, 106, 0, 0.055) 0%, rgba(250, 249, 246, 1) 68%);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --transition-smooth: 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--color-offwhite);
+      background-image: var(--gradient-bg);
+      background-attachment: fixed;
+      color: var(--color-text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    /* Container de layout */
+    .maintenance-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1080px;
+      margin-inline: auto;
+      padding: clamp(28px, 4.5vw, 56px) 20px clamp(24px, 3vw, 40px);
+      min-height: 100vh;
+      min-height: 100svh;
+    }
+
+    /* Topo: Logo */
+    .maintenance-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-bottom: clamp(24px, 4vw, 48px);
+    }
+
+    .maintenance-logo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform var(--transition-smooth), opacity var(--transition-smooth);
+    }
+
+    .maintenance-logo-link:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .maintenance-logo {
+      height: clamp(44px, 4.8vw, 58px);
+      width: auto;
+      max-width: 240px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Card Central */
+    .maintenance-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-block: auto;
+    }
+
+    .maintenance-card {
+      width: 100%;
+      max-width: 580px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: clamp(32px, 5.5vw, 52px) clamp(24px, 4.8vw, 44px);
+      text-align: center;
+      box-shadow:
+        0 1px 3px rgba(20, 19, 26, 0.04),
+        0 14px 40px -10px rgba(20, 19, 26, 0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Borda sutil de destaque no topo do card */
+    .maintenance-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: var(--gradient-orange);
+      border-radius: 0 0 4px 4px;
+      opacity: 0.85;
+    }
+
+    /* --------------------------------------------------------------------------
+       ETAPA 1 — Estado de Carregamento
+       -------------------------------------------------------------------------- */
+    .state-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 4vw, 40px) 12px;
+      transition: opacity 320ms ease, transform 320ms ease;
+    }
+
+    .state-loading.is-hidden {
+      opacity: 0;
+      transform: scale(0.96);
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    /* Spinner Circular Animado em Laranja */
+    .maintenance-spinner {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      margin-bottom: 24px;
+    }
+
+    .spinner-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3.5px solid rgba(255, 106, 0, 0.12);
+      border-top-color: #FF6A00;
+      border-right-color: #EE4D2D;
+      animation: spin 0.9s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
+    }
+
+    /* Glow pulsante discreto */
+    .spinner-glow {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 106, 0, 0.18) 0%, rgba(255, 106, 0, 0) 70%);
+      animation: pulse-glow 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(0.85); opacity: 0.5; }
+      50% { transform: scale(1.15); opacity: 0.85; }
+    }
+
+    .loading-text {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--color-muted);
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .loading-dots {
+      display: inline-block;
+      min-width: 14px;
+      text-align: left;
+      animation: dots 1.4s infinite steps(4, start);
+    }
+
+    @keyframes dots {
+      0% { content: ""; }
+      25% { content: "."; }
+      50% { content: ".."; }
+      75% { content: "..."; }
+    }
+
+    /* --------------------------------------------------------------------------
+       ETAPA 2 — Estado de Aviso
+       -------------------------------------------------------------------------- */
+    .state-notice {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .state-notice.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .state-notice[hidden] {
+      display: none;
+    }
+
+    /* Ícone de Ferramentas / Manutenção */
+    .notice-icon-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 106, 0, 0.09) 0%, rgba(238, 77, 45, 0.05) 100%);
+      border: 1.5px solid rgba(255, 106, 0, 0.22);
+      color: #FF6A00;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(255, 106, 0, 0.12);
+    }
+
+    .notice-icon-badge svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* Título H1 */
+    .notice-title {
+      font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+      font-size: clamp(1.4rem, 2.8vw, 1.85rem);
+      font-weight: 800;
+      color: var(--color-dark);
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    /* Descrição */
+    .notice-description {
+      font-size: clamp(0.94rem, 1.6vw, 1.02rem);
+      color: var(--color-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      max-width: 480px;
+    }
+
+    /* Frase de apoio */
+    .notice-support {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    /* Grupo de Botões */
+    .notice-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-size: 0.94rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all var(--transition-smooth);
+      white-space: nowrap;
+    }
+
+    /* Botão Secundário: Voltar ao Site */
+    .btn-action-secondary {
+      background: var(--color-white);
+      border-color: var(--color-border);
+      color: var(--color-text);
+    }
+
+    .btn-action-secondary:hover {
+      background: #F8F6F3;
+      border-color: #D6CEC5;
+      color: var(--color-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(20, 19, 26, 0.05);
+    }
+
+    .btn-action-secondary:active {
+      transform: translateY(0);
+    }
+
+    .btn-action-secondary svg {
+      transition: transform var(--transition-smooth);
+    }
+
+    .btn-action-secondary:hover svg {
+      transform: translateX(-3px);
+    }
+
+    /* Botão Primário: WhatsApp Oficial */
+    .btn-action-primary {
+      background: var(--gradient-orange);
+      color: var(--color-white);
+      box-shadow: 0 4px 14px rgba(255, 106, 0, 0.32);
+    }
+
+    .btn-action-primary:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 20px rgba(255, 106, 0, 0.44);
+      filter: brightness(1.03);
+    }
+
+    .btn-action-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(255, 106, 0, 0.3);
+    }
+
+    .btn-action-primary svg {
+      flex-shrink: 0;
+    }
+
+    /* Rodapé institucional */
+    .maintenance-footer {
+      width: 100%;
+      text-align: center;
+      margin-top: clamp(24px, 4vw, 44px);
+    }
+
+    .maintenance-copyright {
+      font-size: 0.8125rem;
+      color: var(--color-subtle);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    /* --------------------------------------------------------------------------
+       Responsividade Mobile (até 767px) — Polimento e Safe Area
+       -------------------------------------------------------------------------- */
+    @media (max-width: 767px) {
+      .maintenance-wrapper {
+        /* Desce a logo discretamente com respiro equilibrado e respeito a Dynamic Island / Safe Area */
+        padding-top: calc(max(38px, env(safe-area-inset-top, 0px)) + 12px);
+        padding-bottom: calc(max(18px, env(safe-area-inset-bottom, 0px)) + 6px);
+        padding-left: max(18px, env(safe-area-inset-left, 0px));
+        padding-right: max(18px, env(safe-area-inset-right, 0px));
+      }
+
+      /* Logo institucional */
+      .maintenance-header {
+        margin-bottom: clamp(16px, 3vh, 28px);
+      }
+
+      .maintenance-logo {
+        height: clamp(38px, 4.5vw, 44px);
+        max-width: 200px;
+      }
+
+      /* Card central refinado */
+      .maintenance-card {
+        padding: clamp(26px, 5.5vw, 34px) clamp(18px, 4.5vw, 26px) clamp(22px, 4.5vw, 28px);
+        border-radius: 20px;
+        box-shadow:
+          0 1px 3px rgba(20, 19, 26, 0.03),
+          0 12px 32px -8px rgba(20, 19, 26, 0.07);
+      }
+
+      /* Badge do ícone */
+      .notice-icon-badge {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 18px;
+      }
+
+      .notice-icon-badge svg {
+        width: 26px;
+        height: 26px;
+      }
+
+      /* Textos e espaçamentos internos */
+      .notice-title {
+        font-size: clamp(1.24rem, 4.6vw, 1.4rem);
+        line-height: 1.28;
+        margin-bottom: 12px;
+      }
+
+      .notice-description {
+        font-size: 0.92rem;
+        line-height: 1.55;
+        margin-bottom: 12px;
+        max-width: 100%;
+      }
+
+      .notice-support {
+        font-size: 0.9rem;
+        line-height: 1.45;
+        margin-bottom: 22px;
+      }
+
+      /* Botões de ação */
+      .notice-actions {
+        flex-direction: column-reverse;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .btn-action {
+        width: 100%;
+        min-height: 46px;
+        padding: 12px 18px;
+        font-size: 0.92rem;
+      }
+
+      /* Rodapé */
+      .maintenance-footer {
+        margin-top: clamp(16px, 2.5vh, 28px);
+      }
+    }
+
+    /* Telas muito estreitas (ex.: 320px) */
+    @media (max-width: 360px) {
+      .maintenance-wrapper {
+        padding-top: calc(max(34px, env(safe-area-inset-top, 0px)) + 10px);
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .maintenance-card {
+        padding: 22px 14px 20px;
+      }
+
+      .notice-title {
+        font-size: 1.18rem;
+      }
+
+      .notice-description,
+      .notice-support {
+        font-size: 0.86rem;
+      }
+
+      .btn-action {
+        padding: 11px 14px;
+        font-size: 0.88rem;
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       Acessibilidade: Preferência por Movimento Reduzido
+       -------------------------------------------------------------------------- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .spinner-ring {
+        animation: none;
+        border-top-color: #FF6A00;
+      }
+
+      .spinner-glow {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="maintenance-wrapper">
+
+    <!-- Topo Institucional: Logo Oficial Decolar -->
+    <header class="maintenance-header">
+      <a href="index.html" class="maintenance-logo-link" aria-label="Decolar Consórcios - Página Inicial">
+        <img src="assets/images/LOGO.png" alt="Decolar Consórcios" class="maintenance-logo" width="220" height="55">
+      </a>
+    </header>
+
+    <!-- Área Central -->
+    <main class="maintenance-main" id="maintenance-content" aria-live="polite">
+      <div class="maintenance-card">
+
+        <!-- ETAPA 1 — CARREGAMENTO -->
+        <div class="state-loading" id="state-loading">
+          <div class="maintenance-spinner" aria-hidden="true">
+            <div class="spinner-ring"></div>
+            <div class="spinner-glow"></div>
+          </div>
+          <p class="loading-text">
+            <span>Preparando seu acesso</span><span class="loading-dots">...</span>
+          </p>
+        </div>
+
+        <!-- ETAPA 2 — AVISO INSTITUCIONAL -->
+        <div class="state-notice" id="state-notice" hidden>
+          <!-- Ícone de Ferramentas / Melhorias -->
+          <div class="notice-icon-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+          </div>
+
+          <h1 class="notice-title">Estamos preparando novidades para você.</h1>
+
+          <p class="notice-description">
+            Esta área está temporariamente indisponível enquanto realizamos melhorias para oferecer uma experiência ainda mais completa, segura e eficiente.
+          </p>
+
+          <p class="notice-support">
+            Enquanto isso, nossa equipe continua à disposição para ajudar.
+          </p>
+
+          <div class="notice-actions">
+            <a href="index.html" class="btn-action btn-action-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Voltar ao site</span>
+            </a>
+
+            <a href="https://wa.me/5551997191616" class="btn-action btn-action-primary" target="_blank" rel="noopener noreferrer">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.888 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.456 5.711 1.457h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.468-8.423z"/>
+              </svg>
+              <span>Falar com a Decolar</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="maintenance-footer">
+      <p class="maintenance-copyright">
+        &copy; 2026 Decolar Cons&oacute;rcios. Todos os direitos reservados.
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Lógica de Transição (Carregamento -> Aviso) -->
+  <script>
+    (function () {
+      const loadingEl = document.getElementById('state-loading');
+      const noticeEl = document.getElementById('state-notice');
+
+      if (!loadingEl || !noticeEl) return;
+
+      // Intervalo aleatório entre 2 e 4 segundos (2000ms a 4000ms)
+      const minMs = 2000;
+      const maxMs = 4000;
+      const randomDelay = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+
+      // Verifica preferência de movimento reduzido
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      setTimeout(function () {
+        if (prefersReducedMotion) {
+          loadingEl.hidden = true;
+          loadingEl.style.display = 'none';
+          noticeEl.hidden = false;
+          noticeEl.classList.add('is-visible');
+          return;
+        }
+
+        // Transição fluida e elegante
+        loadingEl.classList.add('is-hidden');
+
+        setTimeout(function () {
+          loadingEl.hidden = true;
+          loadingEl.style.display = 'none';
+          noticeEl.hidden = false;
+
+          // Força reflow para transição suave de entrada
+          void noticeEl.offsetWidth;
+          noticeEl.classList.add('is-visible');
+        }, 300);
+      }, randomDelay);
+    })();
+  </script>
+</body>
+</html>

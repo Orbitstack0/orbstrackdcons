@@ -1,0 +1,5113 @@
+/* Reset básico */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Cursor de texto (caret) invisível por padrão em todo o site — some do
+   texto comum, mas continua normal em qualquer lugar onde a pessoa
+   realmente digita. "caret-color" é uma propriedade herdada: definir aqui
+   no topo e devolver "auto" nos campos editáveis cobre a página inteira
+   sem precisar repetir a regra em cada elemento.
+   Não afeta seleção/cópia de texto (user-select não é tocado), o cursor
+   do mouse, nem teclas de navegação — só a cor do caret de digitação.
+   Suporte: funciona de forma consistente em Chrome/Edge (Chromium), tanto
+   em campos normais quanto no caret do modo de navegação por cursor
+   (Caret Browsing / F7). O Firefox tem uma limitação própria e antiga:
+   não respeita "caret-color" para o caret do modo de navegação por
+   cursor em texto comum (só em campos editáveis) — fora do controle
+   deste CSS. */
+html {
+  caret-color: transparent;
+}
+
+input,
+textarea,
+select,
+[contenteditable]:not([contenteditable="false"]) {
+  caret-color: auto;
+}
+
+body {
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Configurações globais / Design tokens
+   ========================================================================== */
+:root {
+  /* Cores base */
+  --color-white: #ffffff;
+  --color-black: #14131a;
+  --color-graphite: #1d2128;
+  --color-graphite-light: #2a2e36;
+
+  /* Cores de marca (refinadas: vermelho-laranja mais quente e premium,
+     menos "vermelho de alerta", laranja mantido como estava) */
+  --color-red: #f0442e;
+  --color-red-dark: #c23a22;
+  --color-orange: #ff7a1a;
+  --gradient-primary: linear-gradient(135deg, var(--color-red) 0%, var(--color-orange) 100%);
+
+  /* Neutros (retintados para um off-white/grafite mais quente e premium) */
+  --color-gray-50: #f7f4f1;
+  --color-gray-100: #f3efeb;
+  --color-gray-200: #e8e2db;
+  --color-gray-300: #ddd6ce;
+  --color-gray-500: #6c6f76;
+  --color-gray-700: #3d3d43;
+  --color-text: #17181d;
+
+  /* Layout */
+  --header-height: 76px;
+  --container-width: 1720px;
+
+  /* Superfícies */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 1px 2px rgba(20, 18, 22, 0.06);
+  --shadow-md: 0 16px 36px rgba(20, 18, 22, 0.12);
+
+  --transition-base: 200ms ease;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--color-text);
+  background: var(--color-white);
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 32px;
+}
+
+/* Compensação responsiva global para links de âncora sob o header sticky
+   (respeita a variável --header-height real: 76px no mobile/tablet e 108px
+   no desktop com top-strip). */
+[id] {
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+/* Âncora invisível para compensar o header sticky em links de âncora
+   (ex.: "Como Funciona" -> #como-funciona, logo antes de #horizonte).
+   Não ocupa espaço nem altera o layout. */
+.section-anchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: var(--header-height);
+}
+
+#simulador {
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+/* ==========================================================================
+   Botões
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: clamp(0.8rem, 0.4vw + 0.68rem, 0.9rem);
+  border-radius: 999px;
+  cursor: pointer;
+  /* Normaliza <a> e <button> (usados lado a lado, ex.: nos CTAs do
+     carrossel do hero) para o mesmo acabamento: sem borda/fundo/
+     line-height nativos de <button>, mesma fonte herdada. */
+  border: 0;
+  background: none;
+  font-family: inherit;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+}
+
+.btn:focus-visible {
+  outline: 2.5px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+/* CTA principal: maior destaque visual (gradiente Decolar) */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  padding: 11px 20px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(240, 68, 46, 0.24);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(240, 68, 46, 0.3);
+}
+
+/* CTA secundário: fundo branco, borda discreta */
+.btn-secondary {
+  background: var(--color-white);
+  border: 1.5px solid var(--color-gray-300);
+  color: var(--color-gray-700);
+  padding: 9.5px 18px;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-graphite);
+  color: var(--color-graphite);
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.site-header.nav-open {
+  z-index: 2100;
+}
+
+.site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(10px, 1.4vw, 22px);
+  height: var(--header-height);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  height: clamp(42px, 3.5vw, 54px);
+  max-height: 54px;
+  width: auto;
+  max-width: 240px;
+  object-fit: contain;
+}
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.1vw, 20px);
+}
+
+.main-nav a {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-gray-700);
+  padding: 8px 0;
+  white-space: nowrap;
+  transition: color var(--transition-base);
+}
+
+.main-nav a:hover,
+.main-nav a.active,
+.main-nav a[aria-current="page"] {
+  color: var(--color-red);
+}
+
+.main-nav a.has-submenu svg {
+  width: 14px;
+  height: 14px;
+  color: var(--color-gray-500);
+  transition: transform var(--transition-base);
+}
+
+/* Dropdown "Consórcios": base mobile/tablet (acordeão em fluxo normal) */
+.nav-item-dropdown.is-open .has-submenu svg {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-left: 14px;
+  transition: max-height var(--transition-base), opacity var(--transition-base);
+}
+
+.nav-item-dropdown.is-open .submenu {
+  max-height: 220px;
+  opacity: 1;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.submenu li {
+  width: 100%;
+}
+
+.submenu a {
+  display: block;
+  padding: 8px 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  transition: color var(--transition-base);
+}
+
+.submenu a:hover {
+  color: var(--color-orange);
+}
+
+/* Envolve .main-nav + .header-actions sem afetar o layout desktop:
+   "display: contents" torna o wrapper transparente ao flex de .header-inner,
+   então em 1366px o header renderiza exatamente como antes. Só abaixo do
+   breakpoint mobile (ver media query) ele vira o painel fixo único que
+   substitui os dois painéis fixos sobrepostos que causavam o bug. */
+.mobile-menu-panel {
+  display: contents;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1vw, 12px);
+  flex-shrink: 0;
+}
+
+/* Hierarquia do header: "Simule seu Consórcio" (.btn-secondary no HTML) é o
+   CTA principal; "Seja um Representante" (.btn-primary no HTML) vira
+   outline discreto. Só estilo — mesmas classes e mesma funcionalidade. */
+.header-actions .btn-secondary {
+  padding: 9px 20px;
+  border: 1.5px solid transparent;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(240, 68, 46, 0.22);
+}
+
+.header-actions .btn-secondary:hover {
+  border-color: transparent;
+  color: var(--color-white);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(240, 68, 46, 0.3);
+}
+
+.header-actions .btn-primary {
+  padding: 8.5px 16px;
+  border: 1.5px solid var(--color-gray-300);
+  background: transparent;
+  color: var(--color-gray-700);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.header-actions .btn-primary:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Redes sociais: discretas, alinhadas horizontalmente, após os CTAs */
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+  padding-left: 10px;
+  border-left: 1px solid var(--color-gray-200);
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  color: var(--color-gray-500);
+  transition: color var(--transition-base), transform var(--transition-base);
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.social-link:hover {
+  color: var(--color-red);
+  transform: translateY(-1px);
+}
+
+.nav-toggle {
+  position: relative;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Área de toque ampliada (mesma técnica de .simulator-close): garante
+   ~44px mesmo nas larguras em que o botão em si encolhe para 38px
+   (ver @media max-width:360px), sem aumentar o ícone visualmente. */
+.nav-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--color-graphite);
+  border-radius: 2px;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Overlay do menu mobile: escurece o conteúdo atrás do painel e fecha ao
+   clique. Fica sempre presente no markup, mas só é visível quando o
+   hamburger (display:none em desktop) está ativo e o menu é aberto. */
+.menu-overlay {
+  position: fixed;
+  inset: var(--header-height) 0 0 0;
+  background: rgba(20, 18, 22, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+  z-index: 95;
+}
+
+.site-header.nav-open + .menu-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 2050;
+}
+
+/* Trava o scroll do body enquanto o menu mobile está aberto */
+body.nav-locked {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Hero — carrossel cinematográfico (5 slides, ver js/script.js)
+   ========================================================================== */
+.hero-carousel {
+  position: relative;
+  overflow: hidden;
+  scroll-margin-top: 0;
+  background: var(--color-graphite);
+}
+
+.hero-slides {
+  position: relative;
+  height: calc(100vh - var(--header-height));
+  height: calc(100svh - var(--header-height));
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1200ms ease;
+}
+
+.hero-slide.is-active {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+}
+
+.hero-slide-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-slide.is-active .hero-slide-bg {
+  animation: heroSlideZoom 9000ms ease-out both;
+}
+
+@keyframes heroSlideZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 9, 12, 0.52) 0%, rgba(10, 9, 12, 0.38) 45%, rgba(10, 9, 12, 0.68) 100%);
+}
+
+/* Slide 04 (Pesados): o caminhão perdia protagonismo contra o fundo
+   escuro do pôr do sol. Realce só nesta fotografia — brilho/contraste/
+   saturação na imagem e um véu mais leve na faixa central, mantendo o
+   texto branco legível graças ao text-shadow já aplicado nos títulos. */
+.hero-slide[data-slide="3"] .hero-slide-bg {
+  filter: brightness(1.22) contrast(1.1) saturate(1.1);
+}
+
+.hero-slide[data-slide="3"] .hero-slide-overlay {
+  background: linear-gradient(180deg, rgba(10, 9, 12, 0.42) 0%, rgba(10, 9, 12, 0.22) 45%, rgba(10, 9, 12, 0.62) 100%);
+}
+
+.hero-slide-content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  text-align: center;
+  padding-inline: 24px;
+}
+
+.hero-slide-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hero-slide-subtitle {
+  margin-top: 16px;
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-slide-cta {
+  margin-top: 30px;
+}
+
+.hero-slide:not(.is-active) .hero-slide-title,
+.hero-slide:not(.is-active) .hero-slide-subtitle,
+.hero-slide:not(.is-active) .hero-slide-cta {
+  animation: none;
+}
+
+.hero-slide.is-active .hero-slide-title { animation: fadeSlideUp 700ms ease 150ms both; }
+.hero-slide.is-active .hero-slide-subtitle { animation: fadeSlideUp 700ms ease 260ms both; }
+.hero-slide.is-active .hero-slide-cta { animation: fadeSlideUp 700ms ease 360ms both; }
+
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  background: rgba(20, 18, 22, 0.28);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.hero-arrow:hover {
+  background: rgba(20, 18, 22, 0.5);
+  border-color: var(--color-white);
+}
+
+.hero-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hero-arrow-prev { left: clamp(12px, 3vw, 36px); }
+.hero-arrow-next { right: clamp(12px, 3vw, 36px); }
+
+.hero-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(18px, 3vw, 32px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Gap maior que antes (10px -> 16px): a área de toque de cada ponto
+     cresceu (ver ::after abaixo) e precisa de mais respiro entre os
+     indicadores para reduzir toques no vizinho errado. */
+  gap: 16px;
+}
+
+.hero-dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+/* Área de toque ampliada (~31px) sem aumentar o ponto visualmente —
+   mesma técnica já usada em .simulator-close. Não chega aos 44px
+   cheios porque os pontos ficam muito próximos entre si (o gap acima
+   já foi aumentado para compensar); mesmo assim é um ganho grande
+   sobre os 9px originais. */
+.hero-dot::after {
+  content: "";
+  position: absolute;
+  inset: -17px;
+}
+
+.hero-dot.is-active {
+  background: var(--color-white);
+  transform: scale(1.15);
+}
+
+@media (max-width: 767px) {
+  .hero-slides {
+    height: 88vh;
+    height: 88svh;
+  }
+
+  .hero-slide-cta {
+    min-height: 46px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+
+  /* Recuperado no mobile (antes ficava display:none): a altura do hero
+     aqui é 88svh, com espaço de sobra, e o degradê/overlay de cada
+     slide já escurece o suficiente para sustentar um texto secundário
+     menor, sem disputar protagonismo com o título nem cobrir pontos
+     importantes da fotografia. */
+  .hero-slide-subtitle {
+    margin-top: 10px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .hero-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-slide-subtitle {
+    font-size: 0.85rem;
+    max-width: 280px;
+  }
+}
+
+/* ==========================================================================
+   Simulador — modal centralizado, aberto pelos CTAs dos slides 1 e 5 do
+   hero e pelo CTA "Simule seu Consórcio" do header (ver js/script.js).
+   Mesmo formulário/IDs/validações/encaminhamento de sempre — só a
+   apresentação deixou de ser um painel embutido no hero e passou a ser
+   um modal, já que o hero agora é o carrossel acima.
+   ========================================================================== */
+.sim-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 32px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 300ms ease, visibility 0s linear 300ms;
+}
+
+.sim-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 300ms ease;
+}
+
+.sim-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 9, 12, 0.6);
+}
+
+body.sim-open {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Simulador
+   ========================================================================== */
+.simulator-card {
+  width: 100%;
+  max-width: clamp(400px, 32vw, 500px);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: clamp(22px, 2.8vw, 34px);
+  animation: fadeSlideUp 600ms ease 200ms both;
+}
+
+/* Só o simulador em modal da Home (.simulator-card também é usado em
+   simulacao.html, que não muda) */
+.sim-modal .simulator-card {
+  position: relative;
+  z-index: 1;
+  max-height: min(92vh, 92dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: none;
+  transform: translateY(16px);
+  transition: transform 300ms ease;
+}
+
+.sim-modal.is-open .simulator-card {
+  transform: translateY(0);
+}
+
+.sim-modal .simulator-card:focus {
+  outline: none;
+}
+
+.sim-modal .simulator-heading {
+  padding-right: 40px;
+}
+
+.simulator-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.simulator-close::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+}
+
+.simulator-close:hover {
+  background: var(--color-gray-200);
+  color: var(--color-text);
+}
+
+.simulator-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+
+
+.simulator-heading h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.simulator-subtitle {
+  margin-top: 6px;
+  font-size: 0.88rem;
+  color: var(--color-gray-500);
+}
+
+.modality-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.modality-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 6px;
+  text-align: center;
+  border: 1.5px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
+}
+
+.modality-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modality-option svg {
+  width: 22px;
+  height: 22px;
+  color: var(--color-gray-500);
+  transition: color var(--transition-base);
+}
+
+.modality-option span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+}
+
+.modality-option:hover {
+  border-color: var(--color-red);
+  background: rgba(240, 68, 46, 0.04);
+  transform: translateY(-2px);
+}
+
+.modality-option.is-selected {
+  border-color: var(--color-red);
+  background: rgba(240, 68, 46, 0.06);
+}
+
+.modality-option.is-selected svg {
+  color: var(--color-red);
+}
+
+.type-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-gray-100);
+  border-radius: 999px;
+}
+
+.type-option {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-gray-500);
+  cursor: pointer;
+  transition: background-color var(--transition-base), color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.type-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.type-option.is-selected {
+  background: var(--color-white);
+  color: var(--color-red);
+  box-shadow: var(--shadow-sm);
+}
+
+.simulator-range-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.simulator-range-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.simulator-range-header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.simulator-range-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-red);
+}
+
+/* Track de 6px real + thumb de 20px: a área clicável do input (22px) é
+   maior que a linha visível, mas o alinhamento vertical do thumb é
+   calculado sempre em relação ao track (definido explicitamente abaixo),
+   e não à altura "invisível" padrão do navegador - essa era a causa do
+   desalinhamento da bolinha em relação à linha. */
+.simulator-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.simulator-range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--color-red) 0%, var(--color-orange) var(--range-progress, 13%), var(--color-gray-200) var(--range-progress, 13%), var(--color-gray-200) 100%);
+}
+
+.simulator-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  /* (track 6px - thumb 20px) / 2 = -7px: centraliza o thumb sobre o track */
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 3px solid var(--color-red);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.simulator-range::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-gray-200);
+}
+
+.simulator-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--color-red), var(--color-orange));
+}
+
+.simulator-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 3px solid var(--color-red);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-gray-500);
+}
+
+/* Simulador no mobile: aumenta a área de toque do slider e dos campos
+   sem alterar a aparência visual (track/thumb continuam do mesmo
+   tamanho, só a caixa de interação do input cresce). */
+@media (max-width: 600px) {
+  .simulator-range {
+    height: 44px;
+  }
+
+  .modality-option {
+    min-height: 44px;
+  }
+
+  .type-option {
+    min-height: 44px;
+  }
+
+  .form-field input {
+    min-height: 44px;
+    /* 16px evita o autozoom do Safari iOS ao focar o campo (abaixo
+       disso, o iOS aumenta o zoom da página automaticamente); o
+       tamanho visual no desktop continua em 0.95rem, só o mobile muda. */
+    font-size: 16px;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+}
+
+.form-field input {
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  transition: border-color var(--transition-base);
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: var(--color-red);
+}
+
+.consent-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.consent-field input {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: var(--color-red);
+}
+
+.consent-field label {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-gray-500);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(240, 68, 46, 0.28);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(240, 68, 46, 0.34);
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-submit:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Vantagens (seção institucional abaixo do Hero)
+   ========================================================================== */
+/* ==========================================================================
+   Vantagens — composição editorial: fotografia real numa faixa lateral
+   esquerda (recorte orgânico), título/texto/pilares à direita. Sem cards,
+   sem ícones, sem traços decorativos junto a palavras/títulos.
+   ========================================================================== */
+.advantages {
+  /* Sem padding vertical próprio: o espaço interno agora pertence ao
+     conteúdo (.advantages-content), para que a fotografia possa
+     preencher 100% da altura real da seção, de ponta a ponta. */
+  background: #fdfaf6;
+  overflow: hidden;
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
+.advantages-inner {
+  position: relative;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  /* Largura da fotografia como variável local: referenciada tanto no
+     width do painel quanto no padding-left do conteúdo, para que os
+     dois termos nunca fiquem dessincronizados. */
+  --adv-media-w: clamp(240px, 27%, 420px);
+  --adv-gap: clamp(32px, 4.4vw, 72px);
+}
+
+.advantages-media {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--adv-media-w);
+  /* Recorte orgânico: uma única curva suave (ver <clipPath> no HTML),
+     sem pontas nem ângulos — objectBoundingBox acompanha o tamanho real
+     do elemento em qualquer altura/largura. */
+  clip-path: url(#advantages-media-clip);
+}
+
+.advantages-media-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 40%;
+  display: block;
+}
+
+.advantages-content {
+  min-width: 0;
+  padding-block: clamp(80px, 9vw, 120px) clamp(58px, 6.4vw, 86px);
+  padding-left: calc(var(--adv-media-w) + var(--adv-gap));
+  padding-right: 32px;
+}
+
+.advantages-intro {
+  max-width: 640px;
+}
+
+.advantages-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.95rem, 2.8vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.advantages-title-accent {
+  display: block;
+  margin-top: 8px;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.advantages-lead {
+  margin-top: 20px;
+  font-size: 1.06rem;
+  line-height: 1.65;
+  color: var(--color-gray-700);
+}
+
+/* Três pilares: sem cards, sem sombras, sem numeração ou traço
+   decorativo — apenas divisórias finas e discretas entre colunas,
+   tipografia e espaço negativo carregando a hierarquia. */
+.pillars {
+  margin-top: clamp(44px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  width: 100%;
+}
+
+.pillar {
+  padding: 0 clamp(26px, 2.8vw, 40px);
+  border-left: 1px solid rgba(221, 214, 206, 0.6);
+}
+
+.pillar:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+
+.pillar-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.18rem, 1.5vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+.pillar-text {
+  margin-top: 12px;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--color-gray-500);
+}
+
+/* 900px a 1199px: painel lateral ainda de ponta a ponta, só um pouco
+   mais estreito */
+@media (max-width: 1199px) {
+  .advantages-inner {
+    --adv-media-w: clamp(200px, 25%, 340px);
+  }
+}
+
+/* < 900px: fotografia empilhada acima do conteúdo (fluxo normal, não
+   mais absoluta), largura total, recorte orgânico só na borda inferior */
+@media (max-width: 899px) {
+  .advantages-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .advantages-media {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: clamp(220px, 46vw, 320px);
+    clip-path: url(#advantages-media-clip-mobile);
+  }
+
+  .advantages-content {
+    padding-left: 32px;
+    padding-top: clamp(40px, 7vw, 56px);
+  }
+
+  .advantages-intro {
+    max-width: none;
+  }
+
+  .pillars {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pillar {
+    padding: 22px 0;
+    border-left: none;
+    border-top: 1px solid rgba(221, 214, 206, 0.6);
+  }
+
+  .pillar:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .pillar:last-child {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 599px) {
+  .advantages-content {
+    padding-inline: 20px;
+  }
+}
+
+/* ==========================================================================
+   Objetivos — seção institucional/comercial: atendimento consultivo da
+   Decolar. Composição editorial (texto 55% + fotografia real 45%), sem
+   grade de cards, sem numeração ou traços decorativos junto aos títulos.
+   ========================================================================== */
+.goals {
+  padding: clamp(50px, 6vw, 80px) 0;
+  background: var(--color-gray-50);
+  overflow: hidden;
+}
+
+.goals .container {
+  max-width: 1180px;
+}
+
+.goals-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+  /* Áreas nomeadas (em vez de depender só da ordem no HTML): permitem
+     reordenar visualmente por breakpoint sem jamais mexer na ordem real
+     do documento (leitura/teclado/acessibilidade ficam intactas). */
+  grid-template-areas:
+    "intro media"
+    "list  media";
+  align-items: center;
+  gap: clamp(32px, 5vw, 64px);
+}
+
+/* .goals-content é um wrapper puramente estrutural (sem estilos próprios).
+   Sem "display: contents" aqui, .goals-intro e .goals-list — que ficam
+   dentro dele no HTML — nunca são filhos DIRETOS de .goals-inner, então
+   o grid-area abaixo não tem efeito sobre eles: o grid trata o wrapper
+   como um único item não nomeado e ignora a reordenação por breakpoint. */
+.goals-content { display: contents; }
+
+.goals-intro { grid-area: intro; min-width: 0; }
+.goals-media { grid-area: media; min-width: 0; }
+.goals-list { grid-area: list; min-width: 0; }
+
+.goals-media {
+  align-self: stretch;
+  min-height: 360px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.goals-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  display: block;
+}
+
+.goals-intro {
+  max-width: 640px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.goals-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.85rem, 2.7vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.goals-lead {
+  margin-top: 12px;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+
+.goals-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.goal-row {
+  padding-block: clamp(20px, 2.6vw, 30px);
+  border-top: 1px solid rgba(221, 214, 206, 0.6);
+}
+
+.goals-list .goal-row:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.goal-row-body {
+  min-width: 0;
+}
+
+.goal-row-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.goal-row-text {
+  margin-top: 8px;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--color-gray-500);
+}
+
+@media (max-width: 900px) {
+  .goals-inner {
+    grid-template-columns: 1fr;
+    /* Tablet empilhado (768-900px): mantém exatamente a ordem visual de
+       sempre — introdução, diferenciais, fotografia por último. Nada
+       muda aqui; só o mobile abaixo de 768px ganha a nova composição. */
+    grid-template-areas:
+      "intro"
+      "list"
+      "media";
+  }
+
+  .goals-media {
+    min-height: clamp(220px, 62vw, 340px);
+    margin-top: clamp(32px, 6vw, 48px);
+  }
+}
+
+/* Mobile: títulos de seção fluidos (evita 4-5 linhas em 360px) */
+@media (max-width: 767px) {
+  .goals-title,
+  .products-intro h2,
+  .legacy-title {
+    font-size: clamp(1.65rem, 6.8vw, 1.85rem);
+  }
+
+  .goal-row-title {
+    font-size: clamp(1rem, 4.4vw, 1.1rem);
+  }
+}
+
+/* ==========================================================================
+   Mobile (<=767px): composição compacta e editorial para a seção
+   "Uma decisão importante...". Reordena visualmente para introdução ->
+   fotografia -> diferenciais (a ordem no HTML já é essa — ver index.html
+   — então aqui só confirmamos a área; nenhum "order" de flexbox é usado,
+   então a ordem de leitura/teclado nunca diverge da ordem visual).
+   Espaçamentos reduzidos em relação ao tablet/desktop (gap do grid,
+   margens de intro/mídia e padding dos diferenciais), sem diminuir
+   fontes nem esconder texto.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .goals-inner {
+    grid-template-areas:
+      "intro"
+      "media"
+      "list";
+    gap: clamp(18px, 4vw, 26px);
+  }
+
+  /* No desktop/tablet esse espaçamento soma-se ao gap do grid (texto e
+     diferenciais dividem a mesma coluna). Aqui cada área já tem seu
+     próprio espaçamento vindo só do gap — zerar evita espaço duplicado. */
+  .goals-intro {
+    margin-bottom: 0;
+  }
+
+  /* Proporção próxima de 16:9 na fotografia, calibrada para a largura
+     útil do container (viewport menos o padding lateral) nas larguras
+     testadas (320/375/390/430px). */
+  .goals-media {
+    min-height: clamp(175px, 52vw, 300px);
+    margin-top: 0;
+  }
+
+  .goal-row {
+    padding-block: clamp(14px, 2vw, 18px);
+  }
+}
+
+/* ==========================================================================
+   Consórcios (ala de produtos: Veículos / Imóveis / Pesados)
+   Apresentação editorial das três modalidades, com presença visual forte
+   e blocos alternados - sem cards pequenos genéricos.
+   ========================================================================== */
+.products {
+  padding: clamp(58px, 6.4vw, 92px) 0;
+  background: #faf8f6;
+}
+
+.products .container {
+  max-width: 1420px;
+}
+
+.products-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+.products-intro {
+  max-width: 640px;
+  margin-bottom: clamp(36px, 4vw, 56px);
+}
+
+.products-intro h2 {
+  margin-top: 12px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.85rem, 2.7vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.products-intro p {
+  margin-top: 12px;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+
+.products-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.product-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.product-panel:hover {
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+/* ---------- Bloco gráfico (fotografia + índice) ---------- */
+.product-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  overflow: hidden;
+  /* Fundo de fallback (visível apenas antes do carregamento da imagem) */
+  background: linear-gradient(150deg, #1d1b22 0%, #14131a 65%, #0d0c10 100%);
+}
+
+/* Fotografia da modalidade: preenche todo o espaço do painel, sem
+   distorcer (object-fit: cover preserva a proporção original do PNG). */
+.product-media-img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Sobreposição discreta apenas para preservar a legibilidade do índice
+   numérico sobre a fotografia, sem escurecer a imagem de forma geral. */
+.product-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(200deg, rgba(10, 9, 11, 0.02) 0%, rgba(10, 9, 11, 0.4) 100%);
+  pointer-events: none;
+}
+
+.product-index {
+  position: absolute;
+  z-index: 2;
+  right: clamp(12px, 2vw, 28px);
+  bottom: -0.12em;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: clamp(5rem, 9vw, 8rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+
+/* ---------- Bloco de conteúdo ---------- */
+.product-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: clamp(28px, 3.4vw, 44px);
+}
+
+.product-content h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.4rem, 1.9vw, 1.85rem);
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.product-content p {
+  max-width: 480px;
+  font-size: 0.98rem;
+  line-height: 1.62;
+  color: var(--color-gray-700);
+}
+
+.product-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.product-tags li {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--color-gray-100);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+}
+
+/* Dois botões de ação por card: principal (simular, já pré-selecionando
+   a modalidade via query string) e secundário (conhecer a página da
+   modalidade) — lado a lado no desktop, empilhados no mobile (ver
+   media query abaixo). */
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.products-cta-row {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(36px, 4vw, 52px);
+}
+
+@media (min-width: 860px) {
+  .product-panel {
+    grid-template-columns: 42% 58%;
+    min-height: 320px;
+  }
+
+  .product-media {
+    /* Preenche a altura total da linha do grid via stretch explícito.
+       (min-height: 100% foi removido: em uma linha de grid com altura
+       "auto", a porcentagem podia resolver de forma inconsistente entre
+       navegadores, deixando o fundo escuro de fallback visível como uma
+       faixa no topo da imagem antes do estica-mento ser aplicado.) */
+    align-self: stretch;
+  }
+
+  .product-content {
+    justify-content: center;
+  }
+
+  /* Alterna o lado do bloco gráfico para ritmo editorial */
+  .product-panel--reverse {
+    grid-template-columns: 58% 42%;
+  }
+
+  .product-panel--reverse .product-media {
+    order: 2;
+  }
+
+  .product-panel--reverse .product-content {
+    order: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-media {
+    min-height: 190px;
+  }
+
+  /* object-position ajustado por modalidade: no crop curto do mobile,
+     o centro puro (50% 50%) cortava topo/base do assunto principal de
+     cada foto (mesmas imagens, sem troca). */
+  #consorcio-veiculos .product-media-img {
+    object-position: center 60%;
+  }
+
+  #consorcio-imoveis .product-media-img {
+    object-position: center 25%;
+  }
+
+  #consorcio-pesados .product-media-img {
+    object-position: center 28%;
+  }
+
+  .products-cta-row .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  /* Carrossel horizontal: os três cards passam de empilhados a uma
+     faixa com scroll-snap nativo (sem biblioteca). flex (não grid) para
+     que os cards estiquem para a mesma altura automaticamente
+     (align-items:stretch é o padrão do flex), mesmo com textos de
+     comprimentos diferentes. overflow-y:visible + scroll-snap-type:x
+     garantem que só o gesto horizontal é capturado — a rolagem
+     vertical da página nunca é afetada. */
+  .products-panels {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Espaço extra embaixo + margem negativa equivalente: evita que a
+       sombra dos cards (.product-panel:hover) seja cortada pelo
+       overflow-x, sem alterar a altura visual da seção. */
+    padding-bottom: 6px;
+    margin-bottom: -6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .products-panels::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ~87% da largura visível + o gap acima já revela uma prévia natural
+     do próximo card, sem precisar de nenhum cálculo extra. */
+  .product-panel {
+    flex: 0 0 87%;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .product-content {
+    padding: 24px 22px 26px;
+  }
+
+  .product-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .product-actions .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .product-index {
+    font-size: clamp(4rem, 20vw, 5rem);
+  }
+
+  /* Indicador discreto de navegação (3 pontos), só existe no mobile */
+  .products-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .products-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-gray-300);
+    transition: background-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .products-dot.is-active {
+    background: var(--color-red);
+    transform: scale(1.3);
+  }
+}
+
+@media (min-width: 768px) {
+  /* Indicador é exclusivo do carrossel mobile — não existe em
+     tablet/desktop, onde os três cards continuam empilhados como antes. */
+  .products-dots {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Por que escolher a Decolar (institucional, credibilidade) - composição
+   editorial: número grande + texto à esquerda, pilares verticais à
+   direita. Fundo claro, conectando visualmente com o bloco +38 anos que
+   vem em seguida.
+   ========================================================================== */
+/* ==========================================================================
+   Credibilidade, trajetória e presença nacional — seção institucional
+   única (substitui as antigas "Por que escolher a Decolar?", "Experiência
+   que atravessa décadas" e "De Porto Alegre para todo o Brasil").
+   Coluna esquerda: experiência + diferenciais + link para Nossa História.
+   Coluna direita: mapa do Brasil ampliado, protagonista visual.
+   ========================================================================== */
+.legacy {
+  /* ~10% menor que antes (64–100px → 58–90px), seção mais compacta */
+  padding: clamp(58px, 6.5vw, 90px) 0;
+  background: var(--color-gray-50);
+  border-top: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+/* Grid "achatado": cada peça (intro, número, texto, diferenciais, mapa,
+   botão) é um item direto com seu próprio grid-area — permite recompor
+   a ordem VISUAL por breakpoint sem jamais mudar a ordem real do HTML
+   (ver comentário no index.html). Duas colunas já na base (mobile):
+   a maioria das áreas ocupa as duas ("intro intro" etc.), só a linha
+   "pillars map" realmente usa as duas lado a lado. */
+.legacy-grid {
+  max-width: 1420px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(104px, 0.78fr);
+  grid-template-areas:
+    "intro    intro"
+    "number   number"
+    "text     text"
+    "pillars  map"
+    "link     link";
+  gap: clamp(34px, 4.2vw, 56px);
+  align-items: stretch;
+}
+
+/* Mesmo problema de .goals-content, aqui com .legacy-content: wrapper
+   estrutural sem estilos próprios. Sem "display: contents", .legacy-
+   number-block, .legacy-text, .legacy-pillars e .legacy-link (filhos
+   dele, não de .legacy-grid) não recebem o grid-area abaixo — o grid
+   só posiciona corretamente o wrapper (como item único, sem área
+   nomeada) e .legacy-map-col, causando o mapa isolado e os espaços
+   vazios das áreas "number"/"text"/"pillars"/"link" nunca preenchidas. */
+.legacy-content { display: contents; }
+
+.legacy-intro { grid-area: intro; }
+.legacy-number-block { grid-area: number; }
+.legacy-text { grid-area: text; }
+.legacy-pillars { grid-area: pillars; }
+.legacy-map-col { grid-area: map; }
+.legacy-link { grid-area: link; }
+
+/* Tablet (768-899px): reproduz exatamente a ordem empilhada de sempre
+   (introdução, número, texto, diferenciais, botão, mapa por último e
+   em largura total) — nada muda aqui nesta tarefa. */
+@media (min-width: 768px) and (max-width: 899px) {
+  .legacy-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "intro"
+      "number"
+      "text"
+      "pillars"
+      "link"
+      "map";
+  }
+}
+
+/* Desktop (>=900px): reproduz exatamente a composição de sempre — coluna
+   de texto à esquerda (introdução a botão, empilhados) + mapa ocupando
+   toda a altura à direita. Nada muda aqui nesta tarefa. */
+@media (min-width: 900px) {
+  .legacy-grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-areas:
+      "intro    map"
+      "number   map"
+      "text     map"
+      "pillars  map"
+      "link     map";
+  }
+}
+
+.legacy-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+.legacy-title {
+  margin-top: 12px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.85rem, 2.7vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.legacy-lead {
+  margin-top: 12px;
+  max-width: 480px;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+
+/* Número em coluna (não mais lado a lado com o rótulo): +38 grande,
+   identificação abaixo, à esquerda, menor e discreta. */
+.legacy-number-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.legacy-number {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.2rem, 5.5vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.legacy-number-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--color-gray-700);
+}
+
+.legacy-text {
+  margin-top: 16px;
+  max-width: 480px;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--color-gray-500);
+}
+
+.legacy-pillars {
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(18px, 2.3vw, 26px);
+}
+
+.legacy-pillar {
+  padding-block: 17px;
+  border-top: 1px solid rgba(221, 214, 206, 0.6);
+  transition: transform var(--transition-base);
+}
+
+.legacy-pillars .legacy-pillar:last-child {
+  border-bottom: 1px solid rgba(221, 214, 206, 0.6);
+}
+
+.legacy-pillar-label {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  transition: color var(--transition-base);
+}
+
+.legacy-pillar-text {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-gray-500);
+}
+
+/* Botão institucional "Conheça a nossa história": contorno fino laranja,
+   fundo transparente, sem seta — mesmo padrão arredondado dos botões do
+   site, mas com a variante de contorno exigida só para este link. */
+.legacy-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: clamp(20px, 2.4vw, 26px);
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-orange);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-orange);
+  background: transparent;
+  transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .legacy-pillar:hover {
+    transform: translateX(2px);
+  }
+
+  .legacy-pillar:hover .legacy-pillar-label {
+    color: var(--color-red);
+  }
+
+  .legacy-link:hover {
+    background: rgba(255, 122, 26, 0.08);
+    color: var(--color-orange);
+    border-color: var(--color-orange);
+  }
+}
+
+/* Coluna do mapa: protagonista visual, ~55% da composição no desktop,
+   ocupando a maior parte da altura disponível da seção */
+.legacy-map-col {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  align-self: stretch;
+}
+
+@media (min-width: 900px) {
+  .legacy-grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+}
+
+/* ==========================================================================
+   Mobile (<=767px) — ETAPA 4: o mapa deixou de ser plano de fundo
+   (opacidade reduzida/mask-image testados na rodada anterior; o
+   resultado parecia uma imagem apagada atrás do texto, e as linhas de
+   atuação nacional ficavam quase imperceptíveis). Mudança de abordagem:
+   o mapa volta a ser um elemento gráfico normal, em plena opacidade,
+   só que agora ao lado dos diferenciais (não mais sozinho, em bloco
+   isolado, ocupando a largura toda).
+
+   Parte A (introdução, +38, parágrafo de trajetória): fundo limpo, sem
+   mapa atrás — área "intro"/"number"/"text" do grid, cada uma ainda em
+   largura total.
+   Parte B (diferenciais + mapa lado a lado): área "pillars"/"map",
+   dividindo a mesma linha do grid já definido na regra base acima.
+   Botão institucional por último, em largura total.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .legacy {
+    /* Espaçamento vertical reduzido só neste breakpoint (desktop/tablet
+       mantêm o clamp original, inalterado). */
+    padding: clamp(40px, 10vw, 56px) 0;
+  }
+
+  .legacy-grid {
+    /* Gap mais contido que o clamp(34px,4.2vw,56px) do desktop/tablet —
+       composição compacta, como pedido. */
+    gap: clamp(16px, 4vw, 24px);
+  }
+
+  .legacy-number-block {
+    margin-top: clamp(18px, 4vw, 26px);
+  }
+
+  .legacy-text {
+    align-self: start;
+  }
+
+  /* Diferenciais: mesma lista/tipografia/divisórias de sempre, só
+     reposicionada numa coluna mais estreita ao lado do mapa. Fonte dos
+     títulos/textos não é tocada em nenhum lugar deste arquivo. */
+  .legacy-pillars {
+    margin-top: 0;
+    align-self: start;
+  }
+
+  .legacy-pillar {
+    padding-block: 14px;
+  }
+
+  /* Mapa: volta a ser um elemento gráfico comum (não mais posicionado
+     como fundo) — plena opacidade, sem mask-image, só dimensionado para
+     caber na coluna estreita ao lado dos diferenciais. Mesmo SVG, mesma
+     proporção (aspect-ratio em .reach-map, intocado). */
+  .legacy-map-col {
+    align-items: flex-start;
+    justify-content: center;
+    align-self: start;
+  }
+
+  .legacy-map-col .reach-map {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  /* Na coluna estreita, a etiqueta "Atuação nacional" e a legenda
+     "Porto Alegre, RS" (pílulas flutuantes dimensionadas para um mapa
+     bem maior) deixam de caber com folga e poderiam extrapolar a
+     largura da coluna ou sobrepor o próprio desenho. A origem em Porto
+     Alegre continua visível por meio do ponto/glow do SVG (não
+     tocados); só as duas legendas textuais flutuantes somem aqui. */
+  .legacy-map-col .reach-badge,
+  .legacy-map-col .reach-map-label {
+    display: none;
+  }
+
+  .legacy-link {
+    margin-top: clamp(16px, 3.5vw, 22px);
+    justify-self: start;
+  }
+}
+
+/* Faixa estreita (ajuste proporcional pedido para 320/375px): reduz um
+   pouco a fração do mapa e o gap, mantendo as duas colunas — não
+   empilha (a disposição alternativa só seria usada se duas colunas não
+   coubessem de forma alguma, o que não é o caso: o mapa continua
+   inteiro e reconhecível, só um pouco mais estreito). */
+@media (max-width: 374px) {
+  .legacy-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(88px, 0.68fr);
+    gap: clamp(12px, 4vw, 16px);
+  }
+}
+
+/* ==========================================================================
+   Horizonte (quebra visual cinematográfica entre Vantagens e a próxima
+   seção institucional) - fotografia Horizonte.png à esquerda + painel
+   institucional escuro à direita, como um único componente
+   ========================================================================== */
+.horizon {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(72px, 9vw, 120px) 0;
+  /* Fundo de fallback: visível só até a foto (.horizon-media) carregar */
+  background: linear-gradient(160deg, #181c27 0%, #14131a 55%, #0d0c10 100%);
+}
+
+/* Container próprio, mais contido que o do Header (que vai até 1720px):
+   ~90% da largura em notebooks, com teto entre 1450-1550px em telas
+   maiores. */
+.horizon .container {
+  position: relative;
+  z-index: 2;
+  /* min(94vw, ...) garante que o piso de 1180px do clamp() nunca force o
+     container a ficar mais largo que a viewport em telas <1283px (tablets,
+     notebooks estreitos), evitando overflow horizontal mascarado por
+     "overflow-x: hidden" no body. Em >=1283px o resultado é idêntico ao
+     clamp() original (1366x768 preservado). */
+  max-width: min(94vw, clamp(1180px, 92vw, 1520px));
+}
+
+/* ---------- Fotografia cinematográfica, de ponta a ponta da seção ---------- */
+.horizon-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.horizon-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Cena de atendimento consultivo (aperto de mãos + documentos) —
+     prioriza o lado esquerdo/centro do quadro, onde ficam as mãos, a
+     mesa e os papéis; o lado direito se funde ao fundo via mask abaixo. */
+  object-position: 38% 56%;
+  /* A fusão real com o fundo grafite vem daqui: a MÁSCARA apaga os
+     próprios pixels da fotografia progressivamente (em vez de só pintar
+     uma camada escura por cima), revelando o fundo sólido de .horizon
+     por trás. É isso que evita a aparência de "retângulo" ou corte
+     vertical perceptível — não sobra textura da foto para "vazar".
+     Paradas deslocadas mais para a esquerda nesta rodada: o painel
+     deixou de ficar encostado na borda direita (ver .horizon-frame,
+     agora um grid de 3 faixas) e passou a ficar mais central — a
+     transição precisa terminar de escurecer mais cedo para continuar
+     garantindo contraste atrás do texto na nova posição. */
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 20%, rgba(0, 0, 0, 0.8) 36%, rgba(0, 0, 0, 0.34) 52%, transparent 72%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 20%, rgba(0, 0, 0, 0.8) 36%, rgba(0, 0, 0, 0.34) 52%, transparent 72%);
+}
+
+/* Camada complementar, bem mais sutil que a máscara acima: só reforça o
+   contraste na faixa de transição (onde o texto pode encostar na foto)
+   e aplica o leve glow laranja de marca — não é ela quem faz a fusão
+   para o preto, então usa incrementos pequenos, sem saltos de opacidade. */
+.horizon-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(9, 9, 11, 0.04) 0%, rgba(9, 9, 11, 0.22) 26%, rgba(9, 9, 10, 0.54) 42%, rgba(8, 8, 9, 0.8) 60%, rgba(7, 7, 8, 0.93) 78%, rgba(6, 6, 7, 0.95) 100%),
+    radial-gradient(circle at 100% 100%, rgba(255, 122, 26, 0.16) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.horizon-frame {
+  position: relative;
+  z-index: 1;
+  /* Grid de 3 faixas em vez de flex+justify-content:flex-end: é a
+     LARGURA das faixas (não um transform/margem) que traz o painel
+     para a região central-direita, sem encostar na borda do container.
+     Ajustar as frações/minmax abaixo é o jeito certo de mover o
+     conjunto — nunca translateX/margin negativo. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 820px) minmax(0, 0.4fr);
+  align-items: center;
+  min-height: clamp(380px, 46vh, 460px);
+  opacity: 1;
+  transition: opacity 650ms ease;
+}
+
+/* Estado "ainda não revelado": aplicado via JS (progressive enhancement).
+   Sem JavaScript, a seção permanece com a opacidade normal (visível). */
+.horizon.horizon-pending .horizon-frame {
+  opacity: 0;
+}
+
+/* ---------- Painel de texto, sobre a fotografia ----------
+   Todo o conteúdo (etiqueta, título, frase laranja, descrição, CTA)
+   centralizado horizontalmente dentro da própria coluna direita — não
+   em relação à largura inteira da seção, só dentro do painel. */
+.horizon-panel {
+  position: relative;
+  /* Ocupa a faixa central do grid (coluna 2 de 3) — essa é a posição
+     real do bloco; a coluna some ao empilhar no mobile (ver media
+     query), onde grid-column deixa de ter efeito. */
+  grid-column: 2;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-block: clamp(8px, 1.6vw, 20px);
+  transition: opacity 650ms ease 150ms, transform 650ms ease 150ms;
+}
+
+.horizon.horizon-pending .horizon-panel {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.horizon-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  /* Reforço de contraste independente do degradê/máscara por trás —
+     rede de segurança para telas pequenas, sem mudar a estética. */
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+}
+
+.horizon-title {
+  margin-top: 30px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  /* Moderado em relação à rodada anterior (3.6vw/4.2rem): naquele
+     tamanho, "Consórcio não é sobre esperar." não cabia numa linha só
+     dentro da coluna do painel e "esperar." ficava órfã numa 3ª linha.
+     Neste tamanho, a frase cabe em uma linha na coluna de até 820px. */
+  font-size: clamp(2rem, 2.8vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  text-wrap: balance;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
+.horizon-title-accent {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.horizon-lead {
+  margin-top: 16px;
+  max-width: 400px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* O CTA reaproveita o botão premium global (.btn.btn-primary — mesmo
+   gradiente laranja, hover e foco acessível usados em todo o site);
+   aqui ele ganha mais largura/presença (maior padding e fonte) do que o
+   tamanho padrão do botão, sem glow extra além do hover já existente. */
+.horizon-cta {
+  margin-top: 34px;
+  padding: 16px 36px;
+  font-size: 1rem;
+}
+
+/* Tablet landscape: preserva foto + painel lado a lado, só reduz proporções.
+   Abaixo de 900px (tablet portrait) o layout empilha — ver bloco seguinte.
+   Limite superior em 1024px (era 1023): 1024px exato ficava fora dessa
+   faixa e caía direto no layout desktop puro. */
+@media (min-width: 900px) and (max-width: 1024px) {
+  .horizon-title {
+    max-width: 360px;
+  }
+
+  .horizon-lead {
+    max-width: 320px;
+  }
+}
+
+/* Tablet portrait e mobile: foto em cima, painel abaixo (empilhado).
+   Breakpoint antecipado de 767 para 899px: entre 768-1023px de largura o
+   par foto+painel lado a lado ficava apertado — empilhar mais cedo evita
+   conteúdo cortado. */
+@media (max-width: 899px) {
+  .horizon {
+    padding: clamp(56px, 10vw, 84px) 0;
+  }
+
+  .horizon-frame {
+    /* Abandona o grid de 3 faixas do desktop: empilhado, o painel deve
+       ocupar a única coluna disponível em largura total. */
+    display: block;
+    min-height: 0;
+  }
+
+  .horizon-img {
+    object-position: 42% 38%;
+    /* Mesma lógica da máscara do desktop, só que vertical: foto visível
+       no topo, fundindo-se ao grafite perto da base, onde fica o painel. */
+    -webkit-mask-image: linear-gradient(0deg, transparent 0%, rgba(0, 0, 0, 0.4) 18%, rgba(0, 0, 0, 0.84) 40%, #000 60%, #000 100%);
+    mask-image: linear-gradient(0deg, transparent 0%, rgba(0, 0, 0, 0.4) 18%, rgba(0, 0, 0, 0.84) 40%, #000 60%, #000 100%);
+  }
+
+  /* Empilhado: degradê de baixo para cima (texto sempre no rodapé da
+     fotografia), bem mais sutil que antes — a máscara acima já cuida da
+     fusão com o fundo; esta camada só reforça contraste e o glow laranja. */
+  .horizon-media::after {
+    background:
+      linear-gradient(0deg, rgba(8, 8, 9, 0.9) 0%, rgba(9, 9, 10, 0.5) 40%, rgba(10, 9, 11, 0.16) 70%, rgba(9, 9, 11, 0.04) 100%),
+      radial-gradient(circle at 100% 0%, rgba(255, 122, 26, 0.16) 0%, transparent 55%);
+  }
+
+  .horizon-panel {
+    max-width: none;
+    /* Continua centralizado (herdado da regra base) mesmo empilhado em
+       largura total — mantém a mesma composição institucional no celular. */
+  }
+
+  /* Empilhado: o container deixa de encolher para 94vw (margem lateral
+     ficava ~31px em 360px); passa a seguir o padding padrão do .container */
+  .horizon .container {
+    max-width: none;
+  }
+
+  .horizon-cta {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .horizon {
+    min-height: 480px;
+  }
+
+  .horizon-title {
+    font-size: clamp(1.55rem, 6.6vw, 1.9rem);
+  }
+
+  .horizon-cta {
+    justify-content: center;
+    align-self: stretch;
+  }
+}
+
+/* ==========================================================================
+   Mapa do Brasil (dentro de .legacy-map-col): conecta a origem em Porto
+   Alegre à atuação comercial em outras regiões do país. Mapa estilizado,
+   sem pretender precisão cartográfica — protagonista visual da coluna
+   direita, com badge e legenda de origem sobrepostos ao desenho (como
+   etiquetas flutuantes), em vez de elementos empilhados abaixo dele.
+   ========================================================================== */
+
+/* Proporção do viewBox (780 x 820) preservada via aspect-ratio: garante
+   que as posições percentuais do badge/legenda abaixo acompanhem
+   exatamente o desenho em qualquer largura de tela, sem letterboxing. */
+.reach-map {
+  position: relative;
+  width: 100%;
+  /* ~12% menor que antes (640px → 560px) — mesmo desenho/aspect-ratio,
+     então o Brasil inteiro (incl. a região Sul) continua visível por
+     inteiro, só numa proporção mais equilibrada com o texto ao lado. */
+  max-width: 560px;
+  margin-inline: auto;
+  aspect-ratio: 780 / 820;
+  align-self: center;
+  transition: opacity 650ms ease, transform 650ms ease;
+}
+
+.reach-map.reach-pending {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.reach-map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Contorno real do Brasil (mesma geometria/viewBox reaproveitada de
+   nossa-historia.html: 27 unidades federativas) em tom areia/bege suave,
+   com contorno claro e definido — leve profundidade via sombra difusa no
+   grupo, sem gradientes individuais por estado. */
+.reach-map-states {
+  filter: drop-shadow(0 2px 3px rgba(120, 92, 58, 0.14));
+}
+
+.reach-map-state {
+  fill: #e9ddc7;
+  stroke: #faf6ee;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+/* Sequência da revelação: 1) Porto Alegre acende primeiro (sem delay);
+   2) as linhas de conexão se desenham em seguida, com leve escalonamento;
+   3) o mapa permanece estável (nada de loop/pulsar). */
+.reach-line {
+  fill: none;
+  stroke: var(--color-orange);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  filter: drop-shadow(0 0 5px rgba(255, 122, 26, 0.45));
+  transition: stroke-dashoffset 900ms cubic-bezier(0.16, 1, 0.3, 1) 150ms;
+}
+
+.reach-map:not(.reach-pending) .reach-line {
+  stroke-dashoffset: 0;
+}
+
+.reach-map:not(.reach-pending) .reach-line:nth-of-type(2) {
+  transition-delay: 270ms;
+}
+
+.reach-map:not(.reach-pending) .reach-line:nth-of-type(3) {
+  transition-delay: 390ms;
+}
+
+.reach-map:not(.reach-pending) .reach-line:nth-of-type(4) {
+  transition-delay: 510ms;
+}
+
+.reach-point {
+  fill: var(--color-orange);
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(255, 122, 26, 0.55));
+  transition: opacity 400ms ease 600ms;
+}
+
+.reach-map:not(.reach-pending) .reach-point {
+  opacity: 0.95;
+}
+
+/* Glow concentrado na origem (Porto Alegre) - moderado, não um brilho
+   espalhado pelo mapa inteiro */
+.reach-origin-halo {
+  fill: rgba(240, 68, 46, 0.16);
+  opacity: 0;
+  filter: blur(6px);
+  transition: opacity 450ms ease;
+}
+
+.reach-map:not(.reach-pending) .reach-origin-halo {
+  opacity: 1;
+}
+
+.reach-origin {
+  fill: var(--color-red);
+  stroke: var(--color-white);
+  stroke-width: 3;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(240, 68, 46, 0.5));
+  transition: opacity 350ms ease;
+}
+
+.reach-map:not(.reach-pending) .reach-origin {
+  opacity: 1;
+}
+
+/* Badge "Atuação nacional": etiqueta flutuante no canto superior direito
+   do mapa, como na referência aprovada */
+.reach-badge {
+  position: absolute;
+  top: 2%;
+  right: 0;
+  z-index: 1;
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+}
+
+/* Legenda "Porto Alegre, RS": etiqueta flutuante ancorada à direita do
+   ponto de origem no desenho (44.2% / 89% do viewBox 780x820) */
+.reach-map-label {
+  position: absolute;
+  left: 47%;
+  top: 87%;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px 7px 10px;
+  border-radius: 999px;
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-gray-700);
+  white-space: nowrap;
+}
+
+.reach-map-label-pin {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  color: var(--color-red);
+}
+
+@media (max-width: 899px) {
+  .reach-map {
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 599px) {
+  .reach-map {
+    max-width: 340px;
+  }
+
+  .reach-badge,
+  .reach-map-label {
+    font-size: 0.72rem;
+    padding: 7px 12px;
+  }
+
+  .reach-map-label {
+    padding-left: 8px;
+  }
+}
+
+/* ==========================================================================
+   Segurança e Transparência - faixa escura fechando a parte institucional,
+   reforçando confiança sem tom de alerta. Identidade da marca aplicada de
+   forma discreta (ícones outline pequenos, acentos vermelho/laranja).
+   ========================================================================== */
+.trust {
+  position: relative;
+  overflow: hidden;
+  /* Espaçamento vertical reduzido discretamente (58–92px → 52–80px) */
+  padding: clamp(52px, 6.2vw, 80px) 0;
+  background: linear-gradient(150deg, #1d1b22 0%, #14131a 60%, #0d0c10 100%);
+}
+
+/* Profundidade discreta: glow radial sutil em laranja/vermelho, sem afetar legibilidade */
+.trust::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 620px 420px at 8% -10%, rgba(255, 122, 26, 0.1), transparent 65%),
+    radial-gradient(ellipse 560px 440px at 96% 108%, rgba(240, 68, 46, 0.1), transparent 65%);
+  pointer-events: none;
+}
+
+.trust .container.trust-grid {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+}
+
+/* Composição editorial de duas colunas: mensagem institucional + lista de
+   compromissos, sem cards, bordas arredondadas ou ícones repetitivos. */
+.trust-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(30px, 3.8vw, 46px);
+}
+
+.trust-intro {
+  max-width: 440px;
+}
+
+.trust-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+}
+
+.trust-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.9rem, 2.7vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+  color: var(--color-white);
+}
+
+.trust-lead {
+  margin-top: 14px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.trust-statement {
+  margin-top: clamp(20px, 2.6vw, 30px);
+  padding-top: clamp(16px, 2vw, 22px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.trust-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Divisória vertical sutil entre as duas colunas (apenas no desktop, onde
+   ficam lado a lado); metade do gap do grid vira padding, para a linha
+   ficar centrada no espaço entre as colunas */
+@media (min-width: 900px) {
+  .trust-list {
+    padding-left: clamp(18px, 2.2vw, 28px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.trust-row {
+  padding-block: clamp(17px, 2.2vw, 24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform var(--transition-base);
+}
+
+.trust-list .trust-row:last-of-type {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trust-row h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  color: var(--color-white);
+}
+
+/* Reset do <button> para herdar a tipografia do <h3> que o envolve —
+   ativo em qualquer largura, mas sem nenhum efeito visual além disso
+   fora do breakpoint mobile (ver acordeão completo mais abaixo): no
+   desktop/tablet ele só existe para manter a mesma marcação semântica
+   em toda largura, sem duplicar conteúdo. */
+.trust-row-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: default;
+}
+
+.trust-row-icon {
+  display: none;
+}
+
+/* "Contemplação" é a orientação mais sensível da lista (risco de golpe
+   com promessa de contemplação garantida) — mantém o destaque laranja
+   no título para continuar se diferenciando das demais, sem ícone. */
+.trust-row--highlight h3 {
+  color: var(--color-orange);
+}
+
+.trust-row p {
+  margin-top: 6px;
+  max-width: 460px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.56);
+}
+
+.trust-note {
+  margin-top: clamp(20px, 2.4vw, 28px);
+  max-width: 620px;
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .trust-row:hover {
+    transform: translateX(2px);
+  }
+
+  .trust-row:hover h3 {
+    color: var(--color-orange);
+  }
+}
+
+@media (min-width: 900px) {
+  .trust-grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 699px) {
+  .trust-title {
+    font-size: clamp(1.6rem, 6.8vw, 1.9rem);
+  }
+
+  .trust-statement {
+    font-size: 0.96rem;
+  }
+
+  .trust-note {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* ==========================================================================
+   Acordeão de "Segurança e transparência", exclusivo do mobile
+   (<=767px). Acima disso (tablet/desktop), nada muda: os quatro tópicos
+   continuam sempre abertos, sem seta/indicador, exatamente como hoje —
+   as regras abaixo só têm efeito visual dentro deste breakpoint.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .trust {
+    padding: clamp(40px, 8vw, 54px) 0;
+  }
+
+  .trust-row {
+    padding-block: 0;
+    transform: none !important;
+  }
+
+  .trust-row-trigger {
+    cursor: pointer;
+    min-height: 48px;
+    padding-block: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--color-white);
+    background: none;
+    border: 0;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .trust-row-trigger:focus-visible {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .trust-row-trigger:active {
+    opacity: 0.85;
+  }
+
+  /* Indicador "+ / -": duas barras via ::before/::after, girando a
+     vertical até sumir (fica só a horizontal = "-") quando expandido. */
+  .trust-row-icon {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 220ms ease;
+  }
+
+  .trust-row-icon::before,
+  .trust-row-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: currentColor;
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+  }
+
+  .trust-row-icon::before {
+    width: 12px;
+    height: 1.5px;
+    transform: translate(-50%, -50%);
+  }
+
+  .trust-row-icon::after {
+    width: 1.5px;
+    height: 12px;
+    transform: translate(-50%, -50%);
+  }
+
+  .trust-row-trigger[aria-expanded="true"] .trust-row-icon {
+    color: var(--color-orange);
+  }
+
+  .trust-row-trigger[aria-expanded="true"] .trust-row-icon::after {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .trust-row--highlight .trust-row-icon {
+    color: var(--color-orange);
+  }
+
+  /* O painel só recolhe quando o JS adiciona ".is-collapsed" (ver
+     js/script.js) — sem JS, nenhuma dessas regras chega a se aplicar,
+     então os quatro textos continuam sempre visíveis por padrão. */
+  .trust-row-panel {
+    overflow: hidden;
+    transition: max-height 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+  }
+
+  .trust-row-panel.is-collapsed {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .trust-row-panel p {
+    margin-top: 0;
+    padding-bottom: 14px;
+    font-size: 0.90rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   CTA Final - fechamento institucional premium da Home, antes do footer.
+   ========================================================================== */
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(64px, 8vw, 108px) 0;
+  background: radial-gradient(circle at 50% 15%,
+    rgba(255, 93, 24, 0.9) 0%,
+    rgba(224, 54, 18, 0.9) 40%,
+    rgba(120, 26, 14, 0.98) 78%,
+    rgba(70, 14, 10, 1) 100%
+  );
+}
+
+.final-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 620px 620px at -10% -20%, rgba(255, 255, 255, 0.1), transparent 60%),
+    radial-gradient(ellipse 560px 560px at 110% 120%, rgba(20, 8, 5, 0.4), transparent 62%);
+  pointer-events: none;
+}
+
+.final-cta-inner {
+  position: relative;
+  max-width: 780px;
+  text-align: center;
+}
+
+.final-cta-tagline {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.final-cta-tagline-accent {
+  color: var(--color-white);
+  font-weight: 800;
+}
+
+.final-cta-title {
+  margin-top: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  color: var(--color-white);
+}
+
+.final-cta-lead {
+  margin: 14px auto 0;
+  max-width: 480px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.final-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.final-cta-actions .btn {
+  padding: 13px 28px;
+  font-size: 0.94rem;
+}
+
+@media (max-width: 600px) {
+  .final-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .final-cta-actions .btn {
+    width: 100%;
+    min-height: 50px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .final-cta-title {
+    font-size: clamp(1.7rem, 7vw, 1.9rem);
+  }
+}
+
+/* ==========================================================================
+   Ponte para contato — encerramento comercial da Home, antes do footer.
+   Composição editorial, sem fotografia: linha institucional (identificação
+   + "Atendimento institucional"), título, descrição e uma linha de ação
+   final (botão + e-mail). Transição entre a seção escura de Segurança e o
+   footer grafite, em fundo off-white sólido.
+   ========================================================================== */
+.home-contact-bridge {
+  background: var(--color-gray-50);
+  /* Seção ligeiramente mais compacta (48–72px → 42–64px) */
+  padding-block: clamp(42px, 5.4vw, 64px);
+}
+
+.home-contact-bridge-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-contact-bridge-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-bottom: clamp(16px, 2vw, 22px);
+  border-bottom: 1px solid var(--color-gray-300);
+}
+
+.home-contact-bridge-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+.home-contact-bridge-kicker + .home-contact-bridge-kicker {
+  color: var(--color-gray-500);
+}
+
+.home-contact-bridge-main {
+  margin-top: clamp(24px, 3vw, 34px);
+  max-width: 640px;
+}
+
+.home-contact-bridge-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--color-text);
+}
+
+.home-contact-bridge-lead {
+  margin-top: 14px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+
+.home-contact-bridge-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: clamp(26px, 3.4vw, 36px);
+}
+
+/* "Entre em contato" é o único botão da seção: preenchimento laranja
+   sólido, texto branco (reaproveita .btn .btn-primary já usado no
+   restante do site), sem seta decorativa */
+.home-contact-bridge-cta {
+  padding: 14px 30px;
+  font-size: 0.94rem;
+  border-radius: var(--radius-sm);
+}
+
+.home-contact-bridge-email {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text);
+  transition: color var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-contact-bridge-email:hover {
+    color: var(--color-red);
+  }
+}
+
+@media (max-width: 600px) {
+  .home-contact-bridge-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .home-contact-bridge-cta {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   Rodapé Institucional (padronizado com demais páginas internas)
+   ========================================================================== */
+.site-footer {
+  background-color: #08070a;
+  color: var(--color-gray-500);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-block: 16px;
+  font-size: 0.85rem;
+}
+
+.site-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.site-footer-inner p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.site-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: nowrap;
+}
+
+.site-footer-links a {
+  color: var(--color-gray-500);
+  transition: color 0.2s ease;
+}
+
+.site-footer-links a:hover {
+  color: var(--color-white);
+}
+
+.site-footer-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #475569;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.site-footer-credit span {
+  color: #475569;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.site-footer-credit img {
+  width: auto;
+  height: 15px;
+  max-width: 80px;
+  object-fit: contain;
+  opacity: 1;
+  filter: none;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-footer-credit:hover {
+    border-color: #CBD5E1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+  }
+
+  .site-footer-credit:hover img {
+    transform: none;
+  }
+}
+
+@media (max-width: 1080px) {
+  .site-footer-inner,
+  .contact-footer-inner,
+  .cf-footer-inner,
+  .story-footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .site-footer-inner p {
+    white-space: normal;
+  }
+
+  .site-footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .site-footer-credit {
+    font-size: 0.68rem;
+    gap: 6px;
+    padding: 4px 9px;
+  }
+
+  .site-footer-credit img {
+    height: 14px;
+    max-width: 76px;
+  }
+
+  .site-footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    padding-block: 20px;
+    font-size: 0.88rem;
+  }
+
+  .site-footer-links {
+    gap: 4px 20px;
+  }
+
+  .site-footer-credit {
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  /* Reserva espaço para o botão flutuante do WhatsApp não cobrir o rodapé */
+  body:has(.whatsapp-float) .site-footer {
+    padding-bottom: calc(20px + 60px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ==========================================================================
+   Footer institucional da Home - exclusivo de index.html (não reaproveita
+   .site-footer*, usado sem alteração pelas demais páginas do site: blog,
+   simulação e créditos). Fundo grafite quase preto, logotipo em destaque,
+   três colunas editoriais e faixa final de direitos autorais.
+   ========================================================================== */
+.home-footer {
+  background-color: #101014;
+  color: var(--color-gray-500);
+  padding-top: clamp(48px, 5.5vw, 72px);
+}
+
+.home-footer-top {
+  padding-bottom: clamp(24px, 3vw, 36px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .home-footer-brand {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+}
+
+.home-footer-logo-link {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.home-footer-logo {
+  display: block;
+  width: 190px;
+  height: auto;
+}
+
+.home-footer-tagline {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 440px;
+}
+
+.home-footer-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(32px, 4vw, 48px);
+  padding-block: clamp(36px, 4.5vw, 56px);
+}
+
+.home-footer-col-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.home-footer-item {
+  margin-top: clamp(18px, 2.2vw, 24px);
+}
+
+.home-footer-item:first-of-type {
+  margin-top: 20px;
+}
+
+.home-footer-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.home-footer-value {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.home-footer-value-link {
+  transition: color var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-footer-value-link:hover {
+    color: var(--color-orange);
+  }
+}
+
+.home-footer-value-muted {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Endereço institucional no rodapé: ícone discreto + texto em duas
+   linhas, todo o bloco clicável (abre o Google Maps). Reaproveita
+   .home-footer-value/.home-footer-value-link — só ajusta o layout para
+   caber o ícone ao lado do texto. */
+.home-footer-address-link {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.home-footer-address-icon {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-footer-address-link:hover .home-footer-address-icon {
+    color: var(--color-orange);
+  }
+}
+
+.home-footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.home-footer-nav a {
+  font-size: 0.94rem;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-footer-nav a:hover {
+    color: var(--color-orange);
+  }
+}
+
+.home-footer-text {
+  margin-top: 18px;
+  max-width: 320px;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.home-footer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-orange);
+  background: transparent;
+  color: var(--color-orange);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: background var(--transition-base), color var(--transition-base), transform var(--transition-base);
+}
+
+.home-footer-cta-icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-footer-cta:hover {
+    background: var(--color-orange);
+    color: var(--color-white);
+    transform: translateY(-1px);
+  }
+}
+
+.home-footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-block: clamp(18px, 2.2vw, 24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.82rem;
+}
+
+.home-footer-copy {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+.home-footer-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #475569;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-footer-credit span {
+  color: #475569;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.home-footer-credit img {
+  width: auto;
+  height: 15px;
+  max-width: 80px;
+  object-fit: contain;
+  opacity: 1;
+  filter: none;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-footer-credit:hover {
+    border-color: #CBD5E1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+  }
+
+  .home-footer-credit:hover img {
+    transform: none;
+  }
+}
+
+@media (min-width: 700px) {
+  .home-footer-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 600px) {
+  .home-footer-bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 599px) {
+  /* Reserva espaço para o botão flutuante do WhatsApp não cobrir o rodapé */
+  body:has(.whatsapp-float) .home-footer {
+    padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .home-footer-credit {
+    font-size: 0.68rem;
+    gap: 6px;
+    padding: 4px 9px;
+    align-self: flex-start;
+  }
+
+  .home-footer-credit img {
+    height: 14px;
+    max-width: 76px;
+  }
+}
+
+/* ==========================================================================
+   Revelação suave ao rolar a página (mesmo princípio já usado em
+   .horizon-pending: progressive enhancement via IntersectionObserver
+   em script.js). Utilizada pelos novos blocos institucionais da Home.
+
+   Visível por padrão: o estado oculto só é ativado pela classe
+   ".reveal-armed", adicionada via JS exatamente no momento em que o
+   IntersectionObserver passa a vigiar o elemento (ver script.js). Assim,
+   sem JavaScript, com JS ainda não executado (ex.: captura de tela logo
+   após o load) ou em qualquer falha do observer, o conteúdo permanece
+   visível — a animação nunca é condição obrigatória para exibi-lo. */
+.reveal-on-scroll.reveal-armed {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Animações
+   ========================================================================== */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroCharacterEnter {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroCharacterFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+/* Tablets em orientação retrato (ex.: 1024x1366, 820x1180): evita que o
+   carrossel herde um 100svh excessivo nessa faixa de altura. */
+@media (min-width: 1024px) and (orientation: portrait) {
+  .hero-slides {
+    height: min(calc(100svh - var(--header-height)), 820px);
+  }
+}
+
+/* Dropdown "Consórcios": no desktop vira um menu flutuante aberto por hover
+   (mesma faixa em que o header exibe a navegação horizontal, complementar
+   ao breakpoint do menu hambúrguer em max-width: 1299px) */
+@media (min-width: 1300px) {
+  .nav-item-dropdown {
+    position: relative;
+  }
+
+  /* Ponte invisível que cobre o espaço entre o item e o menu, evitando que
+     o dropdown feche ao mover o mouse do botão até as opções */
+  .nav-item-dropdown::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 12px;
+  }
+
+  .submenu,
+  .main-nav .submenu,
+  .brand-header .main-nav .submenu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    width: max-content;
+    min-width: 216px;
+    max-height: none;
+    overflow: visible;
+    padding: 6px;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    box-shadow: 0 14px 34px rgba(20, 18, 22, 0.12), 0 2px 6px rgba(20, 18, 22, 0.04);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
+    z-index: 50;
+  }
+
+  .nav-item-dropdown:hover .submenu,
+  .nav-item-dropdown.is-open .submenu {
+    max-height: none;
+    padding: 6px;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .nav-item-dropdown:hover .has-submenu svg,
+  .nav-item-dropdown.is-open .has-submenu svg {
+    transform: rotate(180deg);
+  }
+
+  .main-nav .submenu li,
+  .brand-header .main-nav .submenu li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-nav .submenu a,
+  .brand-header .main-nav .submenu a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 9px 14px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    white-space: nowrap;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    transition: background-color var(--transition-base), color var(--transition-base);
+  }
+
+  .main-nav .submenu a:hover,
+  .brand-header .main-nav .submenu a:hover {
+    background: rgba(255, 122, 26, 0.09);
+    color: #d45000;
+  }
+
+  .main-nav .submenu a.active,
+  .main-nav .submenu a[aria-current="page"],
+  .brand-header .main-nav .submenu a.active,
+  .brand-header .main-nav .submenu a[aria-current="page"] {
+    background: rgba(255, 122, 26, 0.12);
+    color: #d45000;
+    font-weight: 700;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .container {
+    padding-inline: 24px;
+  }
+}
+
+/* Elementos exclusivos do menu mobile (ocultos no desktop) */
+.menu-extra-links,
+.menu-extra-contact,
+.header-cta-mobile {
+  display: none;
+}
+
+/* Menu mobile: abaixo de 1300px o header desktop deixa de caber com folga
+   segura. Barra fechada = logo + "Simule Agora" + hambúrguer (que vira X);
+   aberta = painel grafite em coluna: links, ações, redes e contato. */
+@media (max-width: 1299px) {
+  .container {
+    padding-inline: 24px;
+  }
+
+  .header-cta-mobile {
+    display: inline-flex;
+    margin-left: auto;
+    margin-right: 6px;
+    padding: 10px 18px;
+    min-height: 40px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* Painel único e completo, em fluxo (nav + ações + extras) */
+  .mobile-menu-panel {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    height: calc(100vh - var(--header-height));
+    height: calc(100dvh - var(--header-height));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0 calc(40px + env(safe-area-inset-bottom, 0px));
+    background: #1d2128;
+    color: var(--color-white);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
+    z-index: 96;
+  }
+
+  .site-header.nav-open .mobile-menu-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* 1. Links principais */
+  .main-nav {
+    order: 1;
+    padding: 8px 20px 0;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .main-nav li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .main-nav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    padding: 0 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-white);
+    border-radius: 10px;
+  }
+
+  .main-nav a:hover {
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Item ativo: faixa lateral + fundo com a cor da marca */
+  .main-nav a.active,
+  .main-nav a[aria-current="page"] {
+    color: var(--color-white);
+    background: rgba(240, 68, 46, 0.2);
+  }
+
+  .main-nav a.active::before,
+  .main-nav a[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 4px;
+    border-radius: 4px;
+    background: var(--gradient-primary);
+  }
+
+  .main-nav a.has-submenu svg {
+    width: 18px;
+    height: 18px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .submenu {
+    padding-left: 10px;
+  }
+
+  .submenu a {
+    min-height: 48px;
+    padding: 0 14px;
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .submenu a:hover,
+  .submenu a.active,
+  .submenu a[aria-current="page"] {
+    color: var(--color-orange);
+  }
+
+  /* 2. Ações: Área do Cliente / Área do Representante / Seja um Representante */
+  .menu-extra-links {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 20px 0;
+  }
+
+  .menu-extra-links a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 14px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+  }
+
+  .menu-extra-links a:hover {
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* .header-actions passa a ser transparente ao layout: seus filhos entram
+     direto no painel e são ordenados por "order" */
+  .header-actions {
+    display: contents;
+  }
+
+  .header-actions .btn-secondary {
+    display: none;
+  }
+
+  .header-actions .btn-primary {
+    order: 3;
+    margin: 14px 20px 0;
+    min-height: 48px;
+    padding: 0 20px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    color: var(--color-white);
+    box-shadow: none;
+  }
+
+  .header-actions .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-white);
+    color: var(--color-white);
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* 3. Redes sociais: Facebook, Instagram, LinkedIn */
+  .header-actions .social-links {
+    order: 4;
+    justify-content: flex-start;
+    gap: 12px;
+    margin: 20px 20px 0;
+    padding: 18px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .header-actions .social-link {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+  }
+
+  .header-actions .social-link svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* 4. Contato / informações (dados já existentes no site) */
+  .menu-extra-contact {
+    order: 5;
+    display: flex;
+    flex-direction: column;
+    margin: 18px 20px 0;
+    padding: 18px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-extra-contact a,
+  .menu-extra-contact span {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .menu-extra-contact a:hover {
+    color: var(--color-white);
+  }
+
+  .nav-toggle {
+    display: flex;
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Mobile: até 767px (sem o botão de simulação, logo à esquerda e hambúrguer com destaque à direita) */
+@media (max-width: 767px) {
+  .container {
+    padding-inline: 18px;
+  }
+
+  .header-inner {
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  /* Remoção do botão de simulação exclusivamente no mobile */
+  .header-cta-mobile {
+    display: none !important;
+  }
+
+  /* Logo oficial Decolar: refinada com proporções equilibradas */
+  .logo-img {
+    height: 45px;
+    max-height: 45px;
+    width: auto;
+  }
+
+  /* Destaque ampliado e alvo de toque confortável do menu hambúrguer */
+  .nav-toggle {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    gap: 6px;
+    margin-left: auto;
+  }
+
+  .nav-toggle span {
+    width: 26px;
+    height: 2.5px;
+    border-radius: 2px;
+  }
+
+  .site-header.nav-open .nav-toggle span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+  }
+
+  .site-header.nav-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .site-header.nav-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding-inline: 14px;
+  }
+
+  .logo-img {
+    height: 38px;
+    max-height: 38px;
+  }
+
+  .nav-toggle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    gap: 5.5px;
+  }
+
+  .nav-toggle span {
+    width: 24px;
+    height: 2.2px;
+  }
+
+  .site-header.nav-open .nav-toggle span:nth-child(1) {
+    transform: translateY(7.7px) rotate(45deg);
+  }
+
+  .site-header.nav-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-7.7px) rotate(-45deg);
+  }
+}
+
+/* ==========================================================================
+   Botão flutuante do WhatsApp (Home)
+   ========================================================================== */
+.whatsapp-float {
+  position: fixed;
+  right: 24px;
+  right: max(24px, env(safe-area-inset-right, 0px));
+  bottom: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #25d366;
+  color: var(--color-white);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.whatsapp-float svg {
+  width: 28px;
+  height: 28px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .whatsapp-float:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+  }
+
+  .whatsapp-float:hover .whatsapp-float-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.whatsapp-float-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translate(6px, -50%);
+  white-space: nowrap;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--color-graphite);
+  color: var(--color-white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+@media (max-width: 600px) {
+  .whatsapp-float {
+    right: 16px;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: 52px;
+    height: 52px;
+  }
+
+  .whatsapp-float svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .whatsapp-float-tooltip {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Modal "Blog em breve" (Home)
+   ========================================================================== */
+body.blog-modal-open {
+  overflow: hidden;
+}
+
+.blog-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--transition-base), visibility 0s linear var(--transition-base);
+}
+
+.blog-modal.is-open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--transition-base);
+}
+
+.blog-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 18, 22, 0.55);
+}
+
+.blog-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: clamp(28px, 4vw, 40px);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 56px rgba(20, 18, 22, 0.25);
+  text-align: center;
+  transform: translateY(8px) scale(0.98);
+  transition: transform var(--transition-base);
+}
+
+.blog-modal.is-open .blog-modal-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.blog-modal-dialog:focus {
+  outline: none;
+}
+
+.blog-modal-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+/* Botão "X" (usado apenas no modal de Representantes; o modal do Blog
+   não tem X e permanece exatamente como estava). Abre espaço vertical
+   acima do conteúdo (em vez de padding-right) para não descentralizar
+   o texto, que neste modal é centralizado. */
+.blog-modal-dialog--with-close {
+  padding-top: 52px;
+}
+
+.blog-modal-close-x {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+
+  width: 36px;
+  height: 36px;
+  /* ::after abaixo amplia a área de toque para ~44px sem crescer o X
+     visualmente (mesma técnica de .simulator-close). */
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  border-radius: 10px;
+  line-height: 1;
+  overflow: visible;
+
+  color: var(--color-gray-500);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.blog-modal-close-x::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+
+.blog-modal-close-x svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  overflow: visible;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.blog-modal-close-x:hover {
+  background: var(--color-gray-50);
+  color: var(--color-text);
+}
+
+.blog-modal-close-x:focus-visible {
+  background: var(--color-gray-50);
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+.blog-modal-title {
+  margin-top: 10px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.blog-modal-text {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}
+
+.blog-modal-note {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--color-gray-500);
+}
+
+.blog-modal-close {
+  margin-top: 22px;
+  padding: 12px 32px;
+
+  /* Regra própria e autocontida (não depende da ordem em cascata com
+     .btn-primary): neutraliza a aparência nativa de <button> - que
+     .btn/.btn-primary nunca precisaram zerar porque no resto do site
+     esse estilo é aplicado a <a>, nunca a <button> - e redeclara o
+     gradiente/cor explicitamente para não ficar refém do cascade. */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0;
+  outline: none;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  line-height: 1.2;
+  box-shadow: 0 6px 16px rgba(240, 68, 46, 0.24);
+}
+
+.blog-modal-close:hover {
+  box-shadow: 0 10px 22px rgba(240, 68, 46, 0.3);
+}
+
+.blog-modal-close:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .blog-modal-dialog {
+    max-width: 100%;
+  }
+
+  .blog-modal-close-x {
+    top: 10px;
+    right: 10px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .blog-modal-close {
+    min-height: 48px;
+  }
+}
+
+/* Celular deitado / telas baixas: o diálogo rola em vez de ser cortado */
+@media (max-height: 520px) {
+  .blog-modal-dialog {
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+  }
+}
+
+/* ==========================================================================
+   Simulação rápida (simulacao.html) - etapa curta entre a Home e o
+   WhatsApp: resumo do que veio por parâmetros de URL + formulário curto.
+   ========================================================================== */
+.sim-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 6vw, 76px) 0;
+  background: linear-gradient(180deg, #fbfbfc 0%, var(--color-gray-50) 100%);
+  scroll-margin-top: var(--header-height);
+}
+
+/* Profundidade discreta: glow radial sutil em laranja/vermelho, mesma
+   linguagem do hero da Home, sem afetar legibilidade */
+.sim-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 620px 420px at 6% -12%, rgba(255, 122, 26, 0.12), transparent 65%),
+    radial-gradient(ellipse 560px 440px at 100% 105%, rgba(240, 68, 46, 0.08), transparent 62%);
+  pointer-events: none;
+}
+
+.sim-hero .container {
+  max-width: 1100px;
+}
+
+.sim-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 4vw, 56px);
+}
+
+@media (min-width: 900px) {
+  .sim-hero-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .sim-intro,
+  .sim-form-panel {
+    height: 100%;
+  }
+}
+
+.sim-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: clamp(26px, 3.2vw, 38px);
+}
+
+.sim-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  max-width: 480px;
+  text-wrap: balance;
+}
+
+/* Destaque de 1 palavra com o gradiente da marca */
+.sim-title-accent {
+  display: inline-block;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sim-lead {
+  margin-top: 12px;
+  max-width: 460px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+  text-wrap: pretty;
+}
+
+.sim-summary {
+  position: relative;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.sim-summary-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+}
+
+.sim-summary-modalidade {
+  display: block;
+  margin-top: 8px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.sim-summary-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.sim-summary-value-label {
+  font-size: 0.85rem;
+  color: var(--color-gray-500);
+}
+
+.sim-summary-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-red);
+}
+
+.sim-summary-edit {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-gray-300);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-gray-500);
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.sim-summary-edit:hover {
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.sim-choice-card {
+  margin-top: 20px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.sim-form-panel {
+  position: relative;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: clamp(24px, 3vw, 36px);
+  overflow: hidden;
+}
+
+/* Barra superior no gradiente da marca: sinaliza que este é o painel de
+   decisão (etapa final antes do WhatsApp) */
+.sim-form-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.sim-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sim-form select {
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background: var(--color-white);
+  transition: border-color var(--transition-base);
+}
+
+.sim-form select:focus {
+  outline: none;
+  border-color: var(--color-red);
+}
+
+.sim-form-error {
+  display: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-red);
+}
+
+.form-field.has-error input,
+.form-field.has-error select {
+  border-color: var(--color-red);
+}
+
+.form-field.has-error .sim-form-error {
+  display: block;
+}
+
+.sim-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.sim-submit svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.sim-privacy {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-gray-500);
+}
+
+.sim-privacy a,
+.form-privacy-note a {
+  color: var(--color-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Aviso de privacidade próximo ao botão de envio (formulários do site) */
+.form-privacy-note {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--color-gray-500);
+}
+
+/* Mobile (simulacao.html): paddings 20-22px, campos com 16px (evita zoom
+   automático no iOS), alvos de toque >=44px e título fluido */
+@media (max-width: 600px) {
+  .sim-hero {
+    padding: 32px 0 48px;
+  }
+
+  .sim-hero-grid {
+    gap: 20px;
+  }
+
+  .sim-intro,
+  .sim-form-panel {
+    padding: 22px 20px;
+  }
+
+  .sim-title {
+    font-size: clamp(1.6rem, 7vw, 1.8rem);
+  }
+
+  .sim-summary-modalidade {
+    font-size: 1.2rem;
+  }
+
+  .sim-summary-value-row {
+    flex-wrap: wrap;
+  }
+
+  .sim-summary-edit {
+    min-height: 44px;
+    padding-inline: 2px;
+    font-size: 0.88rem;
+  }
+
+  .sim-form select,
+  .sim-form .form-field input {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .sim-form-error {
+    font-size: 0.8rem;
+  }
+
+  .sim-privacy {
+    font-size: 0.8rem;
+  }
+
+  .sim-choice-card {
+    gap: 20px;
+  }
+
+  .sim-choice-card .modality-option {
+    padding: 14px 4px;
+  }
+
+  .sim-choice-card .modality-option span {
+    font-size: 0.85rem;
+  }
+
+  .sim-choice-card .type-option {
+    font-size: 0.9rem;
+  }
+
+  .sim-choice-card .btn-submit,
+  .sim-submit {
+    min-height: 52px;
+  }
+}
+
+
+/* ==========================================================================
+   Header da Home (body.brand-header): mini barra institucional branca + barra
+   principal laranja. Escopado à Home; as demais páginas mantêm o header
+   padrão. Overrides desktop ficam em >=1300px (mesmo breakpoint do menu),
+   então o painel mobile (fundo branco) não é afetado.
+   ========================================================================== */
+.brand-header {
+  --strip-h: 32px;
+  --header-bar-h: 76px;
+  --header-height: calc(var(--strip-h) + var(--header-bar-h));
+}
+
+.brand-header .site-header,
+.brand-header .site-header.is-scrolled {
+  background: linear-gradient(100deg, #e63d1f 0%, #f2571a 100%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom: 0;
+  box-shadow: 0 6px 22px rgba(190, 50, 15, 0.22);
+}
+
+.brand-header .header-inner {
+  height: var(--header-bar-h);
+}
+
+.top-strip {
+  height: var(--strip-h);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.top-strip-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.top-strip a {
+  position: relative;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-gray-700);
+  transition: color var(--transition-base);
+}
+
+.top-strip a + a {
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
+.top-strip a + a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 11px;
+  background: var(--color-gray-300);
+  transform: translateY(-50%);
+}
+
+.top-strip a:hover {
+  color: var(--color-red);
+}
+
+/* Logo aplicada direto na barra (sem placa/fundo) e maior */
+.brand-header .logo-img {
+  height: clamp(48px, 4.2vw, 62px);
+  max-height: 62px;
+}
+
+.brand-header .social-link svg {
+  width: 25px;
+  height: 25px;
+  max-width: none;
+  max-height: none;
+  flex: 0 0 auto;
+}
+
+.brand-header .nav-toggle span {
+  background: var(--color-white);
+}
+
+/* Mobile/tablet: a mini barra sai do header (seus links vão para dentro do
+   menu aberto) e o CTA curto ganha o tratamento da barra laranja */
+@media (max-width: 1299px) {
+  .brand-header {
+    --strip-h: 0px;
+  }
+
+  .top-strip {
+    display: none;
+  }
+
+  .brand-header .header-cta-mobile {
+    background: var(--color-white);
+    color: #e2461b;
+    box-shadow: 0 4px 14px rgba(120, 30, 5, 0.25);
+  }
+}
+
+@media (max-width: 767px) {
+  .brand-header .logo-img {
+    height: 45px;
+    max-height: 45px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-header .logo-img {
+    height: 38px;
+    max-height: 38px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .brand-header .header-inner {
+    gap: clamp(14px, 1.4vw, 26px);
+  }
+
+  .brand-header .main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .brand-header .main-nav ul {
+    gap: clamp(10px, 1vw, 18px);
+  }
+
+  .brand-header .main-nav > ul > li > a {
+    position: relative;
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 600;
+  }
+
+  .brand-header .main-nav > ul > li > a.has-submenu svg {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .brand-header .main-nav > ul > li > a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-white);
+    transform: scaleX(0);
+    transition: transform 250ms ease;
+  }
+
+  .brand-header .main-nav > ul > li > a:hover,
+  .brand-header .main-nav > ul > li > a.active,
+  .brand-header .main-nav > ul > li > a[aria-current="page"] {
+    color: var(--color-white);
+  }
+
+  .brand-header .main-nav > ul > li > a:hover::after,
+  .brand-header .main-nav > ul > li > a.active::after,
+  .brand-header .main-nav > ul > li > a[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* CTA principal: branco sólido; secundário: outline branco */
+  .brand-header .header-actions .btn-secondary {
+    background: var(--color-white);
+    color: #e2461b;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(120, 30, 5, 0.25);
+  }
+
+  .brand-header .header-actions .btn-secondary:hover {
+    background: #fff4ee;
+    color: #d23a12;
+    box-shadow: 0 8px 20px rgba(120, 30, 5, 0.3);
+  }
+
+  .brand-header .header-actions .btn-primary {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.7);
+    color: var(--color-white);
+  }
+
+  .brand-header .header-actions .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+
+  .brand-header .social-links {
+    border-left-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .brand-header .social-links {
+    gap: 6px;
+  }
+
+  .brand-header .social-link {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .brand-header .social-link:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--color-white);
+    transform: translateY(-1px);
+  }
+}
+
+
+/* ==========================================================================
+   Mobile: "Em breve" nos itens sem destino oficial, simulador do hero como
+   camada (bottom sheet) e refinos de tipografia. Nada aqui atinge >=1300px.
+   ========================================================================== */
+.soon-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--color-gray-100);
+  color: var(--color-gray-500);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.menu-extra-links .soon-badge {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Tipografia em telas estreitas: quebras equilibradas, sem palavras órfãs
+   e sem estourar a largura */
+@media (max-width: 767px) {
+  h1, h2, h3 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* Modal do simulador em telas estreitas: cartão ocupa a largura útil,
+   sem o teto de largura usado no desktop. */
+@media (max-width: 767px) {
+  .sim-modal .simulator-card {
+    max-width: none;
+    border-radius: 22px;
+  }
+
+  .sim-modal .simulator-heading h2 {
+    font-size: 1.15rem;
+  }
+}
+
+
+/* Ações que dependem de dado ainda não oficial (ex.: WhatsApp): desativadas */
+.is-soon {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn.is-soon:hover,
+.btn.is-soon:focus-visible {
+  transform: none;
+  box-shadow: none;
+}
+
+.contact-channel-link.is-soon {
+  color: var(--color-gray-500);
+}
+
+.whatsapp-float.is-soon,
+.whatsapp-float.is-soon:hover {
+  cursor: default;
+  transform: none;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+}
+
+.whatsapp-soon-note {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-gray-700);
+}
+
+
+/* ==========================================================================
+   Quebra de e-mail controlada (todas as páginas): o endereço é marcado com
+   <span class="email-local">local@</span><wbr><span class="email-domain">
+   domínio</span>. O domínio nunca quebra (white-space: nowrap); o <wbr>
+   é o único ponto de quebra permitido, e só entra em ação se não houver
+   espaço para o e-mail inteiro em uma linha.
+   ========================================================================== */
+.email-local,
+.email-domain {
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Linha de links jurídicos no rodapé (todas as páginas): reutilizada tal
+   qual em .site-footer-inner, .contact-footer-inner, .cf-footer-inner,
+   .story-footer-inner e .home-footer-bottom, para não duplicar CSS por
+   página. "Alterar escolha de cookies" é um <button> (não um link real):
+   o clique é tratado por js/consent.js, que reabre o banner de cookies.
+   ========================================================================== */
+.footer-legal-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 28px;
+  width: 100%;
+  margin-top: 0;
+  padding-block: 18px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footer-legal-row a,
+.footer-legal-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-legal-row a:hover,
+  .footer-legal-link:hover {
+    color: var(--color-orange);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-legal-row {
+    gap: 6px 16px;
+    font-size: 0.78rem;
+  }
+
+  .footer-legal-row a,
+  .footer-legal-link {
+    display: inline-flex;
+    align-items: center;
+    padding-block: 8px;
+    min-height: 36px;
+  }
+}
+
+/* ==========================================================================
+   Banner de consentimento de cookies (js/consent.js injeta este markup em
+   todas as páginas). Duas escolhas apenas: aceitar todos ou recusar
+   opcionais — sem painel de personalização. Não bloqueia a navegação
+   (não é modal, sem overlay, sem foco forçado).
+   ========================================================================== */
+.consent-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  pointer-events: none;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+/* Enquanto a gaveta do menu mobile estiver aberta, oculta temporariamente o
+   banner de cookies para que todos os links inferiores do menu fiquem 100%
+   visíveis e clicáveis, preservando o consentimento LGPD ao fechar o menu. */
+body.nav-locked .consent-banner {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
+}
+
+body.nav-locked .consent-banner-inner {
+  pointer-events: none;
+}
+
+.consent-banner-inner {
+  pointer-events: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  width: 100%;
+  max-width: 980px;
+  padding: 22px 26px;
+  border-radius: var(--radius-lg);
+  background: var(--color-graphite);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.consent-banner-text {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.consent-banner-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-white);
+}
+
+.consent-banner-desc {
+  margin-top: 6px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.consent-banner-desc a {
+  color: var(--color-orange);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.consent-banner-actions button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 11px 20px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.consent-accept-all {
+  border: none;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  box-shadow: 0 6px 16px rgba(240, 68, 46, 0.24);
+}
+
+.consent-reject-optional {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .consent-accept-all:hover {
+    box-shadow: 0 10px 22px rgba(240, 68, 46, 0.32);
+  }
+
+  .consent-reject-optional:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: var(--color-white);
+  }
+}
+
+@media (max-width: 600px) {
+  .consent-banner {
+    padding: 0;
+  }
+
+  .consent-banner-inner {
+    border-radius: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .consent-banner-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .consent-banner-actions button {
+    width: 100%;
+    min-height: 46px;
+  }
+}

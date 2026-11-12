@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Selecionar Perfil | Painel Administrativo Decolar Consórcios</title>
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Verificação de acesso — idêntica ao padrão já usado em index.html e
+       artigo-editor.html. A seleção de perfil só pode ser exibida depois
+       de confirmada a autorização administrativa; nunca antes. -->
+  <section class="admin-status-screen" id="admin-loading-state">
+    <div class="admin-status-card">
+      <span class="admin-status-spinner" aria-hidden="true"></span>
+      <p class="admin-status-text">Verificando acesso…</p>
+    </div>
+  </section>
+
+  <section class="admin-status-screen" id="admin-error-state" hidden>
+    <div class="admin-status-card">
+      <h2 class="admin-status-title">Não foi possível verificar seu acesso.</h2>
+      <p class="admin-status-text">Verifique sua conexão e tente novamente.</p>
+      <button type="button" class="admin-status-retry" id="admin-retry-btn">Tentar novamente</button>
+    </div>
+  </section>
+
+  <!-- Etapa 2 do fluxo: código individual. Nunca mostra os três perfis ao
+       mesmo tempo — só pede o código, sem revelar nomes ou fotos. -->
+  <main class="admin-login-screen admin-profile-screen-bg" id="admin-code-screen" hidden>
+    <div class="admin-profile-card admin-code-card">
+
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-login-logo" width="150" height="38">
+      <span class="admin-login-eyebrow">Painel Administrativo</span>
+      <h1 class="admin-login-title">Seu código de acesso</h1>
+      <p class="admin-code-intro">Informe seu código individual para identificar seu perfil.</p>
+
+      <form class="admin-login-form admin-code-form" id="admin-code-form" novalidate>
+
+        <p class="admin-login-error" id="admin-code-error" role="alert" hidden></p>
+
+        <div class="admin-field">
+          <label for="admin-code-input">Código de acesso</label>
+          <input
+            type="text"
+            id="admin-code-input"
+            name="code"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="4"
+            autocomplete="off"
+            class="admin-code-input"
+            required
+          >
+        </div>
+
+        <button type="submit" class="admin-login-submit" id="admin-code-submit">Continuar</button>
+
+        <button type="button" class="admin-login-link-btn" id="admin-code-back">Voltar</button>
+
+      </form>
+
+    </div>
+  </main>
+
+  <!-- Etapa 2.1: confirmação do perfil identificado pelo código. Mostra
+       exclusivamente o perfil correspondente — nunca os outros dois. -->
+  <main class="admin-login-screen admin-profile-screen-bg" id="admin-confirm-screen" hidden>
+    <div class="admin-profile-card admin-confirm-card">
+
+      <img src="../assets/images/LOGO.png" alt="Decolar Consórcios" class="admin-login-logo" width="150" height="38">
+      <span class="admin-login-eyebrow">Painel Administrativo</span>
+
+      <div class="admin-confirm-identity">
+        <img src="" alt="" class="admin-confirm-photo" id="admin-confirm-photo">
+        <h1 class="admin-login-title admin-confirm-name" id="admin-confirm-name"></h1>
+      </div>
+
+      <p class="admin-confirm-question">Este é o seu perfil?</p>
+
+      <div class="admin-confirm-actions">
+        <button type="button" class="admin-login-submit" id="admin-confirm-yes">Sim, sou eu</button>
+        <button type="button" class="admin-confirm-no" id="admin-confirm-no">Não sou eu</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SDK Supabase (CDN — site estático, sem npm/bundler) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-supabase-client.js"></script>
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-profile.js"></script>
+  <script src="js/admin-profile-codes.js"></script>
+  <script src="js/admin-profile-select.js"></script>
+</body>
+</html>
