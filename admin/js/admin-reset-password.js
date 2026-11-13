@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById('admin-reset-submit');
 
   const client = window.adminSupabase;
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const LOGIN_PAGE = window.location.pathname.endsWith('.html') ? 'login.html' : '/admin/login/';
 
   function showOnly(stateEl) {
     [verifyingState, invalidState, form, successState].forEach((el) => {
@@ -145,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showOnly(successState);
 
         setTimeout(() => {
-          window.location.replace('login.html');
+          window.location.replace(LOGIN_PAGE);
         }, 2500);
       } catch (err) {
         console.error('Decolar Admin: falha ao redefinir senha.', err);

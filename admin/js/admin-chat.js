@@ -12,6 +12,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const SELECT_PROFILE_PAGE = window.location.pathname.endsWith('.html') ? 'selecionar-perfil.html' : '/admin/selecionar-perfil/';
   const loadingState = document.getElementById('admin-loading-state');
   const errorState = document.getElementById('admin-error-state');
   const retryBtn = document.getElementById('admin-retry-btn');
@@ -102,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (profileApi) {
         profileApi.clearSelectedProfile();
       }
-      window.location.replace('selecionar-perfil.html');
+      window.location.replace(SELECT_PROFILE_PAGE);
     });
   }
 

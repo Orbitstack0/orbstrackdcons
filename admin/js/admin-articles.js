@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const guard = window.DecolarAdminGuard;
   const profileApi = window.DecolarAdminProfile;
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const isHtmlPath = window.location.pathname.endsWith('.html');
+  const SELECT_PROFILE_PAGE = isHtmlPath ? 'selecionar-perfil.html' : '/admin/selecionar-perfil/';
+  const ARTIGOS_PAGE = isHtmlPath ? 'artigos.html' : '/admin/artigos/';
+  const ARTIGO_DETALHES_BASE = isHtmlPath ? 'artigo-detalhes.html' : '/admin/artigo-detalhes/';
+  const ARTIGO_EDITOR_BASE = isHtmlPath ? 'artigo-editor.html' : '/admin/artigo-editor/';
+  const ARTIGO_PUBLICO_BASE = isHtmlPath ? '/artigo.html' : '/artigo/';
 
   // --------------------------------------------------------------------
   // Proteção de acesso — mesmo padrão das demais páginas do painel.
@@ -72,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (urlParams.get('deleted') === '1') {
           setActionStatus('Artigo excluído com sucesso.', 'is-success');
           try {
-            window.history.replaceState({}, '', 'artigos.html');
+            window.history.replaceState({}, '', ARTIGOS_PAGE);
           } catch (_) {}
         }
       })
@@ -84,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (switchProfileBtn) {
     switchProfileBtn.addEventListener('click', () => {
       if (profileApi) profileApi.clearSelectedProfile();
-      window.location.replace('selecionar-perfil.html');
+      window.location.replace(SELECT_PROFILE_PAGE);
     });
   }
 
@@ -173,13 +181,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const detailsLink = document.createElement('a');
     detailsLink.className = 'admin-article-details-btn';
-    detailsLink.href = `artigo-detalhes.html?id=${encodeURIComponent(article.id)}`;
+    detailsLink.href = `${ARTIGO_DETALHES_BASE}?id=${encodeURIComponent(article.id)}`;
     detailsLink.textContent = 'Ver detalhes';
 
     if (isDraft) {
       const continueLink = document.createElement('a');
       continueLink.className = 'admin-article-continue-btn';
-      continueLink.href = `artigo-editor.html?id=${encodeURIComponent(article.id)}`;
+      continueLink.href = `${ARTIGO_EDITOR_BASE}?id=${encodeURIComponent(article.id)}`;
       continueLink.textContent = 'Continuar escrevendo';
       actions.appendChild(continueLink);
 
@@ -196,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isValidSlug(article.slug)) {
         const viewLink = document.createElement('a');
         viewLink.className = 'admin-article-continue-btn';
-        viewLink.href = `../artigo.html?slug=${encodeURIComponent(article.slug)}`;
+        viewLink.href = `${ARTIGO_PUBLICO_BASE}?slug=${encodeURIComponent(article.slug)}`;
         viewLink.target = '_blank';
         viewLink.rel = 'noopener noreferrer';
         viewLink.textContent = 'Ver artigo publicado';

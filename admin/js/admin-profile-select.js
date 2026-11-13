@@ -15,6 +15,12 @@
  * DecolarAdminProfile.setSelectedProfile(), exatamente como antes.
  */
 document.addEventListener('DOMContentLoaded', () => {
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const isHtmlPath = window.location.pathname.endsWith('.html');
+  const INDEX_PAGE = isHtmlPath ? 'index.html' : '/admin/';
+  const LOGIN_PAGE = isHtmlPath ? 'login.html' : '/admin/login/';
+
   const loadingState = document.getElementById('admin-loading-state');
   const errorState = document.getElementById('admin-error-state');
   const retryBtn = document.getElementById('admin-retry-btn');
@@ -112,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function handleConfirmYes() {
     if (!candidateProfile || !profileApi) return;
     profileApi.setSelectedProfile(candidateProfile.id);
-    window.location.replace('index.html');
+    window.location.replace(INDEX_PAGE);
   }
 
   function handleConfirmNo() {
@@ -127,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (guard && typeof guard.logout === 'function') {
       guard.logout();
     } else {
-      window.location.replace('login.html');
+      window.location.replace(LOGIN_PAGE);
     }
   }
 
@@ -145,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const existing = profileApi.getSelectedProfile();
         if (existing) {
           // Já há um perfil válido nesta sessão — não repete a escolha.
-          window.location.replace('index.html');
+          window.location.replace(INDEX_PAGE);
           return;
         }
         showCodeScreen();

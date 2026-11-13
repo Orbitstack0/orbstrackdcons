@@ -32,7 +32,7 @@ Write-Host "Origem:  $sourceRoot"
 Write-Host "Destino: $targetRoot`n"
 
 # 1. Validação de arquivos obrigatórios na origem
-Write-Host "[1/6] Validando integridade dos arquivos obrigatórios..." -ForegroundColor Yellow
+Write-Host "[1/7] Validando integridade dos arquivos obrigatórios..." -ForegroundColor Yellow
 
 $requiredFiles = @(
     "index.html",
@@ -67,11 +67,11 @@ Write-Host "   -> Todos os $($requiredFiles.Count) arquivos obrigatórios valida
 
 # 2. Limpar / criar diretório de saída
 if (Test-Path $targetRoot) {
-    Write-Host "[2/6] Limpando pasta de saída existente..." -ForegroundColor Yellow
+    Write-Host "[2/7] Limpando pasta de saída existente..." -ForegroundColor Yellow
     Remove-Item $targetRoot -Recurse -Force
 }
 New-Item -ItemType Directory -Path $targetRoot -Force | Out-Null
-Write-Host "[2/6] Diretório '$OutputDir' preparado com sucesso." -ForegroundColor Green
+Write-Host "[2/7] Diretório '$OutputDir' preparado com sucesso." -ForegroundColor Green
 
 # 3. Padrões de exclusão de segurança (não devem ir para o GitHub Pages)
 $excludedDirNames = @(
@@ -119,7 +119,7 @@ function ShouldExcludeFile($relativePath) {
 }
 
 # 4. Copiar diretórios de assets, CSS, JS e painel administrativo
-Write-Host "[3/6] Copiando diretórios de assets, estilos, scripts e admin..." -ForegroundColor Yellow
+Write-Host "[3/7] Copiando diretórios de assets, estilos, scripts e admin..." -ForegroundColor Yellow
 
 $dirsToCopy = @("assets", "css", "js", "admin")
 foreach ($dir in $dirsToCopy) {
@@ -152,7 +152,7 @@ foreach ($dir in $dirsToCopy) {
 }
 
 # 5. Copiar arquivos raiz estáticos essenciais (robots, sitemap, favicon)
-Write-Host "[4/6] Configurando arquivos de metadados e GitHub Pages..." -ForegroundColor Yellow
+Write-Host "[4/7] Configurando arquivos de metadados e GitHub Pages..." -ForegroundColor Yellow
 
 $rootAssets = @("favicon.ico", "robots.txt", "sitemap.xml")
 foreach ($ra in $rootAssets) {
@@ -174,7 +174,7 @@ $cnameContent = "decolarconsorcios.com.br"
 Write-Host "   -> CNAME configurado para '$cnameContent'." -ForegroundColor Green
 
 # 6. Estruturação em diretórios (rotas) e conversão de links e assets
-Write-Host "[5/6] Gerando diretórios de rotas e convertendo links/assets..." -ForegroundColor Yellow
+Write-Host "[5/7] Gerando diretórios de rotas e convertendo links/assets..." -ForegroundColor Yellow
 
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
@@ -292,8 +292,106 @@ foreach ($sp in $subpagesConfig) {
     Write-Host "   -> dist/$($sp.Route)/index.html gerado."
 }
 
-# 7. Auditoria de segurança e validação final do pacote gerado
-Write-Host "[6/6] Auditando segurança e integridade do pacote gerado..." -ForegroundColor Yellow
+# 7. Rotas limpas para o painel administrativo (dist/admin/<rota>/index.html),
+#    ADICIONADAS ao lado dos arquivos .html originais já copiados no passo
+#    anterior (cópia verbatim da pasta admin/) — nenhum arquivo .html antigo
+#    é removido ou sobrescrito (exceto admin/index.html, cuja rota limpa é a
+#    própria "/admin/"), então endereços antigos como /admin/login.html
+#    continuam respondendo normalmente, sem precisar de redirect 301.
+Write-Host "[6/7] Gerando rotas limpas do painel administrativo..." -ForegroundColor Yellow
+
+# Mapa de navegação entre páginas do admin (links <a href="x.html"> internos)
+$adminLinkMap = [ordered]@{
+    'href="index.html"'                = 'href="/admin/"'
+    'href="login.html"'                = 'href="/admin/login/"'
+    'href="redefinir-senha.html"'      = 'href="/admin/redefinir-senha/"'
+    'href="selecionar-perfil.html"'    = 'href="/admin/selecionar-perfil/"'
+    'href="artigos.html"'              = 'href="/admin/artigos/"'
+    'href="artigo-editor.html"'        = 'href="/admin/artigo-editor/"'
+    'href="artigo-detalhes.html"'      = 'href="/admin/artigo-detalhes/"'
+    'href="chat.html"'                 = 'href="/admin/chat/"'
+    'href="crm.html"'                  = 'href="/admin/crm/"'
+    'href="crm-agenda.html"'           = 'href="/admin/crm-agenda/"'
+    'href="crm-clientes.html"'         = 'href="/admin/crm-clientes/"'
+    'href="crm-oportunidades.html"'    = 'href="/admin/crm-oportunidades/"'
+    'href="crm-relatorios.html"'       = 'href="/admin/crm-relatorios/"'
+    'href="crm-tv.html"'               = 'href="/admin/crm-tv/"'
+}
+
+# Mapa de recursos compartilhados com a raiz do site e com a própria pasta
+# admin/ — precisa virar caminho absoluto porque as novas rotas em
+# diretório (/admin/<rota>/index.html) ficam um nível mais profundas do
+# que os arquivos .html originais (admin/<arquivo>.html).
+$adminAssetMap = [ordered]@{
+    'href="../favicon.ico"'  = 'href="/favicon.ico"'
+    'href="../assets/'       = 'href="/assets/'
+    'src="../assets/'        = 'src="/assets/'
+    'href="../css/'          = 'href="/css/'
+    'href="../index.html"'   = 'href="/"'
+    'href="css/'             = 'href="/admin/css/'
+    'src="js/'                = 'src="/admin/js/'
+}
+
+function ProcessAdminHtmlContent($rawContent) {
+    $content = $rawContent
+    foreach ($entry in $adminLinkMap.GetEnumerator()) {
+        $content = $content.Replace($entry.Key, $entry.Value)
+    }
+    foreach ($entry in $adminAssetMap.GetEnumerator()) {
+        $content = $content.Replace($entry.Key, $entry.Value)
+    }
+    return $content
+}
+
+$adminRoutesConfig = @(
+    @{ File = "artigos.html";             Route = "artigos" },
+    @{ File = "artigo-editor.html";       Route = "artigo-editor" },
+    @{ File = "artigo-detalhes.html";     Route = "artigo-detalhes" },
+    @{ File = "chat.html";                Route = "chat" },
+    @{ File = "crm.html";                 Route = "crm" },
+    @{ File = "crm-agenda.html";          Route = "crm-agenda" },
+    @{ File = "crm-clientes.html";        Route = "crm-clientes" },
+    @{ File = "crm-oportunidades.html";   Route = "crm-oportunidades" },
+    @{ File = "crm-relatorios.html";      Route = "crm-relatorios" },
+    @{ File = "crm-tv.html";              Route = "crm-tv" },
+    @{ File = "login.html";               Route = "login" },
+    @{ File = "redefinir-senha.html";     Route = "redefinir-senha" },
+    @{ File = "selecionar-perfil.html";   Route = "selecionar-perfil" }
+)
+
+$adminSourceDir = Join-Path $sourceRoot "admin"
+$adminDistDir = Join-Path $targetRoot "admin"
+
+$adminRouteCount = 0
+foreach ($ar in $adminRoutesConfig) {
+    $srcPath = Join-Path $adminSourceDir $ar.File
+    if (-not (Test-Path $srcPath)) { continue }
+
+    $routeDir = Join-Path $adminDistDir $ar.Route
+    New-Item -ItemType Directory -Path $routeDir -Force | Out-Null
+
+    $raw = [System.IO.File]::ReadAllText($srcPath, [System.Text.Encoding]::UTF8)
+    $processed = ProcessAdminHtmlContent $raw
+    [System.IO.File]::WriteAllText((Join-Path $routeDir "index.html"), $processed, $utf8NoBom)
+    $adminRouteCount++
+}
+
+# admin/index.html é o único caso em que a rota limpa ("/admin/") coincide
+# com o próprio local do arquivo — por isso ele é reprocessado e
+# SOBRESCRITO em dist/admin/index.html (ao contrário dos demais, que são
+# adicionados em subpastas novas, sem tocar no .html original).
+$adminIndexSrc = Join-Path $adminSourceDir "index.html"
+if (Test-Path $adminIndexSrc) {
+    $adminIndexRaw = [System.IO.File]::ReadAllText($adminIndexSrc, [System.Text.Encoding]::UTF8)
+    $adminIndexProcessed = ProcessAdminHtmlContent $adminIndexRaw
+    [System.IO.File]::WriteAllText((Join-Path $adminDistDir "index.html"), $adminIndexProcessed, $utf8NoBom)
+    $adminRouteCount++
+}
+
+Write-Host "   -> $adminRouteCount rotas limpas do admin geradas em dist/admin/<rota>/, preservando os .html originais." -ForegroundColor Green
+
+# 8. Auditoria de segurança e validação final do pacote gerado
+Write-Host "[7/7] Auditando segurança e integridade do pacote gerado..." -ForegroundColor Yellow
 
 $sensitiveFilesFound = Get-ChildItem -Path $targetRoot -Recurse -File | Where-Object {
     $_.Name -match '\.(sql|env|bak|tmp|log)$|^broken_|^measure_|^res_|^check_'

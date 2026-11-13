@@ -30,15 +30,19 @@
   'use strict';
 
   var STORAGE_KEY = 'decolar-admin-profile';
-  var SELECT_PAGE = 'selecionar-perfil.html';
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  var SELECT_PAGE = window.location.pathname.endsWith('.html') ? 'selecionar-perfil.html' : '/admin/selecionar-perfil/';
 
   // Ordem fixa e obrigatória: Samir (esquerda) | Andrey (centro) | William (direita).
   // "photo" é opcional — quando presente, a tela de seleção mostra a
-  // fotografia em vez das iniciais. Caminho relativo a partir de admin/*.html.
+  // fotografia em vez das iniciais. Caminho absoluto a partir da raiz do
+  // site: as páginas do admin agora podem estar em profundidades
+  // diferentes (admin/*.html no dev, admin/<rota>/ em produção).
   var PROFILES = [
-    { id: 'samir', firstName: 'Samir', fullName: 'Samir Mannaa', photo: '../assets/images/decolar-perfil-samir-mannaa.webp' },
-    { id: 'andrey', firstName: 'Andrey', fullName: 'Andrey Roque', photo: '../assets/images/decolar-perfil-andrey-roque.webp' },
-    { id: 'william', firstName: 'William', fullName: 'William Richer', photo: '../assets/images/decolar-perfil-william-richer.webp' },
+    { id: 'samir', firstName: 'Samir', fullName: 'Samir Mannaa', photo: '/assets/images/decolar-perfil-samir-mannaa.webp' },
+    { id: 'andrey', firstName: 'Andrey', fullName: 'Andrey Roque', photo: '/assets/images/decolar-perfil-andrey-roque.webp' },
+    { id: 'william', firstName: 'William', fullName: 'William Richer', photo: '/assets/images/decolar-perfil-william-richer.webp' },
   ];
 
   function getProfileById(id) {

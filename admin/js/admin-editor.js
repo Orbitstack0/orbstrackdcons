@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const guard = window.DecolarAdminGuard;
   const profileApi = window.DecolarAdminProfile;
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const SELECT_PROFILE_PAGE = window.location.pathname.endsWith('.html') ? 'selecionar-perfil.html' : '/admin/selecionar-perfil/';
 
   // --------------------------------------------------------------------
   // Proteção de acesso — idêntica ao padrão já usado em admin/index.html.
@@ -110,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (switchProfileBtn) {
     switchProfileBtn.addEventListener('click', () => {
       if (profileApi) profileApi.clearSelectedProfile();
-      window.location.replace('selecionar-perfil.html');
+      window.location.replace(SELECT_PROFILE_PAGE);
     });
   }
 

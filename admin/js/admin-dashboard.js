@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const guard = window.DecolarAdminGuard;
   const profileApi = window.DecolarAdminProfile;
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const isHtmlPath = window.location.pathname.endsWith('.html');
+  const SELECT_PROFILE_PAGE = isHtmlPath ? 'selecionar-perfil.html' : '/admin/selecionar-perfil/';
+  const ARTIGO_EDITOR_BASE = isHtmlPath ? 'artigo-editor.html' : '/admin/artigo-editor/';
 
   function showLoading() {
     if (loadingState) loadingState.hidden = false;
@@ -123,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
           draftNoticeArticleEl.textContent = latest.title || 'Sem título';
         }
         if (draftNoticeContinueBtn) {
-          draftNoticeContinueBtn.href = `artigo-editor.html?id=${encodeURIComponent(latest.id)}`;
+          draftNoticeContinueBtn.href = `${ARTIGO_EDITOR_BASE}?id=${encodeURIComponent(latest.id)}`;
         }
 
         draftNotice.hidden = false;
@@ -186,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (switchProfileBtn) {
     switchProfileBtn.addEventListener('click', () => {
       if (profileApi) profileApi.clearSelectedProfile();
-      window.location.replace('selecionar-perfil.html');
+      window.location.replace(SELECT_PROFILE_PAGE);
     });
   }
 

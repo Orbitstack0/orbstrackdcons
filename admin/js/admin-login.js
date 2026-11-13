@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const guard = window.DecolarAdminGuard;
   const params = new URLSearchParams(window.location.search);
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const INDEX_PAGE = window.location.pathname.endsWith('.html') ? 'index.html' : '/admin/';
 
   function showError(message) {
     if (!errorBox) return;
@@ -55,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // o painel em vez de pedir login de novo.
     guard.checkAdminAuthorization().then((result) => {
       if (result.status === 'authorized') {
-        window.location.replace('index.html');
+        window.location.replace(INDEX_PAGE);
       }
     });
   }
@@ -146,10 +149,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // redirectTo é construído a partir da própria origem do site, para
-      // sempre apontar exatamente para a página servida (ex.:
-      // http://localhost:5500/admin/redefinir-senha.html). Esse endereço
+      // sempre apontar exatamente para a página servida — seja no
+      // desenvolvimento local (ex.: http://localhost:5500/admin/login.html
+      // -> .../admin/redefinir-senha.html) ou em produção, com rotas
+      // limpas (https://decolarconsorcios.com.br/admin/login/ ->
+      // .../admin/redefinir-senha/). Esse endereço (nas duas formas)
       // precisa estar cadastrado nas "Redirect URLs" do Supabase Auth.
-      const redirectTo = window.location.origin + window.location.pathname.replace(/login\.html$/, 'redefinir-senha.html');
+      const isHtmlPath = window.location.pathname.endsWith('.html');
+      const resetPath = isHtmlPath
+        ? window.location.pathname.replace(/login\.html$/, 'redefinir-senha.html')
+        : window.location.pathname.replace(/\/login\/?$/, '/redefinir-senha/');
+      const redirectTo = window.location.origin + resetPath;
 
       setForgotSubmitting(true);
 
@@ -213,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const authResult = guard ? await guard.checkAdminAuthorization() : null;
 
         if (authResult && authResult.status === 'authorized') {
-          window.location.replace('index.html');
+          window.location.replace(INDEX_PAGE);
           return;
         }
 

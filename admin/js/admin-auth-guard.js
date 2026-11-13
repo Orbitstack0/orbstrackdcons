@@ -24,7 +24,9 @@
 (function () {
   'use strict';
 
-  var LOGIN_PAGE = 'login.html';
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  var LOGIN_PAGE = window.location.pathname.endsWith('.html') ? 'login.html' : '/admin/login/';
 
   function getClient() {
     return window.adminSupabase || null;

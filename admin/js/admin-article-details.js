@@ -6,6 +6,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const guard = window.DecolarAdminGuard;
   const profileApi = window.DecolarAdminProfile;
+  // Rota-ciente: '.html' no desenvolvimento local (Live Server), rota
+  // limpa em produção (GitHub Pages, servida a partir de dist/).
+  const isHtmlPath = window.location.pathname.endsWith('.html');
+  const SELECT_PROFILE_PAGE = isHtmlPath ? 'selecionar-perfil.html' : '/admin/selecionar-perfil/';
+  const ARTIGOS_PAGE = isHtmlPath ? 'artigos.html' : '/admin/artigos/';
+  const ARTIGO_EDITOR_BASE = isHtmlPath ? 'artigo-editor.html' : '/admin/artigo-editor/';
+  const ARTIGO_PUBLICO_BASE = isHtmlPath ? '/artigo.html' : '/artigo/';
 
   // Telas de verificação inicial de acesso
   const accessLoading = document.getElementById('admin-loading-state');
@@ -136,12 +143,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getArticlePublicDetails(slug) {
     const safeSlug = slug || '';
-    const path = `artigo.html?slug=${encodeURIComponent(safeSlug)}`;
+    // Caminho absoluto a partir da raiz do site — funciona independente da
+    // profundidade da página do admin (admin/*.html no dev ou
+    // admin/<rota>/ em produção): rota-ciente via ARTIGO_PUBLICO_BASE.
+    const path = `${ARTIGO_PUBLICO_BASE}?slug=${encodeURIComponent(safeSlug)}`;
     const host = window.location.hostname;
     const isLocal = !host || host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || window.location.protocol === 'file:';
 
-    const canonicalUrl = `${SITE_PUBLIC_ORIGIN}/${path}`;
-    const localPreviewUrl = `../${path}`;
+    const canonicalUrl = `${SITE_PUBLIC_ORIGIN}${path}`;
+    const localPreviewUrl = path;
 
     return {
       canonicalUrl,
@@ -237,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ações do topo
     if (editBtn) {
-      editBtn.href = `artigo-editor.html?id=${encodeURIComponent(article.id)}`;
+      editBtn.href = `${ARTIGO_EDITOR_BASE}?id=${encodeURIComponent(article.id)}`;
       editBtn.textContent = isDraft ? 'Continuar escrevendo' : 'Editar artigo';
     }
 
@@ -539,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 4. Somente após confirmação positiva e irrefutável, redireciona para a lista
-      window.location.replace('artigos.html?deleted=1');
+      window.location.replace(`${ARTIGOS_PAGE}?deleted=1`);
     } catch (err) {
       console.error('Decolar Admin: erro na operação de exclusão do artigo.', err);
       isDeleting = false;
@@ -584,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (switchProfileBtn) {
     switchProfileBtn.addEventListener('click', () => {
       if (profileApi) profileApi.clearSelectedProfile();
-      window.location.replace('selecionar-perfil.html');
+      window.location.replace(SELECT_PROFILE_PAGE);
     });
   }
 
