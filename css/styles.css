@@ -5093,15 +5093,30 @@ body.nav-locked .consent-banner-inner {
 @media (max-width: 600px) {
   .consent-banner {
     padding: 0;
+    align-items: flex-end;
   }
 
   .consent-banner-inner {
     border-radius: 0;
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    overflow-y: auto;
+    padding: 18px 20px calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* A base desktop define "flex: 1 1 320px" para dividir espaço na
+     horizontal; em coluna (mobile) esse flex-basis passaria a valer na
+     altura, inflando o bloco de texto e abrindo um vão vazio antes dos
+     botões. Aqui ele volta a ocupar só a altura do próprio conteúdo. */
+  .consent-banner-text {
+    flex: 0 0 auto;
   }
 
   .consent-banner-actions {
+    flex: 0 0 auto;
     flex-direction: column;
     align-items: stretch;
   }
